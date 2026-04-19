@@ -1,15 +1,20 @@
 "use client";
 
 import { useLanguage } from "@/lib/LanguageContext";
-import { Languages, Menu, X } from "lucide-react";
-import { useState, useCallback } from "react";
+import { localeNames, type Locale } from "@/lib/i18n";
+import { Languages, Menu, X, ChevronDown } from "lucide-react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import Lenis from "lenis";
 
 const sections = ["about", "services", "agents", "portfolio", "products", "audit", "contact"] as const;
 
+const allLocales: Locale[] = ["fr", "en", "nl", "es", "de", "ma", "pt", "it", "tr", "zh", "ja", "ko", "ru", "hi", "ar"];
+
 export function Navbar() {
   const { locale, t, setLocale } = useLanguage();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [langOpen, setLangOpen] = useState(false);
+  const langRef = useRef<HTMLDivElement>(null);
 
   const scrollTo = useCallback((id: string) => {
     const el = document.getElementById(id);
@@ -23,6 +28,17 @@ export function Navbar() {
     }
     setMobileOpen(false);
   }, []);
+
+  useEffect(() => {
+    if (!langOpen) return;
+    const handleClick = (e: MouseEvent) => {
+      if (langRef.current && !langRef.current.contains(e.target as Node)) {
+        setLangOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, [langOpen]);
 
   return (
     <header className="fixed top-0 left-0 right-0 z-40 transition-all duration-500 bg-dark/80 backdrop-blur-md py-4">
@@ -47,24 +63,66 @@ export function Navbar() {
               {t.nav[key]}
             </button>
           ))}
-          <button
-            onClick={() => setLocale(locale === "fr" ? "en" : "fr")}
-            aria-label={`Changer la langue en ${locale === "fr" ? "anglais" : "français"}`}
-            className="flex items-center gap-1 text-xs font-medium tracking-wider uppercase text-accent hover:text-accent-light transition-colors"
-          >
-            <Languages className="w-3.5 h-3.5" aria-hidden="true" />
-            {locale.toUpperCase()}
-          </button>
+
+          {/* Language dropdown */}
+          <div ref={langRef} className="relative">
+            <button
+              onClick={() => setLangOpen(!langOpen)}
+              aria-label="Changer la langue"
+              aria-expanded={langOpen}
+              className="flex items-center gap-1 text-xs font-medium tracking-wider uppercase text-accent hover:text-accent-light transition-colors"
+            >
+              <Languages className="w-3.5 h-3.5" aria-hidden="true" />
+              {localeNames[locale]}
+              <ChevronDown className={`w-3 h-3 transition-transform ${langOpen ? "rotate-180" : ""}`} aria-hidden="true" />
+            </button>
+
+            {langOpen && (
+              <div className="absolute right-0 top-full mt-2 w-40 max-h-64 overflow-y-auto rounded-xl border border-white/10 bg-dark/95 backdrop-blur-xl py-1 z-50 scrollbar-hide" role="menu">
+                {allLocales.map((loc) => (
+                  <button
+                    key={loc}
+                    onClick={() => { setLocale(loc); setLangOpen(false); }}
+                    role="menuitem"
+                    className={`block w-full text-left px-4 py-2 text-sm transition-colors ${
+                      loc === locale ? "text-accent bg-accent/10" : "text-white/60 hover:text-white hover:bg-white/5"
+                    }`}
+                    dir={loc === "ar" ? "rtl" : "ltr"}
+                  >
+                    {localeNames[loc]}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
 
         <div className="md:hidden flex items-center gap-3">
-          <button
-            onClick={() => setLocale(locale === "fr" ? "en" : "fr")}
-            aria-label={`Changer la langue en ${locale === "fr" ? "anglais" : "français"}`}
-            className="text-xs font-medium text-accent"
-          >
-            {locale.toUpperCase()}
-          </button>
+          <div ref={langRef} className="relative">
+            <button
+              onClick={() => setLangOpen(!langOpen)}
+              aria-label="Changer la langue"
+              className="text-xs font-medium text-accent"
+            >
+              {locale.toUpperCase()}
+            </button>
+            {langOpen && (
+              <div className="absolute right-0 top-full mt-2 w-36 max-h-48 overflow-y-auto rounded-xl border border-white/10 bg-dark/95 backdrop-blur-xl py-1 z-50" role="menu">
+                {allLocales.map((loc) => (
+                  <button
+                    key={loc}
+                    onClick={() => { setLocale(loc); setLangOpen(false); }}
+                    role="menuitem"
+                    className={`block w-full text-left px-3 py-1.5 text-xs transition-colors ${
+                      loc === locale ? "text-accent bg-accent/10" : "text-white/60 hover:text-white"
+                    }`}
+                  >
+                    {localeNames[loc]}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label={mobileOpen ? "Fermer le menu" : "Ouvrir le menu"}
