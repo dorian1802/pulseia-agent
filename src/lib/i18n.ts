@@ -91,6 +91,7 @@ export const translations = {
       formEmail: "Email",
       formMessage: "Message",
       formSend: "Envoyer",
+      formSent: "Message envoyé !",
     },
     footer: {
       tagline: "L'IA qui travaille pour vous 24/7",
@@ -187,6 +188,7 @@ export const translations = {
       formEmail: "Email",
       formMessage: "Message",
       formSend: "Send",
+      formSent: "Message sent!",
     },
     footer: {
       tagline: "AI that works for you 24/7",

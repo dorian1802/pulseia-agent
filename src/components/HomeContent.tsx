@@ -1,6 +1,5 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { LanguageProvider } from "@/lib/LanguageContext";
 import { SmoothScroller } from "@/components/SmoothScroller";
@@ -13,11 +12,7 @@ import { PortfolioSection } from "@/components/PortfolioSection";
 import { ProductsSection } from "@/components/ProductsSection";
 import { CTASection } from "@/components/CTASection";
 import { Footer } from "@/components/Footer";
-
-const SceneCanvas = dynamic(
-  () => import("@/components/SceneCanvas").then((mod) => mod.SceneCanvas),
-  { ssr: false }
-);
+import { FloatingForm } from "@/components/FloatingForm";
 
 export function HomeContent() {
   const { scrollProgressRef, containerRef } = useScrollAnimation();
@@ -25,7 +20,7 @@ export function HomeContent() {
   return (
     <LanguageProvider>
       <SmoothScroller>
-        <SceneCanvas scrollProgress={scrollProgressRef} />
+        <FloatingForm />
         <Navbar />
         <main ref={containerRef}>
           <HeroSection />
