@@ -4,24 +4,23 @@ import { useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-const BLACK = [6, 6, 14];      // #06060e
-const NAVY = [15, 18, 50];     // #0f1232
-const BLUE = [30, 40, 100];    // #1e2864
-const PURPLE = [60, 40, 120];  // #3c2878
-const SLATE = [100, 100, 150]; // #646496
-const LIGHT = [220, 220, 240]; // #dcdcf0
-const WHITE = [248, 249, 252]; // #f8f9fc
+const BLACK = [6, 6, 14];       // #06060e
+const NAVY = [12, 14, 42];      // #0c0e2a
+const BLUE = [22, 34, 90];      // #16225a
+const INDIGO = [30, 30, 100];   // #1e1e64
+const PURPLE = [50, 30, 100];   // #321e64
+const MAUVE = [60, 30, 90];     // #3c1e5a
+const DEEP_PURPLE = [35, 20, 70]; // #231446
 
-// Continuous gradient: noir → bleu profond → bleu → violet → gris → blanc
 const GRADIENT_STOPS = [
-  BLACK,   // 0% — Hero
-  NAVY,    // ~14% — About
-  BLUE,    // ~28% — Services
-  PURPLE,  // ~42% — Agents
-  SLATE,   // ~57% — Portfolio
-  LIGHT,   // ~71% — Products
-  WHITE,   // ~85% — Audit
-  WHITE,   // 100% — CTA
+  BLACK,        // Hero — noir profond
+  NAVY,         // About — noir bleuté
+  BLUE,         // Services — bleu
+  INDIGO,       // Agents — bleu indigo
+  PURPLE,       // Portfolio — violet
+  MAUVE,        // Products — mauve
+  DEEP_PURPLE,  // Audit — violet profond
+  BLACK,        // CTA — retour au noir
 ];
 
 function lerpColor(a: number[], b: number[], t: number): string {
