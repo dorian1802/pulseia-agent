@@ -8,8 +8,8 @@ const BLACK = [6, 6, 14];        // #06060e
 const NAVY = [12, 14, 42];      // #0c0e2a
 const BLUE = [22, 34, 90];      // #16225a
 const INDIGO = [30, 30, 100];   // #1e1e64
-const TEAL = [10, 42, 42];      // #0a2a2a
-const CRIMSON = [42, 10, 26];   // #2a0a1a
+const TURQUOISE = [8, 40, 48];  // #082830
+const MAUVE = [38, 16, 48];     // #261030
 const DEEP_NAVY = [20, 20, 56]; // #141438
 
 const GRADIENT_STOPS = [
@@ -17,8 +17,8 @@ const GRADIENT_STOPS = [
   NAVY,         // About — noir bleuté
   BLUE,         // Services — bleu
   INDIGO,       // Agents — bleu indigo
-  TEAL,         // Portfolio — noir émeraude
-  CRIMSON,      // Products — noir rouge
+  TURQUOISE,    // Portfolio — noir turquoise
+  MAUVE,        // Products — noir mauve
   DEEP_NAVY,    // Audit — bleu profond
   BLACK,        // CTA — retour au noir
 ];
@@ -29,8 +29,8 @@ const GLOW_COLORS = [
   [20, 184, 166],   // About — teal
   [59, 130, 246],   // Services — blue
   [99, 102, 241],   // Agents — indigo
-  [16, 185, 129],   // Portfolio — emerald
-  [239, 68, 68],    // Products — red
+  [64, 224, 208],   // Portfolio — turquoise
+  [186, 85, 211],   // Products — mauve
   [139, 92, 246],   // Audit — violet
   [124, 58, 237],   // CTA — violet accent
 ];
