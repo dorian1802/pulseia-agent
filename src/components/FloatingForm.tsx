@@ -42,6 +42,7 @@ export function FloatingForm() {
 
     const triggers: ScrollTrigger[] = [];
     const aboutIndex = 1;
+    const contactIndex = sections.length - 1;
 
     sections.forEach((section, i) => {
       const isRight = i % 2 === 0;
@@ -51,7 +52,7 @@ export function FloatingForm() {
         start: "top center",
         end: "bottom center",
         onEnter: () => {
-          if (i < aboutIndex) {
+          if (i < aboutIndex || i === contactIndex) {
             gsap.to(el, { opacity: 0, duration: 0.3 });
             return;
           }
@@ -63,7 +64,7 @@ export function FloatingForm() {
           portalJump(el, targetX, side);
         },
         onEnterBack: () => {
-          if (i < aboutIndex) {
+          if (i < aboutIndex || i === contactIndex) {
             gsap.to(el, { opacity: 0, duration: 0.3 });
             return;
           }
