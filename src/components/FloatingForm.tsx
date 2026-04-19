@@ -9,7 +9,6 @@ import { Send, X } from "lucide-react";
 export function FloatingForm() {
   const { t } = useLanguage();
   const formRef = useRef<HTMLDivElement>(null);
-  const innerRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [inContact, setInContact] = useState(false);
@@ -17,7 +16,6 @@ export function FloatingForm() {
   const portalJump = useCallback((el: HTMLElement, targetX: number, side: string) => {
     const tl = gsap.timeline();
 
-    // Shrink into portal
     tl.to(el, {
       scaleX: 0,
       duration: 0.3,
@@ -25,10 +23,8 @@ export function FloatingForm() {
       transformOrigin: side,
     });
 
-    // Instant reposition while invisible
     tl.set(el, { x: targetX });
 
-    // Expand out of portal on the other side
     tl.to(el, {
       scaleX: 1,
       duration: 0.4,
@@ -58,23 +54,19 @@ export function FloatingForm() {
         end: "bottom center",
         onEnter: () => {
           if (isContact) {
-            // Find the CTA form element and merge into it
+            setInContact(true);
+            setOpen(true);
+
+            // Hide static CTA form
             const ctaForm = section.querySelector("[data-cta-form]") as HTMLElement | null;
-            if (ctaForm) {
-              const rect = ctaForm.getBoundingClientRect();
-              ctaForm.style.visibility = "hidden";
+            if (ctaForm) ctaForm.style.visibility = "hidden";
 
-              setInContact(true);
-              setOpen(true);
-
-              gsap.to(el, {
-                x: rect.left,
-                y: rect.top - window.innerHeight / 2 + rect.height / 2,
-                width: rect.width,
-                duration: 0.8,
-                ease: "power3.inOut",
-              });
-            }
+            // Slide into right side of CTA section
+            gsap.to(el, {
+              x: window.innerWidth - el.offsetWidth - 48,
+              duration: 0.8,
+              ease: "power3.out",
+            });
           } else {
             setInContact(false);
             const targetX = isRight ? window.innerWidth - el.offsetWidth - 24 : 24;
@@ -84,26 +76,19 @@ export function FloatingForm() {
         },
         onEnterBack: () => {
           if (isContact) {
+            setInContact(true);
+            setOpen(true);
+
             const ctaForm = section.querySelector("[data-cta-form]") as HTMLElement | null;
-            if (ctaForm) {
-              const rect = ctaForm.getBoundingClientRect();
-              ctaForm.style.visibility = "hidden";
+            if (ctaForm) ctaForm.style.visibility = "hidden";
 
-              setInContact(true);
-              setOpen(true);
-
-              gsap.to(el, {
-                x: rect.left,
-                y: rect.top - window.innerHeight / 2 + rect.height / 2,
-                width: rect.width,
-                duration: 0.8,
-                ease: "power3.inOut",
-              });
-            }
+            gsap.to(el, {
+              x: window.innerWidth - el.offsetWidth - 48,
+              duration: 0.8,
+              ease: "power3.out",
+            });
           } else {
             setInContact(false);
-            // Reset width and vertical position when leaving contact
-            gsap.to(el, { width: 288, y: 0, duration: 0.3 });
             const targetX = isRight ? window.innerWidth - el.offsetWidth - 24 : 24;
             const side = isRight ? "left center" : "right center";
             portalJump(el, targetX, side);
@@ -134,8 +119,8 @@ export function FloatingForm() {
   return (
     <div
       ref={formRef}
-      className="fixed top-1/2 -translate-y-1/2 z-40 pointer-events-auto"
-      style={{ x: typeof window !== "undefined" ? window.innerWidth - 312 : 500, width: 288 }}
+      className="fixed top-1/2 -translate-y-1/2 z-40 w-72 pointer-events-auto"
+      style={{ x: typeof window !== "undefined" ? window.innerWidth - 296 : 500 }}
     >
       {!open && !inContact ? (
         <button
@@ -146,10 +131,7 @@ export function FloatingForm() {
           {t.cta.formSend}
         </button>
       ) : (
-        <div
-          ref={innerRef}
-          className="bg-dark-light/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl shadow-black/50 p-5"
-        >
+        <div className="bg-dark-light/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl shadow-black/50 p-5">
           {!inContact && (
             <div className="flex items-center justify-between mb-4">
               <p className="text-white text-sm font-semibold tracking-wide">
