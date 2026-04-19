@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useMemo } from "react";
+import { useRef, useMemo, useEffect } from "react";
 import { useGLTF } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
@@ -42,13 +42,11 @@ export function CharacterModel({ scrollProgress }: Props) {
   const { scene } = useGLTF("/models/character.glb");
   const isMobileRef = useRef(false);
 
-  useMemo(() => {
-    if (typeof window !== "undefined") {
-      isMobileRef.current = window.innerWidth < 768;
-      const onResize = () => { isMobileRef.current = window.innerWidth < 768; };
-      window.addEventListener("resize", onResize);
-      return () => window.removeEventListener("resize", onResize);
-    }
+  useEffect(() => {
+    isMobileRef.current = window.innerWidth < 768;
+    const onResize = () => { isMobileRef.current = window.innerWidth < 768; };
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
   }, []);
 
   const targetPos = useMemo(() => new THREE.Vector3(), []);
