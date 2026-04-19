@@ -21,34 +21,9 @@ html, body {
   min-height: 100vh;
 }
 
-/* Fixed fullscreen background layer */
-#bg-layer {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  transition: none;
-}
-
-/* Sections are transparent so the fixed bg shows through */
+/* All sections transparent — body bg changes via JS */
 main > section {
   background: transparent !important;
-}
-
-/* Subtle overlay for readability */
-.section-dark::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(10, 10, 15, 0.02);
-  pointer-events: none;
-}
-
-.section-light::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(248, 249, 250, 0.02);
-  pointer-events: none;
 }
 
 @media (prefers-reduced-motion: reduce) {

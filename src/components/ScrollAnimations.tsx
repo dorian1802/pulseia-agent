@@ -34,10 +34,9 @@ export function ScrollAnimations() {
 
     const triggers: ScrollTrigger[] = [];
 
-    // ── Smooth gradient background on fixed layer ──
-    const bgLayer = document.getElementById("bg-layer");
+    // ── Smooth gradient background on body ──
     const main = document.querySelector("main");
-    if (main && bgLayer) {
+    if (main) {
       const n = sections.length;
 
       triggers.push(
@@ -53,7 +52,7 @@ export function ScrollAnimations() {
             const t = sectionFloat - idx;
             const from = SECTION_RGB[idx];
             const to = SECTION_RGB[idx + 1];
-            bgLayer.style.backgroundColor = lerpColor(from, to, t);
+            document.body.style.backgroundColor = lerpColor(from, to, t);
           },
         })
       );
