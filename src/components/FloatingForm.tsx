@@ -23,21 +23,21 @@ export function FloatingForm() {
     const triggers: ScrollTrigger[] = [];
 
     sections.forEach((section, i) => {
-      const isLeft = i % 2 === 0;
+      const isRight = i % 2 === 0;
       const trigger = ScrollTrigger.create({
         trigger: section,
         start: "top center",
         end: "bottom center",
         onEnter: () => {
           gsap.to(el, {
-            x: isLeft ? 24 : window.innerWidth - el.offsetWidth - 24,
+            x: isRight ? window.innerWidth - el.offsetWidth - 24 : 24,
             duration: 0.8,
             ease: "power3.out",
           });
         },
         onEnterBack: () => {
           gsap.to(el, {
-            x: isLeft ? 24 : window.innerWidth - el.offsetWidth - 24,
+            x: isRight ? window.innerWidth - el.offsetWidth - 24 : 24,
             duration: 0.8,
             ease: "power3.out",
           });
@@ -53,7 +53,7 @@ export function FloatingForm() {
     <div
       ref={formRef}
       className="fixed top-1/2 -translate-y-1/2 z-40 w-72 pointer-events-auto"
-      style={{ x: 24 }}
+      style={{ x: typeof window !== "undefined" ? window.innerWidth - 296 : 500 }}
     >
       {!open ? (
         <button
