@@ -15,7 +15,7 @@ export function ProductsSection() {
           <p className="tag-animate text-xs tracking-[0.3em] uppercase text-accent font-medium mb-4">
             {t.products.tag}
           </p>
-          <h2 className="font-display text-5xl md:text-6xl text-dark mb-12 leading-[0.95]">
+          <h2 className="font-display text-5xl md:text-6xl text-white mb-12 leading-[0.95]">
             {t.products.title1} <span className="text-accent italic">{t.products.title2}</span>
           </h2>
         </div>
@@ -23,12 +23,12 @@ export function ProductsSection() {
           {t.products.items.map((item, i) => {
             const Icon = productIcons[i];
             return (
-              <div key={i} className="card-animate rounded-xl border border-black/5 bg-white p-8 hover:shadow-lg transition-all duration-300">
+              <div key={i} className="card-animate rounded-xl border border-white/10 bg-white/5 p-8 hover:shadow-lg transition-all duration-300">
                 <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center mb-5">
                   <Icon className="w-6 h-6 text-accent" />
                 </div>
-                <h3 className="font-display text-xl text-dark mb-2">{item.title}</h3>
-                <p className="text-block text-sm text-dark/50 leading-relaxed">{item.desc}</p>
+                <h3 className="font-display text-xl text-white mb-2">{item.title}</h3>
+                <p className="text-block text-sm text-white/50 leading-relaxed">{item.desc}</p>
               </div>
             );
           })}

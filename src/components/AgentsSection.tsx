@@ -12,20 +12,20 @@ export function AgentsSection() {
           <p className="tag-animate text-xs tracking-[0.3em] uppercase text-accent font-medium mb-4">
             {t.agents.tag}
           </p>
-          <h2 className="font-display text-5xl md:text-6xl text-dark mb-4 leading-[0.95]">
+          <h2 className="font-display text-5xl md:text-6xl text-white mb-4 leading-[0.95]">
             {t.agents.title1} <span className="text-accent italic">{t.agents.title2}</span>
           </h2>
-          <p className="text-block text-muted text-sm mb-8">{t.agents.ceo}</p>
+          <p className="text-block text-white/50 text-sm mb-8">{t.agents.ceo}</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl ml-auto mt-8">
           {t.agents.poles.map((pole) => (
-            <div key={pole.name} className="card-animate rounded-xl border border-black/5 bg-white p-6">
+            <div key={pole.name} className="card-animate rounded-xl border border-white/10 bg-white/5 p-6">
               <h3 className="font-display text-sm tracking-widest uppercase text-accent mb-4">
                 {pole.name}
               </h3>
               <ul className="space-y-2">
                 {pole.members.map((member) => (
-                  <li key={member} className="text-sm text-dark/60 flex items-center gap-2">
+                  <li key={member} className="text-sm text-white/60 flex items-center gap-2">
                     <span className="w-1.5 h-1.5 bg-accent rounded-full flex-shrink-0" />
                     {member}
                   </li>
