@@ -36,8 +36,8 @@ export function Navbar() {
         setLangOpen(false);
       }
     };
-    document.addEventListener("mousedown", handleClick);
-    return () => document.removeEventListener("mousedown", handleClick);
+    document.addEventListener("click", handleClick);
+    return () => document.removeEventListener("click", handleClick);
   }, [langOpen]);
 
   return (
@@ -70,7 +70,7 @@ export function Navbar() {
               onClick={() => setLangOpen(!langOpen)}
               aria-label="Changer la langue"
               aria-expanded={langOpen}
-              className="flex items-center gap-1 text-xs font-medium tracking-wider uppercase text-accent hover:text-accent-light transition-colors"
+              className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium tracking-wider uppercase text-accent hover:bg-accent/10 transition-colors"
             >
               <Languages className="w-3.5 h-3.5" aria-hidden="true" />
               {localeNames[locale]}
@@ -78,13 +78,14 @@ export function Navbar() {
             </button>
 
             {langOpen && (
-              <div className="absolute right-0 top-full mt-2 w-40 max-h-64 overflow-y-auto rounded-xl border border-white/10 bg-dark/95 backdrop-blur-xl py-1 z-50 scrollbar-hide" role="menu">
+              <div className="absolute right-0 top-full mt-2 w-44 max-h-72 overflow-y-auto rounded-xl border border-white/10 bg-dark backdrop-blur-xl py-1 z-50 shadow-2xl" role="menu">
                 {allLocales.map((loc) => (
                   <button
                     key={loc}
+                    onMouseDown={(e) => e.stopPropagation()}
                     onClick={() => { setLocale(loc); setLangOpen(false); }}
                     role="menuitem"
-                    className={`block w-full text-left px-4 py-2 text-sm transition-colors ${
+                    className={`block w-full text-left px-4 py-2.5 text-sm transition-colors ${
                       loc === locale ? "text-accent bg-accent/10" : "text-white/60 hover:text-white hover:bg-white/5"
                     }`}
                     dir={loc === "ar" ? "rtl" : "ltr"}
@@ -102,19 +103,21 @@ export function Navbar() {
             <button
               onClick={() => setLangOpen(!langOpen)}
               aria-label="Changer la langue"
-              className="text-xs font-medium text-accent"
+              className="flex items-center gap-1 px-2 py-1 rounded-md text-xs font-medium text-accent hover:bg-accent/10 transition-colors"
             >
+              <Languages className="w-3.5 h-3.5" aria-hidden="true" />
               {locale.toUpperCase()}
             </button>
             {langOpen && (
-              <div className="absolute right-0 top-full mt-2 w-36 max-h-48 overflow-y-auto rounded-xl border border-white/10 bg-dark/95 backdrop-blur-xl py-1 z-50" role="menu">
+              <div className="absolute right-0 top-full mt-2 w-40 max-h-56 overflow-y-auto rounded-xl border border-white/10 bg-dark backdrop-blur-xl py-1 z-50 shadow-2xl" role="menu">
                 {allLocales.map((loc) => (
                   <button
                     key={loc}
+                    onMouseDown={(e) => e.stopPropagation()}
                     onClick={() => { setLocale(loc); setLangOpen(false); }}
                     role="menuitem"
-                    className={`block w-full text-left px-3 py-1.5 text-xs transition-colors ${
-                      loc === locale ? "text-accent bg-accent/10" : "text-white/60 hover:text-white"
+                    className={`block w-full text-left px-3 py-2 text-xs transition-colors ${
+                      loc === locale ? "text-accent bg-accent/10" : "text-white/60 hover:text-white hover:bg-white/5"
                     }`}
                   >
                     {localeNames[loc]}
