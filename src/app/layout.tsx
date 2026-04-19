@@ -27,7 +27,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr" className={`${inter.variable} ${spaceGrotesk.variable} antialiased`}>
-      <body className="font-sans">{children}</body>
+      <body className="font-sans">
+        <div id="bg-glow" className="fixed inset-0 pointer-events-none z-[-1]" />
+        {children}
+      </body>
     </html>
   );
 }

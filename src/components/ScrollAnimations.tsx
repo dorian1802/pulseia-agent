@@ -23,11 +23,30 @@ const GRADIENT_STOPS = [
   BLACK,        // CTA — retour au noir
 ];
 
+// Accent glow colors per section (brighter, for the gradient overlay)
+const GLOW_COLORS = [
+  [124, 58, 237],   // Hero — violet accent
+  [20, 184, 166],   // About — teal
+  [59, 130, 246],   // Services — blue
+  [99, 102, 241],   // Agents — indigo
+  [16, 185, 129],   // Portfolio — emerald
+  [239, 68, 68],    // Products — red
+  [139, 92, 246],   // Audit — violet
+  [124, 58, 237],   // CTA — violet accent
+];
+
 function lerpColor(a: number[], b: number[], t: number): string {
   const r = Math.round(a[0] + (b[0] - a[0]) * t);
   const g = Math.round(a[1] + (b[1] - a[1]) * t);
   const bl = Math.round(a[2] + (b[2] - a[2]) * t);
   return `rgb(${r},${g},${bl})`;
+}
+
+function lerpColorHex(a: number[], b: number[], t: number): string {
+  const r = Math.round(a[0] + (b[0] - a[0]) * t);
+  const g = Math.round(a[1] + (b[1] - a[1]) * t);
+  const bl = Math.round(a[2] + (b[2] - a[2]) * t);
+  return `#${r.toString(16).padStart(2,"0")}${g.toString(16).padStart(2,"0")}${bl.toString(16).padStart(2,"0")}`;
 }
 
 export function ScrollAnimations() {
@@ -39,9 +58,10 @@ export function ScrollAnimations() {
 
     const triggers: ScrollTrigger[] = [];
 
-    // ── Smooth gradient background on body ──
+    // ── Smooth gradient background on body + glow overlay ──
     const main = document.querySelector("main");
-    if (main) {
+    const glowEl = document.getElementById("bg-glow");
+    if (main && glowEl) {
       triggers.push(
         ScrollTrigger.create({
           trigger: main,
@@ -57,7 +77,15 @@ export function ScrollAnimations() {
             const from = GRADIENT_STOPS[idx];
             const to = GRADIENT_STOPS[idx + 1];
             const baseColor = lerpColor(from, to, t);
+
+            // Base color changes on scroll
             document.body.style.backgroundColor = baseColor;
+
+            // Glow gradient overlay — accent color fades from bottom
+            const glowFrom = GLOW_COLORS[idx];
+            const glowTo = GLOW_COLORS[idx + 1];
+            const glowColor = lerpColorHex(glowFrom, glowTo, t);
+            glowEl.style.background = `radial-gradient(ellipse 60% 50% at 50% 100%, ${glowColor}35 0%, transparent 70%)`;
           },
         })
       );
