@@ -34,11 +34,10 @@ export function ScrollAnimations() {
 
     const triggers: ScrollTrigger[] = [];
 
-    // ── Smooth gradient background across entire page ──
-    // One continuous scrub trigger that interpolates through all section colors
+    // ── Smooth gradient background on fixed layer ──
+    const bgLayer = document.getElementById("bg-layer");
     const main = document.querySelector("main");
-    if (main) {
-      // Build color stops for each section transition
+    if (main && bgLayer) {
       const n = sections.length;
 
       triggers.push(
@@ -54,7 +53,7 @@ export function ScrollAnimations() {
             const t = sectionFloat - idx;
             const from = SECTION_RGB[idx];
             const to = SECTION_RGB[idx + 1];
-            document.body.style.backgroundColor = lerpColor(from, to, t);
+            bgLayer.style.backgroundColor = lerpColor(from, to, t);
           },
         })
       );
