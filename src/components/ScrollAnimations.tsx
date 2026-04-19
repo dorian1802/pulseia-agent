@@ -4,18 +4,24 @@ import { useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-const DARK = [10, 10, 15];     // #0a0a0f
-const LIGHT = [248, 249, 250]; // #f8f9fa
+const BLACK = [6, 6, 14];      // #06060e
+const NAVY = [15, 18, 50];     // #0f1232
+const BLUE = [30, 40, 100];    // #1e2864
+const PURPLE = [60, 40, 120];  // #3c2878
+const SLATE = [100, 100, 150]; // #646496
+const LIGHT = [220, 220, 240]; // #dcdcf0
+const WHITE = [248, 249, 252]; // #f8f9fc
 
-const SECTION_RGB = [
-  DARK,   // Hero
-  LIGHT,  // About
-  DARK,   // Services
-  LIGHT,  // Agents
-  DARK,   // Portfolio
-  LIGHT,  // Products
-  DARK,   // Audit
-  DARK,   // CTA
+// Continuous gradient: noir → bleu profond → bleu → violet → gris → blanc
+const GRADIENT_STOPS = [
+  BLACK,   // 0% — Hero
+  NAVY,    // ~14% — About
+  BLUE,    // ~28% — Services
+  PURPLE,  // ~42% — Agents
+  SLATE,   // ~57% — Portfolio
+  LIGHT,   // ~71% — Products
+  WHITE,   // ~85% — Audit
+  WHITE,   // 100% — CTA
 ];
 
 function lerpColor(a: number[], b: number[], t: number): string {
@@ -37,8 +43,6 @@ export function ScrollAnimations() {
     // ── Smooth gradient background on body ──
     const main = document.querySelector("main");
     if (main) {
-      const n = sections.length;
-
       triggers.push(
         ScrollTrigger.create({
           trigger: main,
@@ -47,11 +51,12 @@ export function ScrollAnimations() {
           scrub: true,
           onUpdate: (self) => {
             const progress = self.progress;
-            const sectionFloat = progress * (n - 1);
-            const idx = Math.min(Math.floor(sectionFloat), n - 2);
-            const t = sectionFloat - idx;
-            const from = SECTION_RGB[idx];
-            const to = SECTION_RGB[idx + 1];
+            const n = GRADIENT_STOPS.length;
+            const floatPos = progress * (n - 1);
+            const idx = Math.min(Math.floor(floatPos), n - 2);
+            const t = floatPos - idx;
+            const from = GRADIENT_STOPS[idx];
+            const to = GRADIENT_STOPS[idx + 1];
             document.body.style.backgroundColor = lerpColor(from, to, t);
           },
         })
