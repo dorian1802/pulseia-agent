@@ -31,14 +31,14 @@ export function PortfolioSection() {
                 {/* Colored top bar */}
                 <div className="h-px w-full bg-gradient-to-r from-accent/40 via-accent/10 to-transparent" />
 
-                <div className="p-8">
-                  <span className="text-xs tracking-[0.2em] uppercase text-accent/50">
+                <div className="p-8 bg-white/[0.03] group-hover:bg-white/[0.06] transition-colors">
+                  <span className="text-xs tracking-[0.2em] uppercase text-accent/70">
                     {item.category}
                   </span>
-                  <h3 className={`font-display ${isLarge ? "text-2xl" : "text-lg"} text-white mt-3 mb-2 group-hover:text-accent transition-colors`}>
+                  <h3 className={`font-display ${isLarge ? "text-3xl" : "text-xl"} text-white mt-3 mb-3 group-hover:text-accent transition-colors`}>
                     {item.name}
                   </h3>
-                  <p className="text-block text-sm text-white/30 leading-relaxed">{item.desc}</p>
+                  <p className="text-block text-sm text-white/60 leading-relaxed">{item.desc}</p>
                 </div>
               </div>
             );
