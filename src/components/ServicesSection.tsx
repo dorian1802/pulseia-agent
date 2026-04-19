@@ -18,26 +18,38 @@ export function ServicesSection() {
           {t.services.title1} <span className="text-accent italic">{t.services.title2}</span>
         </h2>
 
-        <div className="max-w-4xl space-y-0">
+        {/* Bento grid — first item spans 2 cols */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl">
           {t.services.items.map((item, i) => {
             const Icon = icons[i];
+            const isFirst = i === 0;
+            const isLast = i === t.services.items.length - 1;
             return (
               <div
                 key={i}
-                className="stat-animate group flex items-start gap-6 py-8 border-t border-white/[0.06] last:border-b hover:border-accent/20 transition-colors"
+                className={`stat-animate group relative overflow-hidden rounded-2xl border border-white/[0.06] p-8 transition-all duration-500 hover:border-accent/30 ${
+                  isFirst ? "md:col-span-2 lg:col-span-2" : ""
+                } ${isLast ? "lg:col-span-1 md:col-span-1" : ""}`}
               >
-                <div className="w-12 h-12 rounded-xl bg-accent/10 group-hover:bg-accent/20 flex items-center justify-center flex-shrink-0 transition-colors">
-                  <Icon className="w-5 h-5 text-accent" />
+                {/* Background glow on hover */}
+                <div className="absolute inset-0 bg-accent/[0.03] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                <div className={`relative ${isFirst ? "flex items-start gap-8" : ""}`}>
+                  <div className={`${isFirst ? "w-16 h-16 rounded-2xl" : "w-12 h-12 rounded-xl"} bg-accent/10 group-hover:bg-accent/20 flex items-center justify-center flex-shrink-0 transition-colors`}>
+                    <Icon className={`${isFirst ? "w-7 h-7" : "w-5 h-5"} text-accent`} />
+                  </div>
+                  <div className={isFirst ? "flex-1" : ""}>
+                    <h3 className={`font-display ${isFirst ? "text-2xl" : "text-lg"} text-white mb-2 group-hover:text-accent transition-colors`}>
+                      {item.title}
+                    </h3>
+                    <p className={`text-sm text-white/40 leading-relaxed ${isFirst ? "max-w-md" : ""}`}>
+                      {item.desc}
+                    </p>
+                  </div>
                 </div>
-                <div className="flex-1 min-w-0">
-                  <h3 className="font-display text-xl text-white mb-1 group-hover:text-accent transition-colors">
-                    {item.title}
-                  </h3>
-                  <p className="text-block text-sm text-white/40 leading-relaxed">
-                    {item.desc}
-                  </p>
-                </div>
-                <div className="font-display text-3xl font-light text-white/[0.04] group-hover:text-accent/20 transition-colors flex-shrink-0">
+
+                {/* Number watermark */}
+                <div className="absolute bottom-3 right-4 font-display text-6xl font-light text-white/[0.03] group-hover:text-accent/[0.06] transition-colors select-none">
                   {String(i + 1).padStart(2, "0")}
                 </div>
               </div>

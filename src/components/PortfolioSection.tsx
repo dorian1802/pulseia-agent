@@ -1,7 +1,6 @@
 "use client";
 
 import { useLanguage } from "@/lib/LanguageContext";
-import { ArrowUpRight } from "lucide-react";
 
 export function PortfolioSection() {
   const { t } = useLanguage();
@@ -16,24 +15,34 @@ export function PortfolioSection() {
           {t.portfolio.title1} <span className="text-accent italic">{t.portfolio.title2}</span>
         </h2>
 
-        <div className="max-w-4xl">
-          {t.portfolio.items.map((item, i) => (
-            <div
-              key={i}
-              className="stat-animate group flex items-center gap-6 py-6 border-t border-white/[0.06] last:border-b hover:border-accent/20 transition-colors cursor-default"
-            >
-              <span className="font-display text-xs tracking-widest uppercase text-accent/50 w-24 flex-shrink-0">
-                {item.category}
-              </span>
-              <div className="flex-1 min-w-0">
-                <h3 className="font-display text-lg text-white group-hover:text-accent transition-colors">
-                  {item.name}
-                </h3>
-                <p className="text-block text-sm text-white/30 leading-relaxed">{item.desc}</p>
+        {/* Masonry-style: alternating large/small */}
+        <div className="max-w-5xl grid grid-cols-1 md:grid-cols-12 gap-4">
+          {t.portfolio.items.map((item, i) => {
+            // Vary sizes: 0,3 = large (7 cols), 1,4,6 = medium (5 cols), 2,5 = wide
+            const isLarge = i === 0 || i === 3;
+            const isWide = i === 2 || i === 5;
+            const colSpan = isLarge ? "md:col-span-7" : isWide ? "md:col-span-12" : "md:col-span-5";
+
+            return (
+              <div
+                key={i}
+                className={`stat-animate group ${colSpan} rounded-2xl border border-white/[0.06] overflow-hidden hover:border-accent/20 transition-all duration-500`}
+              >
+                {/* Colored top bar */}
+                <div className="h-px w-full bg-gradient-to-r from-accent/40 via-accent/10 to-transparent" />
+
+                <div className="p-8">
+                  <span className="text-xs tracking-[0.2em] uppercase text-accent/50">
+                    {item.category}
+                  </span>
+                  <h3 className={`font-display ${isLarge ? "text-2xl" : "text-lg"} text-white mt-3 mb-2 group-hover:text-accent transition-colors`}>
+                    {item.name}
+                  </h3>
+                  <p className="text-block text-sm text-white/30 leading-relaxed">{item.desc}</p>
+                </div>
               </div>
-              <ArrowUpRight className="w-4 h-4 text-white/0 group-hover:text-accent transition-all flex-shrink-0" />
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

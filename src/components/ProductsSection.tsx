@@ -1,7 +1,7 @@
 "use client";
 
 import { useLanguage } from "@/lib/LanguageContext";
-import { Brain, Globe, Crown, Gamepad2, ArrowRight } from "lucide-react";
+import { Brain, Globe, Crown, Gamepad2 } from "lucide-react";
 
 const productIcons = [Brain, Globe, Crown, Gamepad2];
 
@@ -18,24 +18,37 @@ export function ProductsSection() {
           {t.products.title1} <span className="text-accent italic">{t.products.title2}</span>
         </h2>
 
-        <div className="max-w-4xl space-y-0">
+        {/* Alternating left/right feature blocks */}
+        <div className="max-w-4xl space-y-16">
           {t.products.items.map((item, i) => {
             const Icon = productIcons[i];
+            const isReversed = i % 2 !== 0;
+
             return (
               <div
                 key={i}
-                className="stat-animate group flex items-start gap-6 py-8 border-t border-white/[0.06] last:border-b hover:border-accent/20 transition-colors"
+                className={`stat-animate group flex flex-col ${isReversed ? "md:flex-row-reverse" : "md:flex-row"} items-start gap-8`}
               >
-                <div className="w-12 h-12 rounded-xl bg-accent/10 group-hover:bg-accent/20 flex items-center justify-center flex-shrink-0 transition-colors">
-                  <Icon className="w-6 h-6 text-accent" />
+                {/* Icon circle */}
+                <div className="relative flex-shrink-0">
+                  <div className="w-20 h-20 rounded-full border border-white/[0.08] flex items-center justify-center group-hover:border-accent/30 transition-colors">
+                    <Icon className="w-8 h-8 text-accent" />
+                  </div>
+                  {/* Connecting line to next item */}
+                  {i < t.products.items.length - 1 && (
+                    <div className="absolute top-20 left-1/2 -translate-x-1/2 w-px h-16 bg-gradient-to-b from-white/[0.06] to-transparent" />
+                  )}
                 </div>
-                <div className="flex-1 min-w-0">
-                  <h3 className="font-display text-xl text-white mb-1 group-hover:text-accent transition-colors">
+
+                {/* Text */}
+                <div className="flex-1">
+                  <h3 className="font-display text-2xl text-white mb-2 group-hover:text-accent transition-colors">
                     {item.title}
                   </h3>
-                  <p className="text-block text-sm text-white/40 leading-relaxed">{item.desc}</p>
+                  <p className="text-block text-white/40 leading-relaxed max-w-lg">
+                    {item.desc}
+                  </p>
                 </div>
-                <ArrowRight className="w-4 h-4 text-white/0 group-hover:text-accent transition-all flex-shrink-0 mt-2" />
               </div>
             );
           })}
