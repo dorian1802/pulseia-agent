@@ -18,7 +18,7 @@ export function Navbar() {
     // Use Lenis smooth scroll if available
     const lenis = (window as unknown as { __lenis?: Lenis }).__lenis;
     if (lenis) {
-      lenis.scrollTo(el, { offset: 0, duration: 1.2 });
+      lenis.scrollTo(el, { offset: 0, duration: 3 });
     } else {
       el.scrollIntoView({ behavior: "smooth" });
     }
