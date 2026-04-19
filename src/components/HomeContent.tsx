@@ -3,6 +3,7 @@
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { LanguageProvider } from "@/lib/LanguageContext";
 import { SmoothScroller } from "@/components/SmoothScroller";
+import { ScrollAnimations } from "@/components/ScrollAnimations";
 import { Navbar } from "@/components/Navbar";
 import { HeroSection } from "@/components/HeroSection";
 import { AboutSection } from "@/components/AboutSection";
@@ -20,6 +21,7 @@ export function HomeContent() {
   return (
     <LanguageProvider>
       <SmoothScroller>
+        <ScrollAnimations />
         <FloatingForm />
         <Navbar />
         <main ref={containerRef}>

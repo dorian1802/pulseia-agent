@@ -12,7 +12,7 @@ export function ProductsSection() {
     <section id="products" className="min-h-screen relative z-10 flex items-center section-light py-32">
       <div className="pointer-events-auto container mx-auto px-6">
         <div className="max-w-2xl ml-auto">
-          <p className="text-xs tracking-[0.3em] uppercase text-accent font-medium mb-4">
+          <p className="tag-animate text-xs tracking-[0.3em] uppercase text-accent font-medium mb-4">
             {t.products.tag}
           </p>
           <h2 className="font-display text-5xl md:text-6xl text-dark mb-12 leading-[0.95]">
@@ -23,12 +23,12 @@ export function ProductsSection() {
           {t.products.items.map((item, i) => {
             const Icon = productIcons[i];
             return (
-              <div key={i} className="rounded-xl border border-black/5 bg-white p-8 hover:shadow-lg transition-all duration-300">
+              <div key={i} className="card-animate rounded-xl border border-black/5 bg-white p-8 hover:shadow-lg transition-all duration-300">
                 <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center mb-5">
                   <Icon className="w-6 h-6 text-accent" />
                 </div>
                 <h3 className="font-display text-xl text-dark mb-2">{item.title}</h3>
-                <p className="text-sm text-dark/50 leading-relaxed">{item.desc}</p>
+                <p className="text-block text-sm text-dark/50 leading-relaxed">{item.desc}</p>
               </div>
             );
           })}

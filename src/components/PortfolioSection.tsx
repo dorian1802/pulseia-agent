@@ -10,7 +10,7 @@ export function PortfolioSection() {
     <section id="portfolio" className="min-h-screen relative z-10 flex items-center section-dark py-32">
       <div className="pointer-events-auto container mx-auto px-6">
         <div className="max-w-2xl">
-          <p className="text-xs tracking-[0.3em] uppercase text-accent font-medium mb-4">
+          <p className="tag-animate text-xs tracking-[0.3em] uppercase text-accent font-medium mb-4">
             {t.portfolio.tag}
           </p>
           <h2 className="font-display text-5xl md:text-6xl text-white mb-12 leading-[0.95]">
@@ -21,15 +21,15 @@ export function PortfolioSection() {
           {t.portfolio.items.map((item, i) => (
             <div
               key={i}
-              className="group rounded-xl border border-white/10 bg-white/5 p-6 hover:border-accent/30 hover:bg-white/10 transition-all duration-300"
+              className="card-animate group rounded-xl border border-white/10 bg-white/5 p-6 hover:border-accent/30 hover:bg-white/10 transition-all duration-300"
             >
-              <span className="text-xs tracking-wider uppercase text-accent/60 mb-3 block">
+              <span className="tag-animate text-xs tracking-wider uppercase text-accent/60 mb-3 block">
                 {item.category}
               </span>
               <h3 className="font-display text-lg text-white mb-2 group-hover:text-accent transition-colors">
                 {item.name}
               </h3>
-              <p className="text-sm text-white/40 leading-relaxed">{item.desc}</p>
+              <p className="text-block text-sm text-white/40 leading-relaxed">{item.desc}</p>
               <ArrowUpRight className="w-4 h-4 text-accent/0 group-hover:text-accent transition-all mt-3" />
             </div>
           ))}

@@ -1,7 +1,7 @@
 "use client";
 
 import { useLanguage } from "@/lib/LanguageContext";
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Sparkles, X, ArrowRight } from "lucide-react";
@@ -11,14 +11,6 @@ export function FloatingForm() {
   const formRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-
-  const slideTo = useCallback((el: HTMLElement, targetX: number) => {
-    gsap.to(el, {
-      x: targetX,
-      duration: 0.8,
-      ease: "power3.out",
-    });
-  }, []);
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -33,51 +25,91 @@ export function FloatingForm() {
     const contactIndex = sections.length - 1;
 
     sections.forEach((section, i) => {
-      const isRight = i % 2 === 0;
+      if (i < aboutIndex || i === contactIndex) return;
 
-      const trigger = ScrollTrigger.create({
-        trigger: section,
-        start: "top center",
-        end: "bottom center",
-        onEnter: () => {
-          if (i < aboutIndex || i === contactIndex) {
-            gsap.to(el, { opacity: 0, duration: 0.3 });
-            return;
-          }
+      // At top of section → one side, at bottom → other side
+      const isRightTop = i % 2 === 0;
+      const topX = isRightTop ? window.innerWidth - el.offsetWidth - 24 : 24;
+      const bottomX = isRightTop ? 24 : window.innerWidth - el.offsetWidth - 24;
 
-          gsap.to(el, { opacity: 1, duration: 0.3 });
-          const targetX = isRight ? window.innerWidth - el.offsetWidth - 24 : 24;
-          slideTo(el, targetX);
-        },
-        onEnterBack: () => {
-          if (i < aboutIndex || i === contactIndex) {
-            gsap.to(el, { opacity: 0, duration: 0.3 });
-            return;
-          }
+      triggers.push(
+        ScrollTrigger.create({
+          trigger: section,
+          start: "top 80%",
+          end: "top 20%",
+          scrub: true,
+          onUpdate: (self) => {
+            const x = gsap.utils.interpolate(topX, bottomX, self.progress);
+            gsap.set(el, { x, opacity: 1 });
+          },
+        })
+      );
 
-          gsap.to(el, { opacity: 1, duration: 0.3 });
-          const targetX = isRight ? window.innerWidth - el.offsetWidth - 24 : 24;
-          slideTo(el, targetX);
-        },
-        onLeaveBack: () => {
-          if (i <= aboutIndex) {
-            gsap.to(el, { opacity: 0, duration: 0.3 });
-          }
-        },
-      });
-      triggers.push(trigger);
+      // Hold position through middle of section
+      triggers.push(
+        ScrollTrigger.create({
+          trigger: section,
+          start: "top 20%",
+          end: "bottom 80%",
+          onEnter: () => gsap.set(el, { x: bottomX, opacity: 1 }),
+          onEnterBack: () => gsap.set(el, { x: bottomX, opacity: 1 }),
+        })
+      );
+
+      // Bottom of section → back to starting side for next section
+      triggers.push(
+        ScrollTrigger.create({
+          trigger: section,
+          start: "bottom 80%",
+          end: "bottom 20%",
+          scrub: true,
+          onUpdate: (self) => {
+            const nextIsRight = (i + 1) % 2 === 0;
+            const nextTopX = nextIsRight ? window.innerWidth - el.offsetWidth - 24 : 24;
+            const x = gsap.utils.interpolate(bottomX, nextTopX, self.progress);
+            gsap.set(el, { x, opacity: 1 });
+          },
+        })
+      );
     });
+
+    // Hide in hero
+    const heroSection = sections[0];
+    if (heroSection) {
+      triggers.push(
+        ScrollTrigger.create({
+          trigger: heroSection,
+          start: "top top",
+          end: "bottom top",
+          onEnter: () => gsap.to(el, { opacity: 0, duration: 0.2 }),
+          onLeaveBack: () => gsap.to(el, { opacity: 0, duration: 0.2 }),
+        })
+      );
+    }
+
+    // Hide in contact
+    const contactSection = sections[contactIndex];
+    if (contactSection) {
+      triggers.push(
+        ScrollTrigger.create({
+          trigger: contactSection,
+          start: "top 80%",
+          onEnter: () => gsap.to(el, { opacity: 0, duration: 0.3 }),
+          onEnterBack: () => gsap.to(el, { opacity: 0, duration: 0.3 }),
+        })
+      );
+    }
 
     gsap.set(el, { opacity: 0 });
 
-    return () => triggers.forEach((t) => t.kill());
-  }, [slideTo]);
+    return () => triggers.forEach((tr) => tr.kill());
+  }, []);
 
   return (
     <div
       ref={formRef}
       className="fixed bottom-6 z-40 pointer-events-auto"
-      style={{ x: typeof window !== "undefined" ? window.innerWidth / 2 - 180 : 500 }}
+      style={{ x: typeof window !== "undefined" ? window.innerWidth / 2 - 80 : 500 }}
     >
       {!open ? (
         <button

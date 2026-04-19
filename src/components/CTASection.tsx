@@ -10,13 +10,13 @@ export function CTASection() {
     <section id="contact" className="min-h-screen relative z-10 flex items-center section-dark py-32">
       <div className="pointer-events-auto container mx-auto px-6">
         <div className="max-w-2xl mx-auto text-center">
-          <p className="text-xs tracking-[0.3em] uppercase text-accent font-medium mb-4">
+          <p className="tag-animate text-xs tracking-[0.3em] uppercase text-accent font-medium mb-4">
             {t.cta.tag}
           </p>
           <h2 className="font-display text-5xl md:text-6xl text-white mb-6 leading-[0.95]">
             {t.cta.title1} <span className="text-accent italic">{t.cta.title2}</span>
           </h2>
-          <p className="text-white/50 max-w-xl mx-auto mb-12 leading-relaxed">
+          <p className="text-block text-white/50 max-w-xl mx-auto mb-12 leading-relaxed">
             {t.cta.description}
           </p>
         </div>
@@ -24,7 +24,7 @@ export function CTASection() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-4xl mx-auto">
           {/* Contact info */}
           <div className="space-y-6">
-            <div className="flex items-center gap-4 p-4 rounded-xl border border-white/10 bg-white/5">
+            <div className="card-animate flex items-center gap-4 p-4 rounded-xl border border-white/10 bg-white/5">
               <Mail className="w-5 h-5 text-accent" />
               <div>
                 <p className="text-xs text-white/30 uppercase tracking-wider">Email</p>
@@ -33,18 +33,18 @@ export function CTASection() {
                 </a>
               </div>
             </div>
-            <div className="flex items-center gap-4 p-4 rounded-xl border border-white/10 bg-white/5">
+            <div className="card-animate flex items-center gap-4 p-4 rounded-xl border border-white/10 bg-white/5">
               <MapPin className="w-5 h-5 text-accent" />
               <div>
                 <p className="text-xs text-white/30 uppercase tracking-wider">Location</p>
                 <p className="text-white/70 text-sm">{t.cta.location}</p>
               </div>
             </div>
-            <div className="p-4 rounded-xl border border-white/10 bg-white/5">
+            <div className="card-animate p-4 rounded-xl border border-white/10 bg-white/5">
               <p className="text-xs text-white/30 uppercase tracking-wider mb-3">Packs</p>
               <div className="flex flex-wrap gap-2">
                 {t.cta.packs.map((pack) => (
-                  <span key={pack} className="text-xs bg-accent/10 text-accent px-3 py-1.5 rounded-full">
+                  <span key={pack} className="tag-animate text-xs bg-accent/10 text-accent px-3 py-1.5 rounded-full">
                     {pack}
                   </span>
                 ))}

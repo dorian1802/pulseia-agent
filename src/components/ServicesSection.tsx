@@ -12,7 +12,7 @@ export function ServicesSection() {
     <section id="services" className="min-h-screen relative z-10 flex items-center section-dark py-32">
       <div className="pointer-events-auto container mx-auto px-6">
         <div className="max-w-2xl">
-          <p className="text-xs tracking-[0.3em] uppercase text-accent font-medium mb-4">
+          <p className="tag-animate text-xs tracking-[0.3em] uppercase text-accent font-medium mb-4">
             {t.services.tag}
           </p>
           <h2 className="font-display text-5xl md:text-6xl text-white mb-12 leading-[0.95]">
@@ -25,13 +25,13 @@ export function ServicesSection() {
             return (
               <div
                 key={i}
-                className="rounded-xl border border-white/10 bg-white/5 p-6 hover:border-accent/30 hover:bg-white/10 transition-all duration-300"
+                className="card-animate rounded-xl border border-white/10 bg-white/5 p-6 hover:border-accent/30 hover:bg-white/10 transition-all duration-300"
               >
                 <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center mb-4">
                   <Icon className="w-5 h-5 text-accent" />
                 </div>
                 <h3 className="font-display text-lg text-white mb-2">{item.title}</h3>
-                <p className="text-sm text-white/50 leading-relaxed">{item.desc}</p>
+                <p className="text-block text-sm text-white/50 leading-relaxed">{item.desc}</p>
               </div>
             );
           })}
