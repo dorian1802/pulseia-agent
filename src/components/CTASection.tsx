@@ -27,7 +27,7 @@ export function CTASection() {
             <div className="card-animate flex items-center gap-4 p-4 rounded-xl border border-white/10 bg-white/5">
               <Mail className="w-5 h-5 text-accent" />
               <div>
-                <p className="text-xs text-white/30 uppercase tracking-wider">Email</p>
+                <p className="text-xs text-white/50 uppercase tracking-wider">Email</p>
                 <a href={`mailto:${t.cta.email}`} className="text-white/70 hover:text-accent transition-colors text-sm">
                   {t.cta.email}
                 </a>
@@ -36,12 +36,12 @@ export function CTASection() {
             <div className="card-animate flex items-center gap-4 p-4 rounded-xl border border-white/10 bg-white/5">
               <MapPin className="w-5 h-5 text-accent" />
               <div>
-                <p className="text-xs text-white/30 uppercase tracking-wider">Location</p>
+                <p className="text-xs text-white/50 uppercase tracking-wider">Location</p>
                 <p className="text-white/70 text-sm">{t.cta.location}</p>
               </div>
             </div>
             <div className="card-animate p-4 rounded-xl border border-white/10 bg-white/5">
-              <p className="text-xs text-white/30 uppercase tracking-wider mb-3">Packs</p>
+              <p className="text-xs text-white/50 uppercase tracking-wider mb-3">Packs</p>
               <div className="flex flex-wrap gap-2">
                 {t.cta.packs.map((pack) => (
                   <span key={pack} className="tag-animate text-xs bg-accent/10 text-accent px-3 py-1.5 rounded-full">

@@ -19,14 +19,18 @@ export function HeroSection() {
             {t.hero.tagline2}
           </span>
         </h1>
-        <p className="text-block text-white/50 text-lg md:text-xl max-w-xl mx-auto">
+        <p className="text-block text-white/70 text-lg md:text-xl max-w-xl mx-auto">
           {t.hero.subtitle}
         </p>
       </div>
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
-        <a href="#about" className="pointer-events-auto">
-          <ArrowDown className="w-5 h-5 text-accent/40 animate-bounce" />
-        </a>
+        <button
+          onClick={() => document.getElementById("about")?.scrollIntoView({ behavior: "smooth" })}
+          className="pointer-events-auto"
+          aria-label="Descendre à la section suivante"
+        >
+          <ArrowDown className="w-5 h-5 text-accent/60 animate-bounce" aria-hidden="true" />
+        </button>
       </div>
     </section>
   );

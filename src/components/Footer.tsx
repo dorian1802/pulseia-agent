@@ -13,7 +13,7 @@ export function Footer() {
             <p className="font-display text-xl font-bold tracking-widest text-white">
               PULSE<span className="text-accent">IA</span>
             </p>
-            <p className="text-white/30 text-xs mt-1">{t.footer.tagline}</p>
+            <p className="text-white/50 text-xs mt-1">{t.footer.tagline}</p>
           </div>
           <p className="text-white/20 text-xs">
             &copy; {new Date().getFullYear()} Pulseia — {t.footer.rights}

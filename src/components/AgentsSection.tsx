@@ -17,14 +17,14 @@ export function AgentsSection() {
             <h2 className="font-display text-5xl md:text-6xl text-white mb-3 leading-[0.95]">
               {t.agents.title1} <span className="text-accent italic">{t.agents.title2}</span>
             </h2>
-            <p className="text-block text-white/40 text-sm">{t.agents.ceo}</p>
+            <p className="text-block text-white/60 text-sm">{t.agents.ceo}</p>
 
             {/* Total count */}
             <div className="stat-animate mt-12">
               <span className="font-display text-7xl font-bold bg-gradient-to-b from-accent to-accent/30 bg-clip-text text-transparent">
                 {t.agents.poles.reduce((acc, p) => acc + p.members.length, 0)}
               </span>
-              <p className="text-xs text-white/30 tracking-widest uppercase mt-2">Agents actifs</p>
+              <p className="text-xs text-white/50 tracking-widest uppercase mt-2">Agents actifs</p>
             </div>
           </div>
 

@@ -45,7 +45,7 @@ export function ProductsSection() {
                   <h3 className="font-display text-2xl text-white mb-2 group-hover:text-accent transition-colors">
                     {item.title}
                   </h3>
-                  <p className="text-block text-white/40 leading-relaxed max-w-lg">
+                  <p className="text-block text-white/60 leading-relaxed max-w-lg">
                     {item.desc}
                   </p>
                 </div>

@@ -42,7 +42,7 @@ export function ServicesSection() {
                     <h3 className={`font-display ${isFirst ? "text-2xl" : "text-lg"} text-white mb-2 group-hover:text-accent transition-colors`}>
                       {item.title}
                     </h3>
-                    <p className={`text-sm text-white/40 leading-relaxed ${isFirst ? "max-w-md" : ""}`}>
+                    <p className={`text-sm text-white/60 leading-relaxed ${isFirst ? "max-w-md" : ""}`}>
                       {item.desc}
                     </p>
                   </div>
