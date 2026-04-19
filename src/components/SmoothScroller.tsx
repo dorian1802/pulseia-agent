@@ -16,6 +16,9 @@ export function SmoothScroller({ children }: { children: ReactNode }) {
     });
 
     lenisRef.current = lenis;
+    // Expose for Navbar to use
+    (window as unknown as { __lenis?: Lenis }).__lenis = lenis;
+
     lenis.on("scroll", ScrollTrigger.update);
 
     gsap.ticker.add((time) => {
@@ -25,6 +28,7 @@ export function SmoothScroller({ children }: { children: ReactNode }) {
 
     return () => {
       lenis.destroy();
+      (window as unknown as { __lenis?: Lenis }).__lenis = undefined;
     };
   }, []);
 
