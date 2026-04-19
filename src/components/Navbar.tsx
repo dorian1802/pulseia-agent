@@ -3,7 +3,7 @@
 import { useLanguage } from "@/lib/LanguageContext";
 import { Globe, Languages } from "lucide-react";
 
-const sections = ["about", "services", "agents", "portfolio", "products", "contact"] as const;
+const sections = ["about", "services", "agents", "portfolio", "products", "audit", "contact"] as const;
 
 export function Navbar() {
   const { locale, t, setLocale } = useLanguage();
