@@ -57,9 +57,6 @@ export function ScrollAnimations() {
             const from = GRADIENT_STOPS[idx];
             const to = GRADIENT_STOPS[idx + 1];
             const baseColor = lerpColor(from, to, t);
-
-            // Interpolate accent color
-            const accentFrom = ACCENT_COLORS[idx];
             document.body.style.backgroundColor = baseColor;
           },
         })
