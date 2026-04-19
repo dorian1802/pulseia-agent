@@ -1,7 +1,7 @@
 "use client";
 
 import { useLanguage } from "@/lib/LanguageContext";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Send, X } from "lucide-react";
@@ -9,8 +9,33 @@ import { Send, X } from "lucide-react";
 export function FloatingForm() {
   const { t } = useLanguage();
   const formRef = useRef<HTMLDivElement>(null);
+  const innerRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [inContact, setInContact] = useState(false);
+
+  const portalJump = useCallback((el: HTMLElement, targetX: number, side: string) => {
+    const tl = gsap.timeline();
+
+    // Shrink into portal
+    tl.to(el, {
+      scaleX: 0,
+      duration: 0.3,
+      ease: "power2.in",
+      transformOrigin: side,
+    });
+
+    // Instant reposition while invisible
+    tl.set(el, { x: targetX });
+
+    // Expand out of portal on the other side
+    tl.to(el, {
+      scaleX: 1,
+      duration: 0.4,
+      ease: "back.out(1.4)",
+      transformOrigin: side === "left center" ? "right center" : "left center",
+    });
+  }, []);
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -21,41 +46,98 @@ export function FloatingForm() {
     if (!sections.length) return;
 
     const triggers: ScrollTrigger[] = [];
+    const lastIndex = sections.length - 1;
 
     sections.forEach((section, i) => {
+      const isContact = i === lastIndex;
       const isRight = i % 2 === 0;
+
       const trigger = ScrollTrigger.create({
         trigger: section,
         start: "top center",
         end: "bottom center",
         onEnter: () => {
-          gsap.to(el, {
-            x: isRight ? window.innerWidth - el.offsetWidth - 24 : 24,
-            duration: 0.8,
-            ease: "power3.out",
-          });
+          if (isContact) {
+            // Find the CTA form element and merge into it
+            const ctaForm = section.querySelector("[data-cta-form]") as HTMLElement | null;
+            if (ctaForm) {
+              const rect = ctaForm.getBoundingClientRect();
+              ctaForm.style.visibility = "hidden";
+
+              setInContact(true);
+              setOpen(true);
+
+              gsap.to(el, {
+                x: rect.left,
+                y: rect.top - window.innerHeight / 2 + rect.height / 2,
+                width: rect.width,
+                duration: 0.8,
+                ease: "power3.inOut",
+              });
+            }
+          } else {
+            setInContact(false);
+            const targetX = isRight ? window.innerWidth - el.offsetWidth - 24 : 24;
+            const side = isRight ? "left center" : "right center";
+            portalJump(el, targetX, side);
+          }
         },
         onEnterBack: () => {
-          gsap.to(el, {
-            x: isRight ? window.innerWidth - el.offsetWidth - 24 : 24,
-            duration: 0.8,
-            ease: "power3.out",
-          });
+          if (isContact) {
+            const ctaForm = section.querySelector("[data-cta-form]") as HTMLElement | null;
+            if (ctaForm) {
+              const rect = ctaForm.getBoundingClientRect();
+              ctaForm.style.visibility = "hidden";
+
+              setInContact(true);
+              setOpen(true);
+
+              gsap.to(el, {
+                x: rect.left,
+                y: rect.top - window.innerHeight / 2 + rect.height / 2,
+                width: rect.width,
+                duration: 0.8,
+                ease: "power3.inOut",
+              });
+            }
+          } else {
+            setInContact(false);
+            // Reset width and vertical position when leaving contact
+            gsap.to(el, { width: 288, y: 0, duration: 0.3 });
+            const targetX = isRight ? window.innerWidth - el.offsetWidth - 24 : 24;
+            const side = isRight ? "left center" : "right center";
+            portalJump(el, targetX, side);
+          }
+        },
+        onLeave: () => {
+          if (isContact) {
+            const ctaForm = section.querySelector("[data-cta-form]") as HTMLElement | null;
+            if (ctaForm) ctaForm.style.visibility = "visible";
+            setInContact(false);
+          }
+        },
+        onLeaveBack: () => {
+          if (isContact) {
+            const ctaForm = section.querySelector("[data-cta-form]") as HTMLElement | null;
+            if (ctaForm) ctaForm.style.visibility = "visible";
+            setInContact(false);
+            setOpen(false);
+          }
         },
       });
       triggers.push(trigger);
     });
 
     return () => triggers.forEach((t) => t.kill());
-  }, []);
+  }, [portalJump]);
 
   return (
     <div
       ref={formRef}
-      className="fixed top-1/2 -translate-y-1/2 z-40 w-72 pointer-events-auto"
-      style={{ x: typeof window !== "undefined" ? window.innerWidth - 296 : 500 }}
+      className="fixed top-1/2 -translate-y-1/2 z-40 pointer-events-auto"
+      style={{ x: typeof window !== "undefined" ? window.innerWidth - 312 : 500, width: 288 }}
     >
-      {!open ? (
+      {!open && !inContact ? (
         <button
           onClick={() => setOpen(true)}
           className="flex items-center gap-2 bg-accent hover:bg-accent-dark text-white rounded-full pl-4 pr-3 py-2.5 text-sm font-medium tracking-wider uppercase shadow-lg shadow-accent/20 transition-colors"
@@ -64,13 +146,20 @@ export function FloatingForm() {
           {t.cta.formSend}
         </button>
       ) : (
-        <div className="bg-dark-light/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl shadow-black/50 p-5">
-          <div className="flex items-center justify-between mb-4">
-            <p className="text-white text-sm font-semibold tracking-wide">{t.cta.title1} {t.cta.title2}</p>
-            <button onClick={() => setOpen(false)} className="text-white/40 hover:text-white transition-colors">
-              <X className="w-4 h-4" />
-            </button>
-          </div>
+        <div
+          ref={innerRef}
+          className="bg-dark-light/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl shadow-black/50 p-5"
+        >
+          {!inContact && (
+            <div className="flex items-center justify-between mb-4">
+              <p className="text-white text-sm font-semibold tracking-wide">
+                {t.cta.title1} {t.cta.title2}
+              </p>
+              <button onClick={() => setOpen(false)} className="text-white/40 hover:text-white transition-colors">
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+          )}
           {submitted ? (
             <p className="text-accent text-sm py-6 text-center">{t.cta.formSent ?? "Message envoyé !"}</p>
           ) : (

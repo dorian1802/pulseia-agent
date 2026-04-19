@@ -54,6 +54,7 @@ export function CTASection() {
 
           {/* Form */}
           <form
+            data-cta-form
             action={`https://formsubmit.co/${t.cta.email}`}
             method="POST"
             className="space-y-4"
