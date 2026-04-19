@@ -11,8 +11,6 @@ export function FloatingForm() {
   const formRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [inContact, setInContact] = useState(false);
-  const [visible, setVisible] = useState(false);
 
   const portalJump = useCallback((el: HTMLElement, targetX: number, side: string) => {
     const tl = gsap.timeline();
@@ -43,12 +41,9 @@ export function FloatingForm() {
     if (!sections.length) return;
 
     const triggers: ScrollTrigger[] = [];
-    const lastIndex = sections.length - 1;
-    // About section = index 1
     const aboutIndex = 1;
 
     sections.forEach((section, i) => {
-      const isContact = i === lastIndex;
       const isRight = i % 2 === 0;
 
       const trigger = ScrollTrigger.create({
@@ -56,112 +51,31 @@ export function FloatingForm() {
         start: "top center",
         end: "bottom center",
         onEnter: () => {
-          // Hide in hero section
           if (i < aboutIndex) {
-            setVisible(false);
-            gsap.set(el, { opacity: 0 });
+            gsap.to(el, { opacity: 0, duration: 0.3 });
             return;
           }
 
-          setVisible(true);
-          gsap.set(el, { opacity: 1 });
+          gsap.to(el, { opacity: 1, duration: 0.3 });
 
-          if (isContact) {
-            setInContact(true);
-            setOpen(true);
-
-            const ctaForm = section.querySelector("[data-cta-form]") as HTMLElement | null;
-            if (ctaForm) {
-              ctaForm.style.visibility = "hidden";
-              const rect = ctaForm.getBoundingClientRect();
-
-              gsap.to(el, {
-                x: rect.left,
-                top: rect.top,
-                width: rect.width,
-                scaleY: 1,
-                duration: 0.8,
-                ease: "power3.inOut",
-                onComplete: () => {
-                  el.style.transform = "none";
-                },
-              });
-            }
-          } else {
-            setInContact(false);
-            el.style.top = "50%";
-            el.style.transform = "translateY(-50%)";
-            gsap.set(el, { width: 288, scaleY: 1 });
-
-            const targetX = isRight ? window.innerWidth - 288 - 24 : 24;
-            const side = isRight ? "left center" : "right center";
-            portalJump(el, targetX, side);
-          }
+          const targetX = isRight ? window.innerWidth - 288 - 24 : 24;
+          const side = isRight ? "left center" : "right center";
+          portalJump(el, targetX, side);
         },
         onEnterBack: () => {
           if (i < aboutIndex) {
-            setVisible(false);
-            gsap.set(el, { opacity: 0 });
+            gsap.to(el, { opacity: 0, duration: 0.3 });
             return;
           }
 
-          setVisible(true);
-          gsap.set(el, { opacity: 1 });
+          gsap.to(el, { opacity: 1, duration: 0.3 });
 
-          if (isContact) {
-            setInContact(true);
-            setOpen(true);
-
-            const ctaForm = section.querySelector("[data-cta-form]") as HTMLElement | null;
-            if (ctaForm) {
-              ctaForm.style.visibility = "hidden";
-              const rect = ctaForm.getBoundingClientRect();
-
-              gsap.to(el, {
-                x: rect.left,
-                top: rect.top,
-                width: rect.width,
-                scaleY: 1,
-                duration: 0.8,
-                ease: "power3.inOut",
-                onComplete: () => {
-                  el.style.transform = "none";
-                },
-              });
-            }
-          } else {
-            setInContact(false);
-            el.style.top = "50%";
-            el.style.transform = "translateY(-50%)";
-            gsap.set(el, { width: 288, scaleY: 1 });
-
-            const targetX = isRight ? window.innerWidth - 288 - 24 : 24;
-            const side = isRight ? "left center" : "right center";
-            portalJump(el, targetX, side);
-          }
-        },
-        onLeave: () => {
-          if (isContact) {
-            const ctaForm = section.querySelector("[data-cta-form]") as HTMLElement | null;
-            if (ctaForm) ctaForm.style.visibility = "visible";
-            setInContact(false);
-            el.style.top = "50%";
-            el.style.transform = "translateY(-50%)";
-            gsap.set(el, { width: 288 });
-          }
+          const targetX = isRight ? window.innerWidth - 288 - 24 : 24;
+          const side = isRight ? "left center" : "right center";
+          portalJump(el, targetX, side);
         },
         onLeaveBack: () => {
-          if (isContact) {
-            const ctaForm = section.querySelector("[data-cta-form]") as HTMLElement | null;
-            if (ctaForm) ctaForm.style.visibility = "visible";
-            setInContact(false);
-            setOpen(false);
-            el.style.top = "50%";
-            el.style.transform = "translateY(-50%)";
-            gsap.set(el, { width: 288 });
-          }
           if (i <= aboutIndex) {
-            setVisible(false);
             gsap.to(el, { opacity: 0, duration: 0.3 });
           }
         },
@@ -169,7 +83,6 @@ export function FloatingForm() {
       triggers.push(trigger);
     });
 
-    // Start hidden
     gsap.set(el, { opacity: 0 });
 
     return () => triggers.forEach((t) => t.kill());
@@ -178,10 +91,10 @@ export function FloatingForm() {
   return (
     <div
       ref={formRef}
-      className="fixed top-1/2 -translate-y-1/2 z-40 pointer-events-auto"
-      style={{ x: typeof window !== "undefined" ? window.innerWidth - 312 : 500, width: 288 }}
+      className="fixed top-1/2 -translate-y-1/2 z-40 w-72 pointer-events-auto"
+      style={{ x: typeof window !== "undefined" ? window.innerWidth - 312 : 500 }}
     >
-      {!open && !inContact ? (
+      {!open ? (
         <button
           onClick={() => setOpen(true)}
           className="flex items-center gap-2 bg-accent hover:bg-accent-dark text-white rounded-full pl-4 pr-3 py-2.5 text-sm font-medium tracking-wider uppercase shadow-lg shadow-accent/20 transition-colors"
@@ -191,16 +104,14 @@ export function FloatingForm() {
         </button>
       ) : (
         <div className="bg-dark-light/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl shadow-black/50 p-5">
-          {!inContact && (
-            <div className="flex items-center justify-between mb-4">
-              <p className="text-white text-sm font-semibold tracking-wide">
-                {t.cta.title1} {t.cta.title2}
-              </p>
-              <button onClick={() => setOpen(false)} className="text-white/40 hover:text-white transition-colors">
-                <X className="w-4 h-4" />
-              </button>
-            </div>
-          )}
+          <div className="flex items-center justify-between mb-4">
+            <p className="text-white text-sm font-semibold tracking-wide">
+              {t.cta.title1} {t.cta.title2}
+            </p>
+            <button onClick={() => setOpen(false)} className="text-white/40 hover:text-white transition-colors">
+              <X className="w-4 h-4" />
+            </button>
+          </div>
           {submitted ? (
             <p className="text-accent text-sm py-6 text-center">{t.cta.formSent ?? "Message envoyé !"}</p>
           ) : (
