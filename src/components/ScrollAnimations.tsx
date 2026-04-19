@@ -4,22 +4,34 @@ import { useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-const BLACK = [6, 6, 14];       // #06060e
+const BLACK = [6, 6, 14];        // #06060e
 const NAVY = [12, 14, 42];      // #0c0e2a
 const BLUE = [22, 34, 90];      // #16225a
 const INDIGO = [30, 30, 100];   // #1e1e64
-const PURPLE = [50, 30, 100];   // #321e64
-const MAUVE = [60, 30, 90];     // #3c1e5a
-const DEEP_PURPLE = [35, 20, 70]; // #231446
+const TEAL = [10, 42, 42];      // #0a2a2a
+const CRIMSON = [42, 10, 26];   // #2a0a1a
+const DEEP_NAVY = [20, 20, 56]; // #141438
+
+// Accent colors for radial gradient glow per section
+const ACCENT_COLORS = [
+  [124, 58, 237],  // Hero — accent purple
+  [20, 184, 166],  // About — teal
+  [59, 130, 246],  // Services — blue
+  [99, 102, 241],  // Agents — indigo
+  [16, 185, 129],  // Portfolio — emerald
+  [239, 68, 68],   // Products — red
+  [139, 92, 246],  // Audit — violet
+  [124, 58, 237],  // CTA — accent purple
+];
 
 const GRADIENT_STOPS = [
   BLACK,        // Hero — noir profond
   NAVY,         // About — noir bleuté
   BLUE,         // Services — bleu
   INDIGO,       // Agents — bleu indigo
-  PURPLE,       // Portfolio — violet
-  MAUVE,        // Products — mauve
-  DEEP_PURPLE,  // Audit — violet profond
+  TEAL,         // Portfolio — noir émeraude
+  CRIMSON,      // Products — noir rouge
+  DEEP_NAVY,    // Audit — bleu profond
   BLACK,        // CTA — retour au noir
 ];
 
@@ -56,7 +68,19 @@ export function ScrollAnimations() {
             const t = floatPos - idx;
             const from = GRADIENT_STOPS[idx];
             const to = GRADIENT_STOPS[idx + 1];
-            document.body.style.backgroundColor = lerpColor(from, to, t);
+            const baseColor = lerpColor(from, to, t);
+
+            // Interpolate accent color
+            const accentFrom = ACCENT_COLORS[idx];
+            const accentTo = ACCENT_COLORS[idx + 1];
+            const accentColor = lerpColor(
+              [accentFrom[0], accentFrom[1], accentFrom[2]],
+              [accentTo[0], accentTo[1], accentTo[2]],
+              t
+            );
+
+            // Radial gradient: accent glow in center-bottom, black at edges
+            document.body.style.background = `radial-gradient(ellipse 80% 60% at 50% 80%, ${accentColor}22 0%, ${baseColor} 60%)`;
           },
         })
       );
