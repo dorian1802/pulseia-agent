@@ -4,7 +4,7 @@ import { useLanguage } from "@/lib/LanguageContext";
 import { useEffect, useRef, useState, useCallback } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Send, X } from "lucide-react";
+import { Send, X, ArrowRight } from "lucide-react";
 
 export function FloatingForm() {
   const { t } = useLanguage();
@@ -12,6 +12,7 @@ export function FloatingForm() {
   const [open, setOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [inContact, setInContact] = useState(false);
+  const [visible, setVisible] = useState(false);
 
   const portalJump = useCallback((el: HTMLElement, targetX: number, side: string) => {
     const tl = gsap.timeline();
@@ -43,6 +44,8 @@ export function FloatingForm() {
 
     const triggers: ScrollTrigger[] = [];
     const lastIndex = sections.length - 1;
+    // About section = index 1
+    const aboutIndex = 1;
 
     sections.forEach((section, i) => {
       const isContact = i === lastIndex;
@@ -53,43 +56,86 @@ export function FloatingForm() {
         start: "top center",
         end: "bottom center",
         onEnter: () => {
+          // Hide in hero section
+          if (i < aboutIndex) {
+            setVisible(false);
+            gsap.set(el, { opacity: 0 });
+            return;
+          }
+
+          setVisible(true);
+          gsap.set(el, { opacity: 1 });
+
           if (isContact) {
             setInContact(true);
             setOpen(true);
 
-            // Hide static CTA form
             const ctaForm = section.querySelector("[data-cta-form]") as HTMLElement | null;
-            if (ctaForm) ctaForm.style.visibility = "hidden";
+            if (ctaForm) {
+              ctaForm.style.visibility = "hidden";
+              const rect = ctaForm.getBoundingClientRect();
 
-            // Slide into right side of CTA section
-            gsap.to(el, {
-              x: window.innerWidth - el.offsetWidth - 48,
-              duration: 0.8,
-              ease: "power3.out",
-            });
+              gsap.to(el, {
+                x: rect.left,
+                top: rect.top,
+                width: rect.width,
+                scaleY: 1,
+                duration: 0.8,
+                ease: "power3.inOut",
+                onComplete: () => {
+                  el.style.transform = "none";
+                },
+              });
+            }
           } else {
             setInContact(false);
-            const targetX = isRight ? window.innerWidth - el.offsetWidth - 24 : 24;
+            el.style.top = "50%";
+            el.style.transform = "translateY(-50%)";
+            gsap.set(el, { width: 288, scaleY: 1 });
+
+            const targetX = isRight ? window.innerWidth - 288 - 24 : 24;
             const side = isRight ? "left center" : "right center";
             portalJump(el, targetX, side);
           }
         },
         onEnterBack: () => {
+          if (i < aboutIndex) {
+            setVisible(false);
+            gsap.set(el, { opacity: 0 });
+            return;
+          }
+
+          setVisible(true);
+          gsap.set(el, { opacity: 1 });
+
           if (isContact) {
             setInContact(true);
             setOpen(true);
 
             const ctaForm = section.querySelector("[data-cta-form]") as HTMLElement | null;
-            if (ctaForm) ctaForm.style.visibility = "hidden";
+            if (ctaForm) {
+              ctaForm.style.visibility = "hidden";
+              const rect = ctaForm.getBoundingClientRect();
 
-            gsap.to(el, {
-              x: window.innerWidth - el.offsetWidth - 48,
-              duration: 0.8,
-              ease: "power3.out",
-            });
+              gsap.to(el, {
+                x: rect.left,
+                top: rect.top,
+                width: rect.width,
+                scaleY: 1,
+                duration: 0.8,
+                ease: "power3.inOut",
+                onComplete: () => {
+                  el.style.transform = "none";
+                },
+              });
+            }
           } else {
             setInContact(false);
-            const targetX = isRight ? window.innerWidth - el.offsetWidth - 24 : 24;
+            el.style.top = "50%";
+            el.style.transform = "translateY(-50%)";
+            gsap.set(el, { width: 288, scaleY: 1 });
+
+            const targetX = isRight ? window.innerWidth - 288 - 24 : 24;
             const side = isRight ? "left center" : "right center";
             portalJump(el, targetX, side);
           }
@@ -99,6 +145,9 @@ export function FloatingForm() {
             const ctaForm = section.querySelector("[data-cta-form]") as HTMLElement | null;
             if (ctaForm) ctaForm.style.visibility = "visible";
             setInContact(false);
+            el.style.top = "50%";
+            el.style.transform = "translateY(-50%)";
+            gsap.set(el, { width: 288 });
           }
         },
         onLeaveBack: () => {
@@ -107,11 +156,21 @@ export function FloatingForm() {
             if (ctaForm) ctaForm.style.visibility = "visible";
             setInContact(false);
             setOpen(false);
+            el.style.top = "50%";
+            el.style.transform = "translateY(-50%)";
+            gsap.set(el, { width: 288 });
+          }
+          if (i <= aboutIndex) {
+            setVisible(false);
+            gsap.to(el, { opacity: 0, duration: 0.3 });
           }
         },
       });
       triggers.push(trigger);
     });
+
+    // Start hidden
+    gsap.set(el, { opacity: 0 });
 
     return () => triggers.forEach((t) => t.kill());
   }, [portalJump]);
@@ -119,8 +178,8 @@ export function FloatingForm() {
   return (
     <div
       ref={formRef}
-      className="fixed top-1/2 -translate-y-1/2 z-40 w-72 pointer-events-auto"
-      style={{ x: typeof window !== "undefined" ? window.innerWidth - 296 : 500 }}
+      className="fixed top-1/2 -translate-y-1/2 z-40 pointer-events-auto"
+      style={{ x: typeof window !== "undefined" ? window.innerWidth - 312 : 500, width: 288 }}
     >
       {!open && !inContact ? (
         <button
@@ -157,27 +216,27 @@ export function FloatingForm() {
                 name="name"
                 required
                 placeholder={t.cta.formName}
-                className="w-full px-3 py-2 rounded-lg border border-white/10 bg-white/5 text-white placeholder-white/30 focus:border-accent focus:ring-1 focus:ring-accent outline-none transition-colors text-sm"
+                className="w-full px-4 py-3 rounded-lg border border-white/10 bg-white/5 text-white placeholder-white/30 focus:border-accent focus:ring-1 focus:ring-accent outline-none transition-colors text-sm"
               />
               <input
                 type="email"
                 name="email"
                 required
                 placeholder={t.cta.formEmail}
-                className="w-full px-3 py-2 rounded-lg border border-white/10 bg-white/5 text-white placeholder-white/30 focus:border-accent focus:ring-1 focus:ring-accent outline-none transition-colors text-sm"
+                className="w-full px-4 py-3 rounded-lg border border-white/10 bg-white/5 text-white placeholder-white/30 focus:border-accent focus:ring-1 focus:ring-accent outline-none transition-colors text-sm"
               />
               <textarea
                 name="message"
-                rows={3}
+                rows={4}
                 required
                 placeholder={t.cta.formMessage}
-                className="w-full px-3 py-2 rounded-lg border border-white/10 bg-white/5 text-white placeholder-white/30 focus:border-accent focus:ring-1 focus:ring-accent outline-none transition-colors text-sm resize-none"
+                className="w-full px-4 py-3 rounded-lg border border-white/10 bg-white/5 text-white placeholder-white/30 focus:border-accent focus:ring-1 focus:ring-accent outline-none transition-colors text-sm resize-none"
               />
               <button
                 type="submit"
-                className="inline-flex items-center justify-center gap-2 bg-accent hover:bg-accent-dark text-white rounded-lg px-4 py-2 text-sm font-semibold tracking-wider uppercase transition-colors w-full"
+                className="inline-flex items-center justify-center gap-2 bg-accent hover:bg-accent-dark text-white rounded-lg px-8 py-3 text-sm font-semibold tracking-wider uppercase transition-colors w-full"
               >
-                {t.cta.formSend} <Send className="w-3.5 h-3.5" />
+                {t.cta.formSend} <ArrowRight className="w-4 h-4" />
               </button>
             </form>
           )}
