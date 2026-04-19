@@ -93,6 +93,14 @@ export const translations = {
       formSend: "Envoyer",
       formSent: "Message envoyé !",
     },
+    audit: {
+      button: "Audit IA gratuit",
+      title: "Votre audit IA gratuit",
+      description: "Découvrez où l'intelligence artificielle peut transformer votre activité. Analyse personnalisée, sans engagement.",
+      website: "Site web (optionnel)",
+      submit: "Obtenir mon audit",
+      sent: "Demande envoyée ! Nous vous contactons sous 24h.",
+    },
     footer: {
       tagline: "L'IA qui travaille pour vous 24/7",
       rights: "Tous droits réservés",
@@ -189,6 +197,14 @@ export const translations = {
       formMessage: "Message",
       formSend: "Send",
       formSent: "Message sent!",
+    },
+    audit: {
+      button: "Free AI Audit",
+      title: "Your free AI audit",
+      description: "Discover where artificial intelligence can transform your business. Personalized analysis, no commitment.",
+      website: "Website (optional)",
+      submit: "Get my audit",
+      sent: "Request sent! We'll contact you within 24h.",
     },
     footer: {
       tagline: "AI that works for you 24/7",
