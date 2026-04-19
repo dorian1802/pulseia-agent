@@ -79,8 +79,9 @@ export function ScrollAnimations() {
               t
             );
 
-            // Radial gradient: accent glow in center-bottom, black at edges
-            document.body.style.background = `radial-gradient(ellipse 80% 60% at 50% 80%, ${accentColor}22 0%, ${baseColor} 60%)`;
+            // Gradient: base color as background + accent glow from bottom
+            document.body.style.backgroundColor = baseColor;
+            document.body.style.background = `linear-gradient(to top, ${accentColor}40 0%, ${baseColor} 50%, ${baseColor} 100%)`;
           },
         })
       );
