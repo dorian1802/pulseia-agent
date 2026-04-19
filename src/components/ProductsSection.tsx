@@ -10,7 +10,7 @@ export function ProductsSection() {
 
   return (
     <section id="products" className="min-h-screen relative z-10 flex items-center py-32">
-      <div className="pointer-events-auto container mx-auto px-6">
+      <div className="pointer-events-auto container mx-auto px-6 text-center">
         <p className="tag-animate text-xs tracking-[0.3em] uppercase text-accent font-medium mb-4">
           {t.products.tag}
         </p>
@@ -19,7 +19,7 @@ export function ProductsSection() {
         </h2>
 
         {/* Alternating left/right feature blocks */}
-        <div className="max-w-4xl space-y-16">
+        <div className="max-w-4xl mx-auto space-y-16">
           {t.products.items.map((item, i) => {
             const Icon = productIcons[i];
             const isReversed = i % 2 !== 0;
@@ -27,7 +27,7 @@ export function ProductsSection() {
             return (
               <div
                 key={i}
-                className={`stat-animate group flex flex-col ${isReversed ? "md:flex-row-reverse" : "md:flex-row"} items-start gap-8`}
+                className={`stat-animate group flex flex-col ${isReversed ? "md:flex-row-reverse" : "md:flex-row"} items-start gap-8 text-left`}
               >
                 {/* Icon circle */}
                 <div className="relative flex-shrink-0">

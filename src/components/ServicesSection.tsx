@@ -10,7 +10,7 @@ export function ServicesSection() {
 
   return (
     <section id="services" className="min-h-screen relative z-10 flex items-center py-32">
-      <div className="pointer-events-auto container mx-auto px-6">
+      <div className="pointer-events-auto container mx-auto px-6 text-center">
         <p className="tag-animate text-xs tracking-[0.3em] uppercase text-accent font-medium mb-4">
           {t.services.tag}
         </p>
@@ -19,7 +19,7 @@ export function ServicesSection() {
         </h2>
 
         {/* Bento grid — first item spans 2 cols */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto">
           {t.services.items.map((item, i) => {
             const Icon = icons[i];
             const isFirst = i === 0;
@@ -27,7 +27,7 @@ export function ServicesSection() {
             return (
               <div
                 key={i}
-                className={`stat-animate group relative overflow-hidden rounded-2xl border border-white/[0.06] p-8 transition-all duration-500 hover:border-accent/30 ${
+                className={`stat-animate group relative overflow-hidden rounded-2xl border border-white/[0.06] p-8 transition-all duration-500 hover:border-accent/30 text-left ${
                   isFirst ? "md:col-span-2 lg:col-span-2" : ""
                 } ${isLast ? "lg:col-span-1 md:col-span-1" : ""}`}
               >

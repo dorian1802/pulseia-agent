@@ -7,8 +7,8 @@ export function AboutSection() {
 
   return (
     <section id="about" className="min-h-screen relative z-10 flex items-center section-light py-32">
-      <div className="pointer-events-auto container mx-auto px-6">
-        <div className="max-w-2xl ml-auto">
+      <div className="pointer-events-auto container mx-auto px-6 text-center">
+        <div className="max-w-2xl mx-auto">
           <p className="tag-animate text-xs tracking-[0.3em] uppercase text-accent font-medium mb-4">
             {t.about.tag}
           </p>
@@ -18,7 +18,7 @@ export function AboutSection() {
           <p className="text-block text-white/50 text-base md:text-lg leading-relaxed mb-12">
             {t.about.description}
           </p>
-          <div className="flex gap-12">
+          <div className="flex gap-12 justify-center">
             <div className="stat-animate">
               <p className="font-display text-4xl text-accent font-bold">{t.about.stat1value}</p>
               <p className="text-sm text-white/50 mt-1">{t.about.stat1label}</p>

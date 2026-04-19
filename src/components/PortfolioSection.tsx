@@ -7,7 +7,7 @@ export function PortfolioSection() {
 
   return (
     <section id="portfolio" className="min-h-screen relative z-10 flex items-center py-32">
-      <div className="pointer-events-auto container mx-auto px-6">
+      <div className="pointer-events-auto container mx-auto px-6 text-center">
         <p className="tag-animate text-xs tracking-[0.3em] uppercase text-accent font-medium mb-4">
           {t.portfolio.tag}
         </p>
@@ -16,7 +16,7 @@ export function PortfolioSection() {
         </h2>
 
         {/* Masonry-style: alternating large/small */}
-        <div className="max-w-5xl grid grid-cols-1 md:grid-cols-12 gap-4">
+        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-4">
           {t.portfolio.items.map((item, i) => {
             // Vary sizes: 0,3 = large (7 cols), 1,4,6 = medium (5 cols), 2,5 = wide
             const isLarge = i === 0 || i === 3;
@@ -26,7 +26,7 @@ export function PortfolioSection() {
             return (
               <div
                 key={i}
-                className={`stat-animate group ${colSpan} rounded-2xl border border-white/[0.06] overflow-hidden hover:border-accent/20 transition-all duration-500`}
+                className={`stat-animate group ${colSpan} rounded-2xl border border-white/[0.06] overflow-hidden hover:border-accent/20 transition-all duration-500 text-left`}
               >
                 {/* Colored top bar */}
                 <div className="h-px w-full bg-gradient-to-r from-accent/40 via-accent/10 to-transparent" />

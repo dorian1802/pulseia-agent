@@ -7,8 +7,8 @@ export function AgentsSection() {
 
   return (
     <section id="agents" className="min-h-screen relative z-10 flex items-center py-32">
-      <div className="pointer-events-auto container mx-auto px-6">
-        <div className="flex flex-col lg:flex-row gap-16">
+      <div className="pointer-events-auto container mx-auto px-6 text-center">
+        <div className="flex flex-col lg:flex-row gap-16 items-center">
           {/* Left: title + CEO */}
           <div className="lg:w-1/3">
             <p className="tag-animate text-xs tracking-[0.3em] uppercase text-accent font-medium mb-4">
@@ -34,7 +34,7 @@ export function AgentsSection() {
               {t.agents.poles.map((pole, pi) => (
                 <div
                   key={pole.name}
-                  className="stat-animate snap-start flex-shrink-0 w-56 rounded-2xl border border-white/[0.06] bg-white/[0.02] p-6 hover:border-accent/20 transition-colors"
+                  className="stat-animate snap-start flex-shrink-0 w-56 rounded-2xl border border-white/[0.06] bg-white/[0.02] p-6 hover:border-accent/20 transition-colors text-left"
                 >
                   {/* Pole color accent bar */}
                   <div className="w-8 h-1 rounded-full bg-accent mb-5" />

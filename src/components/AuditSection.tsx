@@ -8,8 +8,8 @@ export function AuditSection() {
 
   return (
     <section id="audit" className="min-h-screen relative z-10 flex items-center section-dark py-32">
-      <div className="pointer-events-auto container mx-auto px-6">
-        <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      <div className="pointer-events-auto container mx-auto px-6 text-center">
+        <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center text-left">
           {/* Left: info */}
           <div>
             <p className="tag-animate text-xs tracking-[0.3em] uppercase text-accent font-medium mb-4">
