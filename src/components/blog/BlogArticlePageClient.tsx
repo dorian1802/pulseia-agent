@@ -163,8 +163,18 @@ function ArticleContent({ postsByLocale, allPostsByLocale }: { postsByLocale: Re
       <ReadingProgress />
 
       {/* Article Hero */}
-      <section className="relative z-10 pt-40 pb-16">
-        <div className="pointer-events-auto container mx-auto px-6 max-w-3xl text-center">
+      <section className="relative z-10 pt-40 pb-16 overflow-hidden">
+        {post.coverImage && (
+          <div className="absolute inset-0 z-0">
+            <img
+              src={post.coverImage}
+              alt=""
+              className="w-full h-full object-cover opacity-20 blur-sm scale-105"
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-dark/60 via-dark/80 to-dark" />
+          </div>
+        )}
+        <div className="relative z-10 pointer-events-auto container mx-auto px-6 max-w-3xl text-center">
           <Link
             href={`/${locale}/blog`}
             className="tag-animate inline-flex items-center gap-2 text-sm text-white/40 hover:text-accent transition-colors mb-12"
