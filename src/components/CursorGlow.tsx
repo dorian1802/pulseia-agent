@@ -33,9 +33,9 @@ export function CursorGlow() {
         mouse.x, mouse.y, radius
       );
 
-      gradient.addColorStop(0, "rgba(147, 51, 234, 0.2)");
-      gradient.addColorStop(0.2, "rgba(99, 102, 241, 0.12)");
-      gradient.addColorStop(0.5, "rgba(59, 130, 246, 0.06)");
+      gradient.addColorStop(0, "rgba(147, 51, 234, 0.08)");
+      gradient.addColorStop(0.2, "rgba(99, 102, 241, 0.05)");
+      gradient.addColorStop(0.5, "rgba(59, 130, 246, 0.02)");
       gradient.addColorStop(1, "rgba(0, 0, 0, 0)");
 
       ctx!.fillStyle = gradient;
