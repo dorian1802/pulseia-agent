@@ -157,7 +157,7 @@ function ArticleContent({ postsByLocale, allPostsByLocale }: { postsByLocale: Re
               <User className="w-4 h-4" /> {post.author}
             </span>
             <span className="flex items-center gap-2">
-              <Calendar className="w-4 h-4" /> {post.date}
+              <Calendar className="w-4 h-4" /> {new Date(post.date).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" })}
             </span>
             <span className="flex items-center gap-2">
               <Clock className="w-4 h-4" /> {post.readTime}

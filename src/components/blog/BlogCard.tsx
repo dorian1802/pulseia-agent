@@ -2,115 +2,132 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Calendar, Clock, ArrowRight } from "lucide-react";
+import { Calendar, Clock, ArrowRight, BookOpen } from "lucide-react";
 import type { BlogPostMeta } from "@/lib/blog";
 
-export function FeaturedCard({ post }: { post: BlogPostMeta }) {
+function formatDate(dateStr: string): string {
+  if (!dateStr) return "";
+  const d = new Date(dateStr);
+  return d.toLocaleDateString("fr-FR", { day: "numeric", month: "short", year: "numeric" });
+}
+
+function CategoryBadge({ category }: { category: string }) {
+  const colors: Record<string, string> = {
+    IA: "bg-violet-500/10 text-violet-400 border-violet-500/20",
+    Automation: "bg-blue-500/10 text-blue-400 border-blue-500/20",
+    SEO: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
+  };
+  const color = colors[category] || "bg-accent/10 text-accent border-accent/20";
   return (
-    <Link href={`/blog/${post.slug}`} className="block group">
-      <div className="card-animate rounded-2xl border border-white/[0.06] overflow-hidden hover:border-accent/30 transition-all duration-700 relative">
-        <div className="absolute inset-0 bg-accent/[0.03] opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-10" />
-        {post.coverImage && (
-          <div className="relative h-64 md:h-80 overflow-hidden">
-            <Image
-              src={post.coverImage}
-              alt={post.title}
-              fill
-              className="object-cover group-hover:scale-105 transition-transform duration-700"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-dark via-dark/60 to-transparent" />
-            <div className="absolute bottom-0 left-0 right-0 p-8 md:p-10">
-              <div className="flex items-center gap-3 mb-4">
-                <span className="px-3 py-1 rounded-full text-[10px] tracking-[0.2em] uppercase font-medium bg-accent/20 text-accent border border-accent/20 backdrop-blur-sm">
-                  {post.category}
-                </span>
-              </div>
-              <h3 className="font-display text-2xl md:text-4xl text-white mb-3 group-hover:text-accent transition-colors duration-500 leading-[1.1]">
-                {post.title}
-              </h3>
-              <div className="flex items-center gap-5 text-sm text-white/40">
-                <span className="flex items-center gap-1.5">
-                  <Calendar className="w-4 h-4" /> {post.date}
-                </span>
-                <span className="flex items-center gap-1.5">
-                  <Clock className="w-4 h-4" /> {post.readTime}
-                </span>
-                <span className="ml-auto flex items-center gap-2 text-white/30 group-hover:text-accent transition-colors duration-500">
-                  Lire <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-500" />
-                </span>
-              </div>
-            </div>
-          </div>
-        )}
-        {!post.coverImage && (
-          <div className="relative p-10 md:p-14 bg-white/[0.02]">
-            <div className="h-px w-full bg-gradient-to-r from-accent/60 via-accent/20 to-transparent mb-8" />
-            <div className="flex items-center gap-3 mb-6">
-              <span className="px-3 py-1 rounded-full text-[10px] tracking-[0.2em] uppercase font-medium bg-accent/10 text-accent border border-accent/20">
-                {post.category}
-              </span>
-            </div>
-            <h3 className="font-display text-3xl md:text-4xl text-white mb-4 group-hover:text-accent transition-colors duration-500 leading-[1.1]">
-              {post.title}
-            </h3>
-            <p className="text-block text-base text-white/50 leading-relaxed mb-8 max-w-2xl line-clamp-2">
-              {post.excerpt}
-            </p>
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-5 text-sm text-white/30">
-                <span className="flex items-center gap-1.5"><Calendar className="w-4 h-4" />{post.date}</span>
-                <span className="flex items-center gap-1.5"><Clock className="w-4 h-4" />{post.readTime}</span>
-              </div>
-              <span className="flex items-center gap-2 text-sm font-medium text-white/30 group-hover:text-accent transition-colors duration-500">
-                Lire <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-500" />
-              </span>
-            </div>
-          </div>
-        )}
-      </div>
-    </Link>
+    <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-[10px] tracking-[0.15em] uppercase font-medium border ${color}`}>
+      {category}
+    </span>
   );
 }
 
-export function BlogCard({ post, index }: { post: BlogPostMeta; index: number }) {
-  const isLarge = index % 3 === 0;
+function ReadTimeBadge({ readTime }: { readTime: string }) {
+  return (
+    <span className="inline-flex items-center gap-1 text-white/25 text-xs">
+      <Clock className="w-3 h-3" />
+      {readTime}
+    </span>
+  );
+}
+
+export function BlogCard({ post, index, isFeatured }: { post: BlogPostMeta; index: number; isFeatured?: boolean }) {
+  if (isFeatured) {
+    return (
+      <Link href={`/blog/${post.slug}`} className="block group">
+        <div className="rounded-2xl border border-white/[0.06] overflow-hidden hover:border-accent/20 transition-all duration-500 relative bg-white/[0.02] hover:bg-white/[0.04]">
+          <div className="flex flex-col lg:flex-row">
+            {/* Cover or placeholder */}
+            <div className="relative lg:w-1/2 h-56 lg:h-auto min-h-[280px] overflow-hidden">
+              {post.coverImage ? (
+                <Image
+                  src={post.coverImage}
+                  alt={post.title}
+                  fill
+                  className="object-cover group-hover:scale-[1.02] transition-transform duration-700"
+                />
+              ) : (
+                <div className="absolute inset-0 bg-gradient-to-br from-accent/10 via-blue-500/5 to-transparent flex items-center justify-center">
+                  <BookOpen className="w-16 h-16 text-white/[0.06]" />
+                </div>
+              )}
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent to-dark/80 hidden lg:block" />
+              <div className="absolute inset-0 bg-gradient-to-t from-dark/60 to-transparent lg:hidden" />
+            </div>
+            {/* Content */}
+            <div className="relative lg:w-1/2 p-8 lg:p-12 flex flex-col justify-center">
+              <div className="flex items-center gap-3 mb-5">
+                <CategoryBadge category={post.category} />
+                <ReadTimeBadge readTime={post.readTime} />
+              </div>
+              <h3 className="font-display text-2xl lg:text-3xl text-white mb-4 group-hover:text-accent transition-colors duration-500 leading-[1.1]">
+                {post.title}
+              </h3>
+              <p className="text-white/45 leading-relaxed mb-6 line-clamp-3 text-sm lg:text-base">
+                {post.excerpt}
+              </p>
+              <div className="flex items-center justify-between mt-auto">
+                <span className="flex items-center gap-1.5 text-xs text-white/25">
+                  <Calendar className="w-3 h-3" />
+                  {formatDate(post.date)}
+                </span>
+                <span className="flex items-center gap-2 text-sm font-medium text-white/30 group-hover:text-accent transition-colors duration-500">
+                  Lire l&apos;article
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-500" />
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Link>
+    );
+  }
 
   return (
     <Link href={`/blog/${post.slug}`} className="block group">
-      <div
-        className="card-animate rounded-2xl border border-white/[0.06] overflow-hidden hover:border-accent/20 transition-all duration-500 relative"
-      >
-        <div className="absolute inset-0 bg-accent/[0.02] opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10" />
-        {post.coverImage && (
-          <div className="relative h-40 md:h-48 overflow-hidden">
+      <article className="h-full rounded-2xl border border-white/[0.06] overflow-hidden hover:border-white/10 transition-all duration-500 relative bg-white/[0.02] hover:bg-white/[0.04] flex flex-col">
+        {/* Cover or gradient placeholder */}
+        <div className="relative h-44 overflow-hidden flex-shrink-0">
+          {post.coverImage ? (
             <Image
               src={post.coverImage}
               alt={post.title}
               fill
-              className="object-cover group-hover:scale-105 transition-transform duration-700"
+              className="object-cover group-hover:scale-[1.03] transition-transform duration-700"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-dark via-dark/40 to-transparent" />
-          </div>
-        )}
-        <div className={`relative bg-white/[0.02] group-hover:bg-white/[0.04] transition-colors duration-500 ${isLarge ? "p-8" : "p-6"}`}>
-          <span className="inline-block px-3 py-1 rounded-full text-[10px] tracking-[0.2em] uppercase font-medium bg-accent/10 text-accent/80 border border-accent/10 mb-3">
-            {post.category}
-          </span>
-          <h3 className={`font-display text-white mb-2 group-hover:text-accent transition-colors duration-500 leading-[1.1] ${isLarge ? "text-xl md:text-2xl" : "text-lg"}`}>
-            {post.title}
-          </h3>
-          <p className="text-white/50 leading-relaxed mb-4 line-clamp-2 text-sm">
-            {post.excerpt}
-          </p>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4 text-xs text-white/30">
-              <span className="flex items-center gap-1.5"><Calendar className="w-3.5 h-3.5" />{post.date}</span>
-              <span className="flex items-center gap-1.5"><Clock className="w-3.5 h-3.5" />{post.readTime}</span>
+          ) : (
+            <div className="absolute inset-0 bg-gradient-to-br from-accent/8 via-blue-500/4 to-transparent flex items-center justify-center">
+              <BookOpen className="w-12 h-12 text-white/[0.06]" />
             </div>
-            <ArrowRight className="w-4 h-4 text-white/20 group-hover:text-accent group-hover:translate-x-1 transition-all duration-500" />
+          )}
+          <div className="absolute inset-0 bg-gradient-to-t from-dark via-dark/30 to-transparent" />
+          <div className="absolute top-3 left-3">
+            <CategoryBadge category={post.category} />
           </div>
         </div>
-      </div>
+        {/* Content */}
+        <div className="relative p-6 flex flex-col flex-1">
+          <h3 className="font-display text-lg text-white mb-2.5 group-hover:text-accent transition-colors duration-500 leading-[1.2] line-clamp-2">
+            {post.title}
+          </h3>
+          <p className="text-white/40 leading-relaxed mb-4 line-clamp-2 text-sm flex-1">
+            {post.excerpt}
+          </p>
+          <div className="flex items-center justify-between mt-auto pt-4 border-t border-white/[0.04]">
+            <span className="flex items-center gap-1.5 text-xs text-white/25">
+              <Calendar className="w-3 h-3" />
+              {formatDate(post.date)}
+            </span>
+            <div className="flex items-center gap-3">
+              <ReadTimeBadge readTime={post.readTime} />
+              <ArrowRight className="w-4 h-4 text-white/15 group-hover:text-accent group-hover:translate-x-0.5 transition-all duration-500" />
+            </div>
+          </div>
+        </div>
+      </article>
     </Link>
   );
 }
