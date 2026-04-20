@@ -39,28 +39,22 @@ function AuditForm() {
   const [sent, setSent] = useState(false);
 
   return (
-    <div className="rounded-2xl border border-white/[0.06] bg-white/[0.03] backdrop-blur-xl overflow-hidden">
-      <div className="h-px w-full bg-gradient-to-r from-accent/50 via-accent/20 to-transparent" />
-      <div className="p-6">
-        {/* Contact info */}
-        <div className="mb-5 pb-5 border-b border-white/[0.06]">
-          <div className="flex items-center gap-2.5 text-white/50 text-xs mb-3">
-            <Mail className="w-3.5 h-3.5 text-accent flex-shrink-0" />
-            <a href={`mailto:${t.cta.email}`} className="hover:text-accent transition-colors">{t.cta.email}</a>
-          </div>
-          <div className="flex items-center gap-2.5 text-white/50 text-xs">
-            <MapPin className="w-3.5 h-3.5 text-accent flex-shrink-0" />
-            <span>{t.cta.location}</span>
-          </div>
-        </div>
+    <div className="rounded-2xl overflow-hidden border border-white/[0.08] bg-white/[0.03] backdrop-blur-2xl shadow-[0_0_60px_-15px_rgba(124,58,237,0.15)] relative">
+      {/* Glow line top */}
+      <div className="h-px w-full bg-gradient-to-r from-transparent via-accent/60 to-transparent" />
+      {/* Subtle accent glow behind */}
+      <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-[200px] h-[200px] bg-accent/10 rounded-full blur-[80px] pointer-events-none" />
 
+      <div className="p-6 relative">
+        {/* Header */}
         <div className="flex items-center gap-3 mb-5">
-          <div className="w-9 h-9 rounded-xl bg-accent/10 flex items-center justify-center">
+          <div className="w-9 h-9 rounded-xl bg-accent/15 flex items-center justify-center shadow-[0_0_20px_-5px_rgba(124,58,237,0.3)]">
             <Sparkles className="w-4 h-4 text-accent" />
           </div>
           <h3 className="font-display text-lg text-white leading-snug">{t.audit.formTitle}</h3>
         </div>
 
+        {/* Benefits */}
         <ul className="space-y-2.5 mb-6">
           {t.audit.benefits.slice(0, 3).map((b) => (
             <li key={b} className="flex items-start gap-2 text-white/50 text-xs leading-relaxed">
@@ -69,6 +63,9 @@ function AuditForm() {
             </li>
           ))}
         </ul>
+
+        {/* Divider */}
+        <div className="h-px w-full bg-gradient-to-r from-transparent via-white/[0.06] to-transparent mb-5" />
 
         {sent ? (
           <div className="text-center py-4 text-sm text-accent font-medium">{t.cta.formSent}</div>
@@ -81,34 +78,58 @@ function AuditForm() {
           >
             <input type="hidden" name="_subject" value="Demande d'audit IA gratuit (blog)" />
             <input type="hidden" name="_captcha" value="false" />
-            <input
-              type="text"
-              name="name"
-              required
-              placeholder={t.cta.formName}
-              className="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-white/5 text-white placeholder-white/30 focus:border-accent focus:ring-1 focus:ring-accent outline-none transition-colors text-sm"
-            />
-            <input
-              type="email"
-              name="email"
-              required
-              placeholder={t.cta.formEmail}
-              className="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-white/5 text-white placeholder-white/30 focus:border-accent focus:ring-1 focus:ring-accent outline-none transition-colors text-sm"
-            />
-            <input
-              type="text"
-              name="website"
-              placeholder={t.audit.website}
-              className="w-full px-3 py-2.5 rounded-lg border border-white/10 bg-white/5 text-white placeholder-white/30 focus:border-accent focus:ring-1 focus:ring-accent outline-none transition-colors text-sm"
-            />
+            <div className="space-y-1">
+              <label htmlFor="audit-name" className="text-[10px] tracking-[0.1em] uppercase text-white/30 font-medium">{t.cta.formName}</label>
+              <input
+                id="audit-name"
+                type="text"
+                name="name"
+                required
+                placeholder={t.cta.formName}
+                className="w-full px-3 py-2.5 rounded-xl border border-white/[0.08] bg-white/[0.04] text-white placeholder-white/20 focus:border-accent/40 focus:bg-white/[0.06] focus:ring-1 focus:ring-accent/30 outline-none transition-all duration-300 text-sm"
+              />
+            </div>
+            <div className="space-y-1">
+              <label htmlFor="audit-email" className="text-[10px] tracking-[0.1em] uppercase text-white/30 font-medium">{t.cta.formEmail}</label>
+              <input
+                id="audit-email"
+                type="email"
+                name="email"
+                required
+                placeholder={t.cta.formEmail}
+                className="w-full px-3 py-2.5 rounded-xl border border-white/[0.08] bg-white/[0.04] text-white placeholder-white/20 focus:border-accent/40 focus:bg-white/[0.06] focus:ring-1 focus:ring-accent/30 outline-none transition-all duration-300 text-sm"
+              />
+            </div>
+            <div className="space-y-1">
+              <label htmlFor="audit-website" className="text-[10px] tracking-[0.1em] uppercase text-white/30 font-medium">{t.audit.website}</label>
+              <input
+                id="audit-website"
+                type="text"
+                name="website"
+                placeholder={t.audit.website}
+                className="w-full px-3 py-2.5 rounded-xl border border-white/[0.08] bg-white/[0.04] text-white placeholder-white/20 focus:border-accent/40 focus:bg-white/[0.06] focus:ring-1 focus:ring-accent/30 outline-none transition-all duration-300 text-sm"
+              />
+            </div>
             <button
               type="submit"
-              className="inline-flex items-center justify-center gap-2 bg-accent hover:bg-accent-dark text-white rounded-lg px-6 py-2.5 text-xs font-semibold tracking-wider uppercase transition-colors w-full"
+              className="inline-flex items-center justify-center gap-2 w-full bg-accent hover:bg-accent-dark text-white rounded-xl px-6 py-3 text-xs font-semibold tracking-wider uppercase transition-all duration-300 shadow-[0_0_30px_-10px_rgba(124,58,237,0.4)] hover:shadow-[0_0_40px_-8px_rgba(124,58,237,0.5)] mt-1"
             >
               {t.audit.submit} <ArrowLeft className="w-3.5 h-3.5 rotate-180" />
             </button>
           </form>
         )}
+
+        {/* Contact info */}
+        <div className="mt-5 pt-4 border-t border-white/[0.06] flex items-center justify-between text-white/30 text-[10px]">
+          <a href={`mailto:${t.cta.email}`} className="flex items-center gap-1.5 hover:text-accent transition-colors">
+            <Mail className="w-3 h-3" />
+            {t.cta.email}
+          </a>
+          <span className="flex items-center gap-1.5">
+            <MapPin className="w-3 h-3" />
+            {t.cta.location}
+          </span>
+        </div>
       </div>
     </div>
   );
