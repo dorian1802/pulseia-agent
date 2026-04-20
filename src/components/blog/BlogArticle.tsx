@@ -45,25 +45,16 @@ function GeneratingImage({ src, alt }: { src: string; alt: string }) {
   const [phase, setPhase] = useState<"loading" | "generating" | "revealing" | "done">("loading");
 
   useEffect(() => {
-    // Phase 1: Loading skeleton (0-800ms)
     const t1 = setTimeout(() => setPhase("generating"), 800);
-    // Phase 2: "Generating" with progress bar (800-2000ms)
     const t2 = setTimeout(() => setPhase("revealing"), 2000);
-    // Phase 3: Blur reveal (2000-3200ms)
     const t3 = setTimeout(() => setPhase("done"), 3200);
-
-    return () => {
-      clearTimeout(t1);
-      clearTimeout(t2);
-      clearTimeout(t3);
-    };
+    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
   }, []);
 
   const blurAmount = phase === "loading" ? 30 : phase === "generating" ? 20 : phase === "revealing" ? 8 : 0;
 
   return (
     <div className="my-8 rounded-xl overflow-hidden border border-white/[0.06] relative">
-      {/* Progress bar */}
       {phase !== "done" && (
         <div className="absolute top-0 left-0 right-0 z-10 h-[2px]">
           <div
@@ -72,8 +63,6 @@ function GeneratingImage({ src, alt }: { src: string; alt: string }) {
           />
         </div>
       )}
-
-      {/* Status badge */}
       {phase !== "done" && (
         <div className="absolute top-3 right-3 z-10 flex items-center gap-2 px-3 py-1.5 rounded-full bg-dark/80 backdrop-blur-sm border border-white/10">
           <span className={`w-2 h-2 rounded-full ${phase === "loading" ? "bg-white/40 animate-pulse" : "bg-accent animate-pulse"}`} />
@@ -82,8 +71,6 @@ function GeneratingImage({ src, alt }: { src: string; alt: string }) {
           </span>
         </div>
       )}
-
-      {/* Skeleton */}
       {phase === "loading" && (
         <div className="aspect-[16/9] bg-white/[0.03] flex items-center justify-center">
           <div className="space-y-3 w-3/4">
@@ -93,8 +80,6 @@ function GeneratingImage({ src, alt }: { src: string; alt: string }) {
           </div>
         </div>
       )}
-
-      {/* Image with blur effect */}
       {phase !== "loading" && (
         <div className="relative aspect-[16/9] overflow-hidden">
           <img
@@ -102,20 +87,14 @@ function GeneratingImage({ src, alt }: { src: string; alt: string }) {
             alt={alt}
             onLoad={() => setLoaded(true)}
             className="w-full h-full object-cover transition-[filter] duration-1000 ease-out"
-            style={{
-              filter: loaded ? `blur(${blurAmount}px)` : "blur(30px)",
-              opacity: loaded ? 1 : 0,
-            }}
+            style={{ filter: loaded ? `blur(${blurAmount}px)` : "blur(30px)", opacity: loaded ? 1 : 0 }}
           />
-          {/* Overlay that fades out during reveal */}
           <div
             className="absolute inset-0 bg-accent/[0.03] transition-opacity duration-1000"
             style={{ opacity: phase === "done" ? 0 : 1 }}
           />
         </div>
       )}
-
-      {/* Caption */}
       <div className="px-4 py-3 border-t border-white/[0.04] flex items-center justify-between">
         <span className="text-xs text-white/30">{alt}</span>
         {phase === "done" && (
@@ -140,40 +119,57 @@ function TypedMarkdown({ content }: { content: string }) {
     const container = containerRef.current;
     if (!container) return;
 
-    const textElements = container.querySelectorAll("p, h2, h3, blockquote, ul, ol, pre, li");
-    const images = container.querySelectorAll("img");
+    const allElements = container.querySelectorAll("p, h2, h3, blockquote, ul, ol, pre, li, table, img");
 
-    const queue: { el: HTMLElement; text: string; html: string; type: "text" | "image" }[] = [];
+    type ItemType = "text" | "image" | "heading" | "table";
+    const queue: { el: HTMLElement; text: string; html: string; type: ItemType }[] = [];
+    const seen = new Set<HTMLElement>();
 
-    // Build queue: interleave text and images in DOM order
-    const allElements = container.querySelectorAll("p, h2, h3, blockquote, ul, ol, pre, li, img");
     allElements.forEach((el) => {
       const htmlEl = el as HTMLElement;
+
+      // Skip if already processed (e.g. inside a table or image paragraph)
+      if (seen.has(htmlEl)) return;
+
       if (el.tagName === "IMG") {
-        const img = el as HTMLImageElement;
-        const parent = img.closest("p");
+        const parent = el.closest("p");
         if (parent) {
+          if (seen.has(parent as HTMLElement)) return;
+          seen.add(parent as HTMLElement);
           queue.push({ el: parent as HTMLElement, text: "", html: parent.innerHTML, type: "image" });
         }
         return;
       }
-      const text = htmlEl.textContent || "";
-      if (!text.trim()) return;
-      // Skip if this element is inside an image paragraph
+
+      // Skip elements inside an image paragraph
       if (htmlEl.closest("p") && (htmlEl.closest("p") as HTMLElement).querySelector("img")) return;
+
+      // Skip elements inside a table (we handle the whole table)
+      if (htmlEl.tagName !== "TABLE" && htmlEl.closest("table")) return;
+
+      const text = htmlEl.textContent || "";
+      if (!text.trim() && htmlEl.tagName !== "TABLE") return;
+
+      if (htmlEl.tagName === "H2" || htmlEl.tagName === "H3") {
+        seen.add(htmlEl);
+        queue.push({ el: htmlEl, text, html: htmlEl.innerHTML, type: "heading" });
+        return;
+      }
+
+      if (htmlEl.tagName === "TABLE") {
+        seen.add(htmlEl);
+        // Mark all child elements as seen so they don't get double-processed
+        htmlEl.querySelectorAll("thead, tbody, tr, td, th, caption").forEach((child) => seen.add(child as HTMLElement));
+        queue.push({ el: htmlEl, text: "", html: htmlEl.innerHTML, type: "table" });
+        return;
+      }
+
+      seen.add(htmlEl);
       queue.push({ el: htmlEl, text, html: htmlEl.innerHTML, type: "text" });
     });
 
-    // Deduplicate image entries
-    const seen = new Set<HTMLElement>();
-    const deduped = queue.filter((item) => {
-      if (seen.has(item.el)) return false;
-      seen.add(item.el);
-      return true;
-    });
-
     // Hide all queued elements
-    deduped.forEach(({ el }) => {
+    queue.forEach(({ el }) => {
       el.style.opacity = "0";
       el.style.position = "relative";
     });
@@ -181,38 +177,93 @@ function TypedMarkdown({ content }: { content: string }) {
     let currentIdx = 0;
 
     function processNext() {
-      if (currentIdx >= deduped.length) return;
-      const item = deduped[currentIdx];
+      if (currentIdx >= queue.length) return;
+      const item = queue[currentIdx];
       currentIdx++;
 
-      if (item.type === "image") {
-        // Replace image paragraph with GeneratingImage component via React-like DOM manipulation
-        const el = item.el;
+      if (item.type === "heading") {
+        // Instant reveal for headings — no typing animation
+        const { el, html } = item;
+        el.innerHTML = html;
+        el.style.opacity = "1";
+        el.style.transform = "translateY(0)";
+        el.style.transition = "opacity 0.4s ease-out, transform 0.4s ease-out";
+        // Trigger a small slide-up reveal
+        el.style.transform = "translateY(8px)";
+        requestAnimationFrame(() => {
+          el.style.transform = "translateY(0)";
+        });
+        processNext();
+        return;
+      }
+
+      if (item.type === "table") {
+        // Animated table: reveal row by row
+        const { el, html } = item;
+        el.innerHTML = html;
         el.style.opacity = "1";
 
+        // Style the table
+        el.className = "w-full border-collapse my-6";
+
+        const rows = el.querySelectorAll("tr");
+        rows.forEach((row, idx) => {
+          const rowEl = row as HTMLElement;
+          rowEl.style.opacity = "0";
+          rowEl.style.transform = "translateY(10px)";
+          rowEl.style.transition = "opacity 0.4s ease-out, transform 0.4s ease-out";
+        });
+
+        // Style header cells
+        const headerCells = el.querySelectorAll("th");
+        headerCells.forEach((cell) => {
+          const c = cell as HTMLElement;
+          c.className = "px-4 py-3 text-left text-xs tracking-[0.12em] uppercase font-medium text-white/50 border-b border-white/[0.08] bg-white/[0.02]";
+        });
+
+        // Style body cells
+        const bodyCells = el.querySelectorAll("td");
+        bodyCells.forEach((cell) => {
+          const c = cell as HTMLElement;
+          c.className = "px-4 py-3 text-sm text-white/70 border-b border-white/[0.04]";
+        });
+
+        // Animate rows in sequence
+        rows.forEach((row, idx) => {
+          const rowEl = row as HTMLElement;
+          setTimeout(() => {
+            rowEl.style.opacity = "1";
+            rowEl.style.transform = "translateY(0)";
+          }, idx * 120);
+        });
+
+        // Continue after all rows have started appearing
+        setTimeout(() => processNext(), rows.length * 120 + 200);
+        return;
+      }
+
+      if (item.type === "image") {
+        const { el } = item;
+        el.style.opacity = "1";
         const img = el.querySelector("img");
         if (!img) { processNext(); return; }
 
         const src = img.getAttribute("src") || "";
         const alt = img.getAttribute("alt") || "";
 
-        // Create the generating image container
         const wrapper = document.createElement("div");
         wrapper.className = "my-8 rounded-xl overflow-hidden border border-white/[0.06] relative";
 
-        // Progress bar
         const progressBar = document.createElement("div");
         progressBar.className = "absolute top-0 left-0 right-0 z-10 h-[2px]";
         progressBar.innerHTML = '<div class="h-full bg-gradient-to-r from-accent to-blue-400 transition-all duration-1000 ease-out" style="width:20%"></div>';
         wrapper.appendChild(progressBar);
 
-        // Status badge
         const badge = document.createElement("div");
         badge.className = "absolute top-3 right-3 z-10 flex items-center gap-2 px-3 py-1.5 rounded-full bg-dark/80 backdrop-blur-sm border border-white/10";
         badge.innerHTML = '<span class="w-2 h-2 rounded-full bg-accent animate-pulse"></span><span class="text-[10px] tracking-[0.15em] uppercase text-white/60">Génération en cours...</span>';
         wrapper.appendChild(badge);
 
-        // Image container
         const imgContainer = document.createElement("div");
         imgContainer.className = "relative aspect-[16/9] overflow-hidden";
         const newImg = document.createElement("img");
@@ -223,36 +274,25 @@ function TypedMarkdown({ content }: { content: string }) {
         newImg.style.transition = "filter 1.5s ease-out";
         imgContainer.appendChild(newImg);
 
-        // Accent overlay
         const overlay = document.createElement("div");
         overlay.className = "absolute inset-0 bg-accent/[0.03] transition-opacity duration-1500";
         imgContainer.appendChild(overlay);
         wrapper.appendChild(imgContainer);
 
-        // Caption
         const caption = document.createElement("div");
         caption.className = "px-4 py-3 border-t border-white/[0.04] flex items-center justify-between";
         caption.innerHTML = `<span class="text-xs text-white/30">${alt}</span>`;
         wrapper.appendChild(caption);
 
-        // Replace the paragraph with the wrapper
         el.replaceWith(wrapper);
 
-        // Animate: loading -> generating -> revealing -> done
+        setTimeout(() => { (progressBar.firstElementChild as HTMLElement).style.width = "60%"; }, 500);
         setTimeout(() => {
-          // Phase 2: generating (60% progress)
-          (progressBar.firstElementChild as HTMLElement).style.width = "60%";
-        }, 500);
-
-        setTimeout(() => {
-          // Phase 3: revealing (95% progress, start unblurring)
           (progressBar.firstElementChild as HTMLElement).style.width = "95%";
           newImg.style.filter = "blur(8px)";
           badge.innerHTML = '<span class="w-2 h-2 rounded-full bg-accent animate-pulse"></span><span class="text-[10px] tracking-[0.15em] uppercase text-white/60">Finalisation...</span>';
         }, 1500);
-
         setTimeout(() => {
-          // Phase 4: done (100%, fully unblurred)
           newImg.style.filter = "blur(0px)";
           progressBar.style.opacity = "0";
           badge.style.opacity = "0";
@@ -264,7 +304,7 @@ function TypedMarkdown({ content }: { content: string }) {
         return;
       }
 
-      // Text typing
+      // Text typing animation
       const { el, text, html } = item;
       el.style.opacity = "1";
       el.textContent = "";

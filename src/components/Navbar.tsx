@@ -19,16 +19,18 @@ export function Navbar() {
 
   const scrollTo = useCallback((id: string) => {
     const el = document.getElementById(id);
-    if (!el) return;
-
-    const lenis = (window as unknown as { __lenis?: Lenis }).__lenis;
-    if (lenis) {
-      lenis.scrollTo(el, { offset: 0, duration: 3 });
+    if (el) {
+      const lenis = (window as unknown as { __lenis?: Lenis }).__lenis;
+      if (lenis) {
+        lenis.scrollTo(el, { offset: 0, duration: 3 });
+      } else {
+        el.scrollIntoView({ behavior: "smooth" });
+      }
     } else {
-      el.scrollIntoView({ behavior: "smooth" });
+      window.location.href = `/${locale}#${id}`;
     }
     setMobileOpen(false);
-  }, []);
+  }, [locale]);
 
   useEffect(() => {
     if (!langOpen) return;
@@ -45,7 +47,7 @@ export function Navbar() {
     <header className="fixed top-0 left-0 right-0 z-40 transition-all duration-500 bg-dark/80 backdrop-blur-md py-4">
       <nav className="container mx-auto px-6 flex items-center justify-between" aria-label="Navigation principale">
         <a
-          href="#"
+          href={`/${locale}`}
           onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}
           className="font-display text-2xl font-bold tracking-widest text-white"
           aria-label="Pulseia — Retour en haut"
@@ -58,7 +60,7 @@ export function Navbar() {
             key === "blog" ? (
               <Link
                 key={key}
-                href="/blog"
+                href={`/${locale}/blog`}
                 className="text-xs font-medium tracking-widest uppercase text-white/70 hover:text-accent transition-colors"
               >
                 {t.nav[key]}
@@ -155,7 +157,7 @@ export function Navbar() {
             key === "blog" ? (
               <Link
                 key={key}
-                href="/blog"
+                href={`/${locale}/blog`}
                 onClick={() => setMobileOpen(false)}
                 role="menuitem"
                 className="block text-sm font-medium tracking-widest uppercase text-white/70 hover:text-accent transition-colors"

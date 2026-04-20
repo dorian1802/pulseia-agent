@@ -1,10 +1,6 @@
 "use client";
 
-import { LanguageProvider } from "@/lib/LanguageContext";
-import { SmoothScroller } from "@/components/SmoothScroller";
-import { ScrollAnimations } from "@/components/ScrollAnimations";
-import { Navbar } from "@/components/Navbar";
-import { Footer } from "@/components/Footer";
+import { useLanguage } from "@/lib/LanguageContext";
 import Link from "next/link";
 import {
   Shield,
@@ -66,6 +62,8 @@ const STATS = [
 ];
 
 function AboutContent() {
+  const { locale } = useLanguage();
+
   return (
     <>
       {/* Hero */}
@@ -228,7 +226,7 @@ function AboutContent() {
               entreprise. Audit gratuit, résultats concrets.
             </p>
             <Link
-              href="/audit"
+              href={`/${locale}/audit`}
               className="inline-flex items-center gap-2 bg-accent hover:bg-accent-dark text-white rounded-lg px-8 py-3.5 text-sm font-semibold tracking-wider uppercase transition-colors"
             >
               Audit gratuit <ArrowRight className="w-4 h-4" />
@@ -241,16 +239,5 @@ function AboutContent() {
 }
 
 export function AboutPageClient() {
-  return (
-    <LanguageProvider>
-      <SmoothScroller>
-        <ScrollAnimations />
-        <Navbar />
-        <main>
-          <AboutContent />
-        </main>
-        <Footer />
-      </SmoothScroller>
-    </LanguageProvider>
-  );
+  return <AboutContent />;
 }

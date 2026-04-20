@@ -188,7 +188,7 @@ function BlogList({ postsByLocale }: { postsByLocale: Record<string, BlogPostMet
       {rest.length > 0 && (
         <section className="relative z-10 pb-20">
           <div className="container mx-auto px-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
               {rest.map((post, i) => (
                 <div key={post.slug} id={`blog-card-${post.slug}`}>
                   <BlogCard post={post} index={i} isRead={mounted && readSlugs.has(post.slug)} />

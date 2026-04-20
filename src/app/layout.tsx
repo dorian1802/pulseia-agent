@@ -77,7 +77,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr" className={`${inter.variable} ${spaceGrotesk.variable} antialiased`}>
+    <html suppressHydrationWarning className={`${inter.variable} ${spaceGrotesk.variable} antialiased`}>
       <head>
         <script
           type="application/ld+json"

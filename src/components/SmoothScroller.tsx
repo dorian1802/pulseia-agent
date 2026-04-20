@@ -16,7 +16,6 @@ export function SmoothScroller({ children }: { children: ReactNode }) {
     });
 
     lenisRef.current = lenis;
-    // Expose for Navbar to use
     (window as unknown as { __lenis?: Lenis }).__lenis = lenis;
 
     lenis.on("scroll", ScrollTrigger.update);
@@ -25,6 +24,15 @@ export function SmoothScroller({ children }: { children: ReactNode }) {
       lenis.raf(time * 1000);
     });
     gsap.ticker.lagSmoothing(0);
+
+    // Scroll to hash anchor after page load
+    const hash = window.location.hash.slice(1);
+    if (hash) {
+      setTimeout(() => {
+        const el = document.getElementById(hash);
+        if (el) lenis.scrollTo(el, { offset: 0, duration: 1.5 });
+      }, 300);
+    }
 
     return () => {
       lenis.destroy();
