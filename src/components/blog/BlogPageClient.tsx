@@ -64,7 +64,12 @@ function BlogList({ postsByLocale }: { postsByLocale: Record<string, BlogPostMet
     return result;
   }, [posts, activeCategory, searchQuery, readSlugs, mounted]);
 
-  const [featured, ...rest] = filteredPosts;
+  const { featured, rest } = useMemo(() => {
+    const unread = filteredPosts.filter((p) => !mounted || !readSlugs.has(p.slug));
+    const read = filteredPosts.filter((p) => mounted && readSlugs.has(p.slug));
+    const sorted = [...unread, ...read];
+    return { featured: sorted[0], rest: sorted.slice(1) };
+  }, [filteredPosts, mounted, readSlugs]);
 
   const categoryCounts = useMemo(() => {
     const counts: Record<string, number> = { all: posts.length };
