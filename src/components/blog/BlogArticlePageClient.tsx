@@ -121,7 +121,12 @@ function ArticleContent({ postsByLocale, allPostsByLocale }: { postsByLocale: Re
 
   useEffect(() => {
     markAsRead(post.slug);
-    window.scrollTo(0, 0);
+    const lenis = (window as unknown as { __lenis?: { scrollTo: (target: number, options?: { immediate: boolean }) => void } }).__lenis;
+    if (lenis) {
+      lenis.scrollTo(0, { immediate: true });
+    } else {
+      window.scrollTo(0, 0);
+    }
   }, [post.slug, markAsRead]);
   const relatedPosts = (allPostsByLocale[locale] || allPostsByLocale["fr"])
     .filter((p) => p.slug !== post.slug)
