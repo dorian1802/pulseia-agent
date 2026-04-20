@@ -33,13 +33,13 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
       publishedTime: post.date,
       authors: [post.author || "Pulseia"],
       tags: [post.category],
-      ...(post.coverImage ? { images: [{ url: post.coverImage, width: 1200, height: 630, alt: post.title }] } : {}),
+      ...(post.coverImage ? { images: [{ url: `${SITE_URL}${post.coverImage}`, width: 1200, height: 630, alt: post.title }] } : {}),
     },
     twitter: {
       card: "summary_large_image",
       title: post.title,
       description: post.excerpt,
-      ...(post.coverImage ? { images: [post.coverImage] } : {}),
+      ...(post.coverImage ? { images: [`${SITE_URL}${post.coverImage}`] } : {}),
     },
   };
 }

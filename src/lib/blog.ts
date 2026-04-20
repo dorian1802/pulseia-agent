@@ -6,6 +6,16 @@ import type { Locale } from "./i18n";
 const BLOG_DIR = path.join(process.cwd(), "content/blog");
 const VALID_LOCALES: Locale[] = ["fr", "en", "nl", "es", "de", "ma", "pt", "it", "tr", "zh", "ja", "ko", "ru", "hi", "ar"];
 
+function getCoverImage(slug: string): string | undefined {
+  const exts = ["jpg", "jpeg", "png", "webp"];
+  for (const ext of exts) {
+    if (fs.existsSync(path.join(BLOG_DIR, slug, `cover.${ext}`))) {
+      return `/blog-cover/${slug}`;
+    }
+  }
+  return undefined;
+}
+
 export interface BlogPostMeta {
   slug: string;
   title: string;
@@ -49,7 +59,7 @@ export function getBlogPost(slug: string, locale: string): BlogPost {
     author: data.author || "Pulseia",
     category: data.category || "",
     readTime: data.readTime || "",
-    coverImage: data.coverImage || undefined,
+    coverImage: getCoverImage(slug),
     locale: (fallback ? "fr" : locale) as Locale,
     fallback,
     content,

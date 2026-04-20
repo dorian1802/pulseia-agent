@@ -122,6 +122,7 @@ function ArticleContent({ postsByLocale, allPostsByLocale }: { postsByLocale: Re
 
   useEffect(() => {
     markAsRead(post.slug);
+    window.scrollTo(0, 0);
   }, [post.slug, markAsRead]);
   const relatedPosts = (allPostsByLocale[locale] || allPostsByLocale["fr"])
     .filter((p) => p.slug !== post.slug)
