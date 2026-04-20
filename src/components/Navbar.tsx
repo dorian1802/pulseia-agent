@@ -4,9 +4,10 @@ import { useLanguage } from "@/lib/LanguageContext";
 import { localeNames, type Locale } from "@/lib/i18n";
 import { Languages, Menu, X, ChevronDown } from "lucide-react";
 import { useState, useCallback, useRef, useEffect } from "react";
+import Link from "next/link";
 import Lenis from "lenis";
 
-const sections = ["about", "services", "agents", "portfolio", "products", "audit", "contact"] as const;
+const sections = ["about", "services", "agents", "portfolio", "products", "audit", "blog", "contact"] as const;
 
 const allLocales: Locale[] = ["fr", "en", "nl", "es", "de", "ma", "pt", "it", "tr", "zh", "ja", "ko", "ru", "hi", "ar"];
 
@@ -54,14 +55,24 @@ export function Navbar() {
 
         <div className="hidden md:flex items-center gap-6">
           {sections.map((key) => (
-            <button
-              key={key}
-              onClick={() => scrollTo(key)}
-              aria-label={`Aller à la section ${t.nav[key]}`}
-              className="text-xs font-medium tracking-widest uppercase text-white/70 hover:text-accent transition-colors"
-            >
-              {t.nav[key]}
-            </button>
+            key === "blog" ? (
+              <Link
+                key={key}
+                href="/blog"
+                className="text-xs font-medium tracking-widest uppercase text-white/70 hover:text-accent transition-colors"
+              >
+                {t.nav[key]}
+              </Link>
+            ) : (
+              <button
+                key={key}
+                onClick={() => scrollTo(key)}
+                aria-label={`Aller à la section ${t.nav[key]}`}
+                className="text-xs font-medium tracking-widest uppercase text-white/70 hover:text-accent transition-colors"
+              >
+                {t.nav[key]}
+              </button>
+            )
           ))}
 
           {/* Language dropdown */}
@@ -78,14 +89,14 @@ export function Navbar() {
             </button>
 
             {langOpen && (
-              <div className="absolute right-0 top-full mt-2 w-44 max-h-72 overflow-y-auto rounded-xl border border-white/10 bg-dark backdrop-blur-xl py-1 z-50 shadow-2xl" role="menu">
+              <div className="absolute right-0 top-full mt-2 w-64 rounded-xl border border-white/10 bg-dark backdrop-blur-xl p-2 z-50 shadow-2xl grid grid-cols-3 gap-0.5" role="menu">
                 {allLocales.map((loc) => (
                   <button
                     key={loc}
                     onMouseDown={(e) => e.stopPropagation()}
                     onClick={() => { setLocale(loc); setLangOpen(false); }}
                     role="menuitem"
-                    className={`block w-full text-left px-4 py-2.5 text-sm transition-colors ${
+                    className={`text-center px-2 py-2 text-sm rounded-lg transition-colors ${
                       loc === locale ? "text-accent bg-accent/10" : "text-white/60 hover:text-white hover:bg-white/5"
                     }`}
                     dir={loc === "ar" ? "rtl" : "ltr"}
@@ -109,14 +120,14 @@ export function Navbar() {
               {locale.toUpperCase()}
             </button>
             {langOpen && (
-              <div className="absolute right-0 top-full mt-2 w-40 max-h-56 overflow-y-auto rounded-xl border border-white/10 bg-dark backdrop-blur-xl py-1 z-50 shadow-2xl" role="menu">
+              <div className="absolute right-0 top-full mt-2 w-56 rounded-xl border border-white/10 bg-dark backdrop-blur-xl p-2 z-50 shadow-2xl grid grid-cols-3 gap-0.5" role="menu">
                 {allLocales.map((loc) => (
                   <button
                     key={loc}
                     onMouseDown={(e) => e.stopPropagation()}
                     onClick={() => { setLocale(loc); setLangOpen(false); }}
                     role="menuitem"
-                    className={`block w-full text-left px-3 py-2 text-xs transition-colors ${
+                    className={`text-center px-1 py-1.5 text-xs rounded-lg transition-colors ${
                       loc === locale ? "text-accent bg-accent/10" : "text-white/60 hover:text-white hover:bg-white/5"
                     }`}
                   >
@@ -141,15 +152,27 @@ export function Navbar() {
       {mobileOpen && (
         <div className="md:hidden bg-dark/95 backdrop-blur-xl border-t border-white/5 px-6 py-6 space-y-4" role="menu">
           {sections.map((key) => (
-            <button
-              key={key}
-              onClick={() => scrollTo(key)}
-              role="menuitem"
-              aria-label={`Aller à la section ${t.nav[key]}`}
-              className="block text-sm font-medium tracking-widest uppercase text-white/70 hover:text-accent transition-colors"
-            >
-              {t.nav[key]}
-            </button>
+            key === "blog" ? (
+              <Link
+                key={key}
+                href="/blog"
+                onClick={() => setMobileOpen(false)}
+                role="menuitem"
+                className="block text-sm font-medium tracking-widest uppercase text-white/70 hover:text-accent transition-colors"
+              >
+                {t.nav[key]}
+              </Link>
+            ) : (
+              <button
+                key={key}
+                onClick={() => scrollTo(key)}
+                role="menuitem"
+                aria-label={`Aller à la section ${t.nav[key]}`}
+                className="block text-sm font-medium tracking-widest uppercase text-white/70 hover:text-accent transition-colors"
+              >
+                {t.nav[key]}
+              </button>
+            )
           ))}
         </div>
       )}

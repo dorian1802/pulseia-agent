@@ -5,7 +5,7 @@ date: "2026-04-19"
 author: "Pulseia"
 category: "IA"
 readTime: "13 min"
-coverImage: "/blog/firecrawl-guide-pratique/cover.jpg"
+coverImage: "/blog/placeholder-cover.svg"
 ---
 
 Le web est la plus grande base de connaissances du monde. Mais ses données sont enfermées dans du HTML complexe, des scripts et des mises en page imprevisibles. **Firecrawl** est l'outil qui ouvre ces données pour l'IA, en transformant n'importe quel site web en Markdown propre, structuré et directement exploitable par les LLM.

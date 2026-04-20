@@ -5,7 +5,7 @@ date: "2026-04-19"
 author: "Pulseia"
 category: "IA"
 readTime: "12 min"
-coverImage: "/blog/deepseek-explication-simple/cover.jpg"
+coverImage: "/blog/placeholder-cover.svg"
 ---
 
 En janvier 2025, un séisme a secoué le monde de l'intelligence artificielle : une startup chinoise nommée DeepSeek a publié un modèle open-source dont les performances rivalisaient avec GPT-4, pour un coût d'entraînement prétendument inférieur à 6 millions de dollars. Un an plus tard, DeepSeek s'est imposé comme l'une des alternatives les plus crédibles aux modèles propriétaires d'OpenAI, Google et Anthropic. Voici tout ce que vous devez comprendre sur DeepSeek, expliqué simplement.

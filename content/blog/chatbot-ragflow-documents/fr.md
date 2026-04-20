@@ -5,7 +5,7 @@ date: "2026-04-19"
 author: "Pulseia"
 category: "IA"
 readTime: "14 min"
-coverImage: "/blog/chatbot-ragflow-documents/cover.jpg"
+coverImage: "/blog/placeholder-cover.svg"
 ---
 
 Vous voulez un chatbot qui répond sur vos documents internes, avec précision et sans hallucination ? **RAGFlow** est la solution la plus rapide pour y parvenir. Ce guide pas à pas vous accompagne de l'installation au déploiement d'un chatbot RAG opérationnel.

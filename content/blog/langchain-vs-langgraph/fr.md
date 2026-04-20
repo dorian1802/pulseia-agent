@@ -5,7 +5,7 @@ date: "2026-04-19"
 author: "Pulseia"
 category: "Automation"
 readTime: "14 min"
-coverImage: "/blog/langchain-vs-langgraph/cover.jpg"
+coverImage: "/blog/placeholder-cover.svg"
 ---
 
 L'écosystème des frameworks d'agents IA a connu une évolution fulgurante ces dernières années. Si LangChain a ouvert la voie en démocratisant la création de chaînes LLM, LangGraph est venu résoudre les limitations structurelles de son prédécesseur. Mais concrètement, quelles sont les différences entre les deux ? Quand faut-il rester sur LangChain, et quand est-il pertinent de passer à LangGraph ? Ce guide complet vous donne toutes les clés pour prendre la bonne décision.

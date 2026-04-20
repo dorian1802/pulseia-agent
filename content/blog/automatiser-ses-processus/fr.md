@@ -5,7 +5,7 @@ date: "2026-04-19"
 author: "Pulseia"
 category: "Automation"
 readTime: "15 min"
-coverImage: "/blog/automatiser-ses-processus/cover.jpg"
+coverImage: "/blog/placeholder-cover.svg"
 ---
 
 > **Automatiser ses processus d'entreprise : guide pas-à-pas pour identifier, cartographier et automatiser les workflows qui vous font perdre du temps chaque jour.**

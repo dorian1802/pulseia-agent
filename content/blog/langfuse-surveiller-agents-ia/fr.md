@@ -5,7 +5,7 @@ date: "2026-04-19"
 author: "Pulseia"
 category: "Automation"
 readTime: "12 min"
-coverImage: "/blog/langfuse-surveiller-agents-ia/cover.jpg"
+coverImage: "/blog/placeholder-cover.svg"
 ---
 
 ## Introduction : Pourquoi la Surveillance des Agents IA est Devenue Critique

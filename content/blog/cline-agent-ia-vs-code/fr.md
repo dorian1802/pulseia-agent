@@ -5,7 +5,7 @@ date: "2026-04-19"
 author: "Pulseia"
 category: "IA"
 readTime: "20 min"
-coverImage: "/blog/cline-agent-ia-vs-code/cover.jpg"
+coverImage: "/blog/placeholder-cover.svg"
 ---
 
 Cline (anciennement Claude Dev) est un agent IA autonome pour VS Code capable de créer, modifier et exécuter du code. Test complet, cas d'usage réels, limites et comparaison avec Copilot et Cursor.

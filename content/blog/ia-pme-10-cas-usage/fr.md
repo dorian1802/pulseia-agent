@@ -5,7 +5,7 @@ date: "2026-04-19"
 author: "Pulseia"
 category: "IA"
 readTime: "18 min"
-coverImage: "/blog/ia-pme-10-cas-usage/cover.jpg"
+coverImage: "/blog/placeholder-cover.svg"
 ---
 
 L'IA n'est plus réservée aux grandes entreprises. Voici 10 cas d'usage concrets où les PME gagnent du temps et de l'argent avec l'intelligence artificielle en 2026.

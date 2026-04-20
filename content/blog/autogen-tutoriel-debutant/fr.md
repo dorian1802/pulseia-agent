@@ -5,7 +5,7 @@ date: "2026-04-19"
 author: "Pulseia"
 category: "Automation"
 readTime: "12 min"
-coverImage: "/blog/autogen-tutoriel-debutant/cover.jpg"
+coverImage: "/blog/placeholder-cover.svg"
 ---
 
 Si vous avez déjà utilisé ChatGPT ou Claude en solo, vous connaissez la puissance d'un seul LLM. Mais imaginez maintenant plusieurs agents IA qui discutent entre eux, se répartissent les tâches, se critiquent mutuellement et produisent un résultat final supérieur à ce qu'un seul agent pourrait obtenir. C'est exactement ce que permet AutoGen. Dans ce tutoriel, vous allez créer votre première équipe d'agents IA en moins de 30 minutes, sans expérience préalable requise.

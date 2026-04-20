@@ -5,7 +5,7 @@ date: "2026-04-19"
 author: "Pulseia"
 category: "IA"
 readTime: "14 min"
-coverImage: "/blog/creer-video-professionnelle-ia/cover.jpg"
+coverImage: "/blog/placeholder-cover.svg"
 ---
 
 Créer une vidéo professionnelle n'a jamais été aussi accessible. L'intelligence artificielle transforme chaque étape de la production, de l'écriture du script à la post-production finale. Ce guide pas à pas vous accompagne de A à Z pour produire une vidéo de qualité broadcast avec les outils IA actuels.

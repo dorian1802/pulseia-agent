@@ -5,7 +5,7 @@ date: "2026-04-19"
 author: "Pulseia"
 category: "Automation"
 readTime: "16 min"
-coverImage: "/blog/semantic-kernel-dotnet/cover.jpg"
+coverImage: "/blog/placeholder-cover.svg"
 ---
 
 Les développeurs .NET ont longtemps regardé l'écosystème IA depuis la tourelle, envieux des outils Python comme LangChain et AutoGen. Avec Semantic Kernel, Microsoft change la donne en offrant un framework IA natif pour .NET, conçu pour les applications d'entreprise. Si vous construisez des solutions IA dans un environnement .NET/Azure, Semantic Kernel est le framework qu'il vous faut. Ce guide vous montre comment l'utiliser concrètement.

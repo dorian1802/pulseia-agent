@@ -5,7 +5,7 @@ date: "2026-04-19"
 author: "Pulseia"
 category: "Automation"
 readTime: "17 min"
-coverImage: "/blog/rpa-vs-ia-automation/cover.jpg"
+coverImage: "/blog/placeholder-cover.svg"
 ---
 
 La RPA automatise les tâches répétitives par des règles fixes. L'IA automation ajoute compréhension, apprentissage et capacité de décision. Ce comparatif vous aide à choisir la bonne approche pour votre entreprise.

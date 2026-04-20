@@ -5,7 +5,7 @@ date: "2026-04-19"
 author: "Pulseia"
 category: "IA"
 readTime: "15 min"
-coverImage: "/blog/openclaw-vs-autogpt-vs-cline/cover.jpg"
+coverImage: "/blog/placeholder-cover.svg"
 ---
 
 ## Introduction : Trois Philosophies pour un Même Objectif

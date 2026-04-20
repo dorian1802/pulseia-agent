@@ -5,7 +5,7 @@ date: "2026-04-19"
 author: "Pulseia"
 category: "Automation"
 readTime: "12 min"
-coverImage: "/blog/dify-vs-langflow/cover.jpg"
+coverImage: "/blog/placeholder-cover.svg"
 ---
 
 Les plateformes no-code pour agents IA se multiplient, mais deux se démarquent : **Dify** et **LangFlow**. Toutes deux permettent de construire des applications IA complexes sans écrire une ligne de code, mais leur philosophie et leur approche diffèrent significativement. Ce comparatif vous aide à choisir la bonne plateforme pour votre projet.

@@ -5,7 +5,7 @@ date: "2026-04-19"
 author: "Pulseia"
 category: "IA"
 readTime: "21 min"
-coverImage: "/blog/5-niveaux-automatisation-ia/cover.jpg"
+coverImage: "/blog/placeholder-cover.svg"
 ---
 
 De la simple règle à l'agent autonome : les 5 niveaux d'automatisation IA expliqués. Identifiez où en est votre PME et comment passer au niveau supérieur.

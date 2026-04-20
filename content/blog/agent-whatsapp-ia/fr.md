@@ -5,7 +5,7 @@ date: "2026-04-19"
 author: "Pulseia"
 category: "Automation"
 readTime: "20 min"
-coverImage: "/blog/agent-whatsapp-ia/cover.jpg"
+coverImage: "/blog/placeholder-cover.svg"
 ---
 
 Un agent WhatsApp IA répond, qualifie et convertit vos prospects 24/7. Voici comment le configurer pas-à-pas avec les outils et les limites à connaître.

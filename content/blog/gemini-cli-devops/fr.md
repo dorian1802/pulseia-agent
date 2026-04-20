@@ -5,7 +5,7 @@ date: "2026-04-19"
 author: "Pulseia"
 category: "IA"
 readTime: "19 min"
-coverImage: "/blog/gemini-cli-devops/cover.jpg"
+coverImage: "/blog/placeholder-cover.svg"
 ---
 
 Gemini CLI est l'interface en ligne de commande de Google Gemini pour DevOps : analyse d'infrastructure, parsing de logs, scripts de déploiement, monitoring. Installation, cas pratiques et comparaison avec les alternatives.

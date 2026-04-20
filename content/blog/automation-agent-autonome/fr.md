@@ -5,7 +5,7 @@ date: "2026-04-19"
 author: "Pulseia"
 category: "IA"
 readTime: "18 min"
-coverImage: "/blog/automation-agent-autonome/cover.jpg"
+coverImage: "/blog/placeholder-cover.svg"
 ---
 
 L'agent IA autonome décide et agit sans supervision humaine. De l'automation basique à l'agent autonome : comprendre l'évolution et quand l'adopter.

@@ -5,7 +5,7 @@ date: "2026-04-19"
 author: "Pulseia"
 category: "IA"
 readTime: "13 min"
-coverImage: "/blog/mem0-memoire-agents-ia/cover.jpg"
+coverImage: "/blog/placeholder-cover.svg"
 ---
 
 Le problème est universel : vous discutez avec un agent IA, lui donnez des informations, et à la conversation suivante, il a tout oublié. **Mem0** résout ce problème en donnant une mémoire à long terme persistante à vos agents IA. Tutoriel complet.

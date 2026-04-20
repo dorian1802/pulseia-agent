@@ -5,7 +5,7 @@ date: "2026-04-19"
 author: "Pulseia"
 category: "IA"
 readTime: "14 min"
-coverImage: "/blog/midjourney-vs-dalle-vs-stable-diffusion/cover.jpg"
+coverImage: "/blog/placeholder-cover.svg"
 ---
 
 Le marché des générateurs d'images par intelligence artificielle a explosé ces dernières années. Trois outils dominent aujourd'hui le paysage : **Midjourney**, **DALL-E 3** et **Stable Diffusion**. Chacun possède des forces et des faiblesses distinctes qui les rendent plus ou moins adaptés selon vos besoins. Dans cet article, nous les comparons en détail sur tous les critères qui comptent : qualité visuelle, prix, facilité d'utilisation, accès API et capacités de personnalisation.

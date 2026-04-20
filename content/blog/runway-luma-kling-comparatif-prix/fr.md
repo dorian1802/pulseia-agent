@@ -5,7 +5,7 @@ date: "2026-04-19"
 author: "Pulseia"
 category: "IA"
 readTime: "13 min"
-coverImage: "/blog/runway-luma-kling-comparatif-prix/cover.jpg"
+coverImage: "/blog/placeholder-cover.svg"
 ---
 
 Choisir entre Runway, Luma Dream Machine et Kling AI ne se résume pas à la qualité visuelle. Le prix, la vitesse de génération et le nombre de clips produits par mois sont des critères tout aussi déterminants. Ce comparatif vous donne toutes les données chiffrées pour faire un choix éclairé selon votre budget et vos besoins.

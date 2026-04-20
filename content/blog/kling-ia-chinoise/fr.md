@@ -5,7 +5,7 @@ date: "2026-04-19"
 author: "Pulseia"
 category: "IA"
 readTime: "11 min"
-coverImage: "/blog/kling-ia-chinoise/cover.jpg"
+coverImage: "/blog/placeholder-cover.svg"
 ---
 
 L'intelligence artificielle chinoise ne se limite plus aux modèles de langage. **Kling AI**, développé par Kuaishou Technology, s'impose comme un concurrent sérieux de Runway et Luma dans le domaine de la génération vidéo. Avec des capacités techniques impressionnantes et des tarifs agressifs, Kling bouscule l'hégémonie américaine sur ce secteur stratégique.

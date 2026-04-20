@@ -5,7 +5,7 @@ date: "2026-04-19"
 author: "Pulseia"
 category: "Automation"
 readTime: "15 min"
-coverImage: "/blog/crewai-vs-autogen/cover.jpg"
+coverImage: "/blog/placeholder-cover.svg"
 ---
 
 Orchestrer plusieurs agents IA pour qu'ils collaborent efficacement est le défi central de l'intelligence artificielle autonome en 2026. Deux frameworks dominent le paysage : CrewAI, avec son approche structurée par rôles et tâches, et AutoGen, avec sa philosophie de conversations multi-agents libres. Mais lequel choisir pour votre projet ? Ce comparatif détaillé vous aide à prendre la bonne décision.
