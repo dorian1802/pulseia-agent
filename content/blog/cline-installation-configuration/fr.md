@@ -5,7 +5,7 @@ date: "2026-04-19"
 author: "Pulseia"
 category: "IA"
 readTime: "22 min"
-coverImage: "/blog/placeholder-cover.svg"
+coverImage: "/blog/cline-installation-configuration/cover.jpg"
 ---
 
 Guide pas-à-pas pour installer et configurer Cline dans VS Code : clés API, sélection du modèle, custom instructions, 5 workflows pratiques et conseils de productivité.

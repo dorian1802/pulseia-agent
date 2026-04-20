@@ -5,7 +5,7 @@ date: "2026-04-19"
 author: "Pulseia"
 category: "IA"
 readTime: "12 min"
-coverImage: "/blog/placeholder-cover.svg"
+coverImage: "/blog/ragflow-vs-llamaindex/cover.jpg"
 ---
 
 Le RAG (Retrieval-Augmented Generation) est la technique incontournable pour connecter des LLM à vos données privées. Deux frameworks dominent : **RAGFlow** et **LlamaIndex**. Mais leur approche est fondamentalement différente. L'un est orienté interface, l'autre orienté code. Lequel choisir pour votre projet ?

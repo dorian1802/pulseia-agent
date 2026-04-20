@@ -5,7 +5,7 @@ date: "2026-04-19"
 author: "Pulseia"
 category: "IA"
 readTime: "16 min"
-coverImage: "/blog/placeholder-cover.svg"
+coverImage: "/blog/stable-diffusion-resultats-pro/cover.jpg"
 ---
 
 Stable Diffusion est souvent perçu comme un outil complexe réservé aux techniciens. La réalité est plus nuancée : avec les bons modèles, les bonnes techniques et un workflow structuré, n'importe qui peut obtenir des résultats de niveau professionnel, même sans être un expert en deep learning. Ce guide vous montre comment.

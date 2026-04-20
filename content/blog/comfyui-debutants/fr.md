@@ -5,7 +5,7 @@ date: "2026-04-19"
 author: "Pulseia"
 category: "IA"
 readTime: "15 min"
-coverImage: "/blog/placeholder-cover.svg"
+coverImage: "/blog/comfyui-debutants/cover.jpg"
 ---
 
 Si vous avez déjà utilisé Stable Diffusion via Automatic1111 ou des services en ligne, vous connaissez probablement les limites de ces interfaces quand il s'agit de contrôler précisément chaque étape de la génération. **ComfyUI** change la donne. C'est une interface node-based (basée sur des noeuds) qui vous offre un contrôle granulaire sur chaque composant du processus de génération. Et le meilleur : elle est gratuite, open source et étonnamment puissante.

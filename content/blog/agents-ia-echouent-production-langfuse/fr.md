@@ -5,7 +5,7 @@ date: "2026-04-19"
 author: "Pulseia"
 category: "Automation"
 readTime: "13 min"
-coverImage: "/blog/placeholder-cover.svg"
+coverImage: "/blog/agents-ia-echouent-production-langfuse/cover.jpg"
 ---
 
 ## Introduction : La Réalité des Agents IA en Production

@@ -5,7 +5,7 @@ date: "2026-04-19"
 author: "Pulseia"
 category: "IA"
 readTime: "13 min"
-coverImage: "/blog/placeholder-cover.svg"
+coverImage: "/blog/autogpt-bilan-2026/cover.jpg"
 ---
 
 ## Introduction : Le Pionnier qui a Tout Changé

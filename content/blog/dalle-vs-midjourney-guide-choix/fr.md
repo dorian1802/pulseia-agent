@@ -5,7 +5,7 @@ date: "2026-04-19"
 author: "Pulseia"
 category: "IA"
 readTime: "12 min"
-coverImage: "/blog/placeholder-cover.svg"
+coverImage: "/blog/dalle-vs-midjourney-guide-choix/cover.jpg"
 ---
 
 DALL-E 3 et Midjourney sont les deux générateurs d'images par IA les plus populaires du marché. Chacun excelle dans des domaines différents, et choisir entre les deux ne devrait pas se faire à l'emporte-pièce. Ce guide compare les deux outils usage par usage, avec des recommandations claires pour chaque situation.

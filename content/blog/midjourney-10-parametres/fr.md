@@ -5,7 +5,7 @@ date: "2026-04-19"
 author: "Pulseia"
 category: "IA"
 readTime: "13 min"
-coverImage: "/blog/placeholder-cover.svg"
+coverImage: "/blog/midjourney-10-parametres/cover.jpg"
 ---
 
 Midjourney est célèbre pour la beauté de ses générations, mais beaucoup d'utilisateurs se contentent de taper un prompt et d'appuyer sur Entrée sans exploiter les paramètres qui transforment vraiment les résultats. Ces paramètres sont le passage du mode « aléatoire » au mode « contrôle ». Les maîtriser, c'est la différence entre une image moyenne et une image exactement conforme à votre vision.

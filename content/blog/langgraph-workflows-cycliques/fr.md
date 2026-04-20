@@ -5,7 +5,7 @@ date: "2026-04-19"
 author: "Pulseia"
 category: "Automation"
 readTime: "15 min"
-coverImage: "/blog/placeholder-cover.svg"
+coverImage: "/blog/langgraph-workflows-cycliques/cover.jpg"
 ---
 
 La plupart des frameworks IA actuels construisent des pipelines linéaires : une entrée traverse une séquence d'étapes et produit une sortie. C'est simple, prévisible, et ça fonctionne — jusqu'à ce que vous ayez besoin d'un agent qui raisonne, agit, observe et adapte son comportement. Les agents autonomes ont besoin de boucles, pas de lignes droites. C'est exactement ce problème que LangGraph résout avec ses workflows cycliques. Cet article vous explique pourquoi c'est un changement de paradigme.

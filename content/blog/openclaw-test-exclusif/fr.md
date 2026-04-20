@@ -5,7 +5,7 @@ date: "2026-04-19"
 author: "Pulseia"
 category: "IA"
 readTime: "14 min"
-coverImage: "/blog/placeholder-cover.svg"
+coverImage: "/blog/openclaw-test-exclusif/cover.jpg"
 ---
 
 ## Introduction : Le Phénomène OpenClaw

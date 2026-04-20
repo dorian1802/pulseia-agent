@@ -5,7 +5,7 @@ date: "2026-04-19"
 author: "Pulseia"
 category: "IA"
 readTime: "14 min"
-coverImage: "/blog/placeholder-cover.svg"
+coverImage: "/blog/llamaindex-explication-simple/cover.jpg"
 ---
 
 Vous voulez que ChatGPT réponde sur **vos** documents, avec **vos** données ? C'est exactement ce que permet LlamaIndex. Ce framework est le pont entre les modèles de langage et vos données privées. Décryptage simple et tutoriel inclus.

@@ -5,7 +5,7 @@ date: "2026-04-19"
 author: "Pulseia"
 category: "IA"
 readTime: "19 min"
-coverImage: "/blog/placeholder-cover.svg"
+coverImage: "/blog/automation-ia-guide-complet/cover.jpg"
 ---
 
 L'automation IA permet aux PME d'automatiser les tâches répétitives grâce à des agents intelligents. Ce guide 2026 couvre les outils, cas d'usage et le ROI de l'automatisation par intelligence artificielle.

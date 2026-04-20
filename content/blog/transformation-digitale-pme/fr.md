@@ -5,7 +5,7 @@ date: "2026-04-19"
 author: "Pulseia"
 category: "IA"
 readTime: "16 min"
-coverImage: "/blog/placeholder-cover.svg"
+coverImage: "/blog/transformation-digitale-pme/cover.jpg"
 ---
 
 La transformation digitale d'une PME ne se résume pas à des outils. Voici un guide concret pour digitaliser vos processus, choisir les bons outils et mesurer les résultats.

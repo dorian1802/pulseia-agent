@@ -5,7 +5,7 @@ date: "2026-04-19"
 author: "Pulseia"
 category: "Automation"
 readTime: "18 min"
-coverImage: "/blog/placeholder-cover.svg"
+coverImage: "/blog/audit-automation-ia/cover.jpg"
 ---
 
 Un audit automation IA identifie les tâches à automatiser en priorité et estime le ROI de chaque projet. Voici la méthodologie complète avec grille d'évaluation, matrice de priorisation et modèle de rapport prêt à l'emploi.

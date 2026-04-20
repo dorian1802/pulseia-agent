@@ -5,7 +5,7 @@ date: "2026-04-19"
 author: "Pulseia"
 category: "IA"
 readTime: "12 min"
-coverImage: "/blog/placeholder-cover.svg"
+coverImage: "/blog/gain-productivite-ia/cover.jpg"
 ---
 
 Les PME qui automatisent avec l'IA gagnent en moyenne 60 heures par mois. Voici les chiffres, les méthodes de calcul et les preuves concrètes du **gain productivité IA**.

@@ -5,7 +5,7 @@ date: "2026-04-19"
 author: "Pulseia"
 category: "Automation"
 readTime: "13 min"
-coverImage: "/blog/placeholder-cover.svg"
+coverImage: "/blog/ollama-llm-local/cover.jpg"
 ---
 
 Faire tourner un modèle de langage sur votre propre machine, sans dépendre d'OpenAI ou de Google, c'est désormais une réalité accessible. **Ollama** démocratise l'exécution locale de LLM en simplifiant drastiquement l'installation et la gestion des modèles. Ce guide vous montre comment commencer, même avec du matériel modeste.

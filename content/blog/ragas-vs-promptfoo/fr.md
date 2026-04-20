@@ -5,7 +5,7 @@ date: "2026-04-19"
 author: "Pulseia"
 category: "Automation"
 readTime: "11 min"
-coverImage: "/blog/placeholder-cover.svg"
+coverImage: "/blog/ragas-vs-promptfoo/cover.jpg"
 ---
 
 ## Introduction : Le Défi de l'Évaluation des Applications RAG

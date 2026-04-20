@@ -5,7 +5,7 @@ date: "2026-04-19"
 author: "Pulseia"
 category: "Automation"
 readTime: "12 min"
-coverImage: "/blog/placeholder-cover.svg"
+coverImage: "/blog/open-webui-ollama-chatgpt-prive/cover.jpg"
 ---
 
 Imaginez un ChatGPT entièrement gratuit, qui protège vos données, fonctionne hors ligne et que vous contrôlez à 100%. C'est exactement ce qu'offrent **Open WebUI** et **Ollama** ensemble. Ce tutoriel vous guide pour déployer cette solution en 15 minutes chrono.

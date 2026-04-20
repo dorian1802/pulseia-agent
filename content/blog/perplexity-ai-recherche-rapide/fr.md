@@ -5,7 +5,7 @@ date: "2026-04-19"
 author: "Pulseia"
 category: "IA"
 readTime: "13 min"
-coverImage: "/blog/placeholder-cover.svg"
+coverImage: "/blog/perplexity-ai-recherche-rapide/cover.jpg"
 ---
 
 Faire des recherches sur le web en 2026, c'est souvent un exercice frustrant : des pages SEO remplies de contenu générique, des publicités qui envahissent l'écran, et des réponses qu'il faut assembler pièce par pièce à partir de dizaines d'onglets. **Perplexity AI** propose une alternative radicale : poser une question, obtenir une réponse structurée avec des sources vérifiables. Rien de plus. Et ça change tout.

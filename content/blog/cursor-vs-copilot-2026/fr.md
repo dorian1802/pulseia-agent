@@ -5,7 +5,7 @@ date: "2026-04-19"
 author: "Pulseia"
 category: "IA"
 readTime: "18 min"
-coverImage: "/blog/placeholder-cover.svg"
+coverImage: "/blog/cursor-vs-copilot-2026/cover.jpg"
 ---
 
 Comparaison détaillée entre Cursor et GitHub Copilot en 2026 : fonctionnalités, modèles IA, contexte, prix, qualité de complétion, chat, confidentialité et verdict par profil de développeur.

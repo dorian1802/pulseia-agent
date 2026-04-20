@@ -5,7 +5,7 @@ date: "2026-04-19"
 author: "Pulseia"
 category: "IA"
 readTime: "13 min"
-coverImage: "/blog/placeholder-cover.svg"
+coverImage: "/blog/grok-ia-elon-musk/cover.jpg"
 ---
 
 Depuis son lancement fin 2023, Grok occupe une place singulière dans le paysage de l'intelligence artificielle. Créé par xAI, la société d'Elon Musk, Grok se présente comme l'alternative « anti-censure » à ChatGPT, avec un atout majeur : l'accès en temps réel aux données de X (anciennement Twitter). Mais au-delà du buzz médiatique, que vaut réellement Grok, et quand a-t-il un avantage concret sur ses concurrents ?

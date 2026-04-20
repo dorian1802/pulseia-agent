@@ -5,7 +5,7 @@ date: "2026-04-19"
 author: "Pulseia"
 category: "IA"
 readTime: "17 min"
-coverImage: "/blog/placeholder-cover.svg"
+coverImage: "/blog/agent-ia-vs-chatbot/cover.jpg"
 ---
 
 Un agent IA va au-delà du chatbot : il agit, décide et apprend. Ce comparatif détaillé vous aide à choisir entre agent IA et chatbot selon vos besoins.

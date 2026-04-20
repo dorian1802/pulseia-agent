@@ -5,7 +5,7 @@ date: "2026-04-19"
 author: "Pulseia"
 category: "Automation"
 readTime: "14 min"
-coverImage: "/blog/placeholder-cover.svg"
+coverImage: "/blog/n8n-ia-5-workflows/cover.jpg"
 ---
 
 n8n est l'un des outils d'automatisation les plus puissants du marché. Combiné à l'intelligence artificielle, il devient un véritable cerveau opérationnel pour votre entreprise. Voici 5 workflows concrets que vous pouvez déployer dès aujourd'hui pour transformer votre productivité.

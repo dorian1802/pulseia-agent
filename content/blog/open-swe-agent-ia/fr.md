@@ -5,7 +5,7 @@ date: "2026-04-19"
 author: "Pulseia"
 category: "IA"
 readTime: "12 min"
-coverImage: "/blog/placeholder-cover.svg"
+coverImage: "/blog/open-swe-agent-ia/cover.jpg"
 ---
 
 ## Introduction : Quand l'IA Résout vos Bugs Pendant que vous Prenez un Café

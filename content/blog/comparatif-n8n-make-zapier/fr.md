@@ -5,7 +5,7 @@ date: "2026-04-19"
 author: "Pulseia"
 category: "Automation"
 readTime: "27 min"
-coverImage: "/blog/placeholder-cover.svg"
+coverImage: "/blog/comparatif-n8n-make-zapier/cover.jpg"
 ---
 
 n8n, Make ou Zapier ? Ce comparatif 2026 analyse prix, fonctionnalités IA, facilité d'usage et limites de chaque plateforme pour vous aider à choisir la bonne solution d'automatisation.

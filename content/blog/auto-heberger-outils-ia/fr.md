@@ -5,7 +5,7 @@ date: "2026-04-19"
 author: "Pulseia"
 category: "Automation"
 readTime: "12 min"
-coverImage: "/blog/placeholder-cover.svg"
+coverImage: "/blog/auto-heberger-outils-ia/cover.jpg"
 ---
 
 L'auto-hébergement des outils IA est une tendance croissante. Entre la confidentialité des données, la maîtrise des coûts et l'indépendance vis-à-vis des géants du cloud, les arguments sont séduisants. Mais l'auto-hébergement a aussi un prix : maintenance, mises à jour, compétences techniques. Ce guide vous aide à prendre une décision éclairée.

@@ -5,7 +5,7 @@ date: "2026-04-19"
 author: "Pulseia"
 category: "IA"
 readTime: "21 min"
-coverImage: "/blog/placeholder-cover.svg"
+coverImage: "/blog/copilot-vs-cursor-vs-cline/cover.jpg"
 ---
 
 Comparatif complet de GitHub Copilot, Cursor et Cline : 20+ critères analysés, tableau de comparaison détaillé, recommandations par profil de développeur et tarifs.

@@ -5,7 +5,7 @@ date: "2026-04-19"
 author: "Pulseia"
 category: "IA"
 readTime: "12 min"
-coverImage: "/blog/placeholder-cover.svg"
+coverImage: "/blog/runway-vs-luma-comparatif/cover.jpg"
 ---
 
 La génération de vidéos par intelligence artificielle a franchi un cap décisif en 2025-2026. Deux plateformes dominent le paysage : **Runway Gen-3** et **Luma Dream Machine**. Chacune propose une approche distincte de la création vidéo, avec des forces et des limites qui les rendent complémentaires plutôt que purement concurrentielles. Ce comparatif vous aide à choisir l'outil adapté à vos besoins.
