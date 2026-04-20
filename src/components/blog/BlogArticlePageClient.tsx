@@ -1,6 +1,7 @@
 "use client";
 
 import { useLanguage } from "@/lib/LanguageContext";
+import { useReadArticles } from "@/lib/useReadArticles";
 import { BlogShell } from "./BlogShell";
 import { BlogArticle } from "./BlogArticle";
 import { ArrowLeft, Calendar, Clock, User, Sparkles, CheckCircle2, Mail, MapPin } from "lucide-react";
@@ -116,7 +117,12 @@ function AuditForm() {
 
 function ArticleContent({ postsByLocale, allPostsByLocale }: { postsByLocale: Record<string, BlogPost>; allPostsByLocale: Record<string, { slug: string; title: string; excerpt: string; category: string }[]> }) {
   const { locale, t } = useLanguage();
+  const { markAsRead } = useReadArticles();
   const post = postsByLocale[locale] || postsByLocale["fr"];
+
+  useEffect(() => {
+    markAsRead(post.slug);
+  }, [post.slug, markAsRead]);
   const relatedPosts = (allPostsByLocale[locale] || allPostsByLocale["fr"])
     .filter((p) => p.slug !== post.slug)
     .slice(0, 3);
@@ -134,7 +140,7 @@ function ArticleContent({ postsByLocale, allPostsByLocale }: { postsByLocale: Re
       <section className="relative z-10 pt-40 pb-16">
         <div className="pointer-events-auto container mx-auto px-6 max-w-3xl text-center">
           <Link
-            href="/blog"
+            href={`/${locale}/blog`}
             className="tag-animate inline-flex items-center gap-2 text-sm text-white/40 hover:text-accent transition-colors mb-12"
           >
             <ArrowLeft className="w-4 h-4" />
@@ -202,7 +208,7 @@ function ArticleContent({ postsByLocale, allPostsByLocale }: { postsByLocale: Re
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {relatedPosts.map((rel) => (
-                <Link key={rel.slug} href={`/blog/${rel.slug}`} className="block group">
+                <Link key={rel.slug} href={`/${locale}/blog/${rel.slug}`} className="block group">
                   <div className="stat-animate rounded-xl border border-white/[0.06] p-6 bg-white/[0.02] hover:bg-white/[0.04] hover:border-accent/20 transition-all duration-500">
                     <span className="text-[10px] tracking-[0.2em] uppercase text-accent/70">{rel.category}</span>
                     <h4 className="font-display text-base text-white mt-2 mb-2 group-hover:text-accent transition-colors leading-snug">

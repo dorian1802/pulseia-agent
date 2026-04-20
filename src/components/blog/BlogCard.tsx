@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Calendar, Clock, ArrowRight, BookOpen } from "lucide-react";
+import { Calendar, Clock, ArrowRight, BookOpen, CheckCircle2 } from "lucide-react";
 import type { BlogPostMeta } from "@/lib/blog";
+import { useLanguage } from "@/lib/LanguageContext";
 
 function formatDate(dateStr: string): string {
   if (!dateStr) return "";
@@ -34,10 +35,12 @@ function ReadTimeBadge({ readTime }: { readTime: string }) {
   );
 }
 
-export function BlogCard({ post, index, isFeatured }: { post: BlogPostMeta; index: number; isFeatured?: boolean }) {
+export function BlogCard({ post, index, isFeatured, isRead }: { post: BlogPostMeta; index: number; isFeatured?: boolean; isRead?: boolean }) {
+  const { locale } = useLanguage();
+  const blogBase = `/${locale}/blog`;
   if (isFeatured) {
     return (
-      <Link href={`/blog/${post.slug}`} className="block group">
+      <Link href={`${blogBase}/${post.slug}`} className="block group">
         <div className="rounded-2xl border border-white/[0.06] overflow-hidden hover:border-accent/20 transition-all duration-500 relative bg-white/[0.02] hover:bg-white/[0.04]">
           <div className="flex flex-col lg:flex-row">
             {/* Cover or placeholder */}
@@ -62,6 +65,11 @@ export function BlogCard({ post, index, isFeatured }: { post: BlogPostMeta; inde
               <div className="flex items-center gap-3 mb-5">
                 <CategoryBadge category={post.category} />
                 <ReadTimeBadge readTime={post.readTime} />
+                {isRead && (
+                  <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md text-[10px] tracking-[0.1em] uppercase font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                    <CheckCircle2 className="w-3 h-3" />Lu
+                  </span>
+                )}
               </div>
               <h3 className="font-display text-2xl lg:text-3xl text-white mb-4 group-hover:text-accent transition-colors duration-500 leading-[1.1]">
                 {post.title}
@@ -87,7 +95,7 @@ export function BlogCard({ post, index, isFeatured }: { post: BlogPostMeta; inde
   }
 
   return (
-    <Link href={`/blog/${post.slug}`} className="block group">
+    <Link href={`${blogBase}/${post.slug}`} className="block group">
       <article className="h-full rounded-2xl border border-white/[0.06] overflow-hidden hover:border-white/10 transition-all duration-500 relative bg-white/[0.02] hover:bg-white/[0.04] flex flex-col">
         {/* Cover or gradient placeholder */}
         <div className="relative h-44 overflow-hidden flex-shrink-0">
@@ -104,8 +112,13 @@ export function BlogCard({ post, index, isFeatured }: { post: BlogPostMeta; inde
             </div>
           )}
           <div className="absolute inset-0 bg-gradient-to-t from-dark via-dark/30 to-transparent" />
-          <div className="absolute top-3 left-3">
+          <div className="absolute top-3 left-3 flex items-center gap-2">
             <CategoryBadge category={post.category} />
+            {isRead && (
+              <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md text-[10px] tracking-[0.1em] uppercase font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                <CheckCircle2 className="w-3 h-3" />Lu
+              </span>
+            )}
           </div>
         </div>
         {/* Content */}

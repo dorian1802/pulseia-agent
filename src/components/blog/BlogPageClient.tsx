@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import { useLanguage } from "@/lib/LanguageContext";
+import { useReadArticles, consumeLastVisitedSlug } from "@/lib/useReadArticles";
 import { BlogShell } from "./BlogShell";
 import { BlogCard } from "./BlogCard";
 import type { BlogPostMeta } from "@/lib/blog";
@@ -22,9 +23,24 @@ function formatDate(dateStr: string): string {
 
 function BlogList({ postsByLocale }: { postsByLocale: Record<string, BlogPostMeta[]> }) {
   const { locale, t } = useLanguage();
+  const { readSlugs, mounted } = useReadArticles();
   const posts = postsByLocale[locale] || postsByLocale["fr"];
   const [activeCategory, setActiveCategory] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState("");
+  const lastSlugRef = useRef<string | null>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!mounted) return;
+    const slug = consumeLastVisitedSlug();
+    if (slug) {
+      lastSlugRef.current = slug;
+      requestAnimationFrame(() => {
+        const el = document.getElementById(`blog-card-${slug}`);
+        if (el) el.scrollIntoView({ block: "center", behavior: "smooth" });
+      });
+    }
+  }, [mounted]);
 
   const filteredPosts = useMemo(() => {
     let result = posts;
@@ -40,8 +56,13 @@ function BlogList({ postsByLocale }: { postsByLocale: Record<string, BlogPostMet
           p.category.toLowerCase().includes(q)
       );
     }
+    if (mounted && readSlugs.size > 0) {
+      const read = result.filter((p) => readSlugs.has(p.slug));
+      const unread = result.filter((p) => !readSlugs.has(p.slug));
+      result = [...read, ...unread];
+    }
     return result;
-  }, [posts, activeCategory, searchQuery]);
+  }, [posts, activeCategory, searchQuery, readSlugs, mounted]);
 
   const [featured, ...rest] = filteredPosts;
 
@@ -151,7 +172,9 @@ function BlogList({ postsByLocale }: { postsByLocale: Record<string, BlogPostMet
       {featured && (
         <section className="relative z-10 pb-8">
           <div className="container mx-auto px-6">
-            <BlogCard post={featured} index={-1} isFeatured />
+            <div id={`blog-card-${featured.slug}`}>
+              <BlogCard post={featured} index={-1} isFeatured isRead={mounted && readSlugs.has(featured.slug)} />
+            </div>
           </div>
         </section>
       )}
@@ -162,7 +185,9 @@ function BlogList({ postsByLocale }: { postsByLocale: Record<string, BlogPostMet
           <div className="container mx-auto px-6">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
               {rest.map((post, i) => (
-                <BlogCard key={post.slug} post={post} index={i} />
+                <div key={post.slug} id={`blog-card-${post.slug}`}>
+                  <BlogCard post={post} index={i} isRead={mounted && readSlugs.has(post.slug)} />
+                </div>
               ))}
             </div>
           </div>
