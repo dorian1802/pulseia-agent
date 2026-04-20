@@ -64,19 +64,20 @@ export function getBlogPostAllLocales(slug: string): Record<string, BlogPost> {
   return result;
 }
 
-export function getAllBlogPosts(locale: string): BlogPostMeta[] {
+export function getAllBlogPosts(locale: string, includeFallback = true): BlogPostMeta[] {
   return getBlogSlugs()
     .map((slug) => {
       const { content: _, ...meta } = getBlogPost(slug, locale);
       return meta;
     })
+    .filter((post) => includeFallback || !post.fallback)
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
 
-export function getAllBlogPostsAllLocales(): Record<string, BlogPostMeta[]> {
+export function getAllBlogPostsAllLocales(includeFallback = true): Record<string, BlogPostMeta[]> {
   const result: Record<string, BlogPostMeta[]> = {};
   for (const loc of VALID_LOCALES) {
-    result[loc] = getAllBlogPosts(loc);
+    result[loc] = getAllBlogPosts(loc, includeFallback);
   }
   return result;
 }
