@@ -6,16 +6,6 @@ import type { Locale } from "./i18n";
 const BLOG_DIR = path.join(process.cwd(), "content/blog");
 const VALID_LOCALES: Locale[] = ["fr", "en", "nl", "es", "de", "ma", "pt", "it", "tr", "zh", "ja", "ko", "ru", "hi", "ar"];
 
-function getCoverImage(slug: string): string | undefined {
-  const exts = ["jpg", "jpeg", "png", "webp"];
-  for (const ext of exts) {
-    if (fs.existsSync(path.join(BLOG_DIR, slug, `cover.${ext}`))) {
-      return `/blog-cover/${slug}`;
-    }
-  }
-  return undefined;
-}
-
 export interface BlogPostMeta {
   slug: string;
   title: string;
@@ -33,11 +23,25 @@ export interface BlogPost extends BlogPostMeta {
   content: string;
 }
 
+function getCoverImage(slug: string): string | undefined {
+  const exts = ["jpg", "jpeg", "png", "webp"];
+  for (const ext of exts) {
+    if (fs.existsSync(path.join(BLOG_DIR, slug, `cover.${ext}`))) {
+      return `/blog-cover/${slug}`;
+    }
+  }
+  return undefined;
+}
+
 export function getBlogSlugs(): string[] {
   if (!fs.existsSync(BLOG_DIR)) return [];
   return fs.readdirSync(BLOG_DIR, { withFileTypes: true })
     .filter((d) => d.isDirectory())
     .map((d) => d.name);
+}
+
+export function blogPostExists(slug: string): boolean {
+  return fs.existsSync(path.join(BLOG_DIR, slug, "fr.md"));
 }
 
 export function getBlogPost(slug: string, locale: string): BlogPost {
@@ -90,4 +94,14 @@ export function getAllBlogPostsAllLocales(includeFallback = true): Record<string
     result[loc] = getAllBlogPosts(loc, includeFallback);
   }
   return result;
+}
+
+export function getAvailableLocalesForSlug(slug: string): Locale[] {
+  const locales: Locale[] = [];
+  for (const loc of VALID_LOCALES) {
+    if (fs.existsSync(path.join(BLOG_DIR, slug, `${loc}.md`))) {
+      locales.push(loc);
+    }
+  }
+  return locales;
 }

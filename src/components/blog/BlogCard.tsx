@@ -50,6 +50,8 @@ export function BlogCard({ post, index, isFeatured, isRead }: { post: BlogPostMe
                   src={post.coverImage}
                   alt={post.title}
                   fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  priority={isFeatured}
                   className="object-cover group-hover:scale-[1.02] transition-transform duration-700"
                 />
               ) : (
@@ -104,6 +106,7 @@ export function BlogCard({ post, index, isFeatured, isRead }: { post: BlogPostMe
               src={post.coverImage}
               alt={post.title}
               fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 25vw"
               className="object-cover group-hover:scale-[1.03] transition-transform duration-700"
             />
           ) : (

@@ -6,7 +6,6 @@ import { BlogShell } from "./BlogShell";
 import { BlogArticle } from "./BlogArticle";
 import { ArrowLeft, Calendar, Clock, User, Sparkles, CheckCircle2, Mail, MapPin } from "lucide-react";
 import Link from "next/link";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import type { BlogPost } from "@/lib/blog";
 

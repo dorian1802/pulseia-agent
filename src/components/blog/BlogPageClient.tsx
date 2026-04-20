@@ -89,12 +89,12 @@ function BlogList({ postsByLocale }: { postsByLocale: Record<string, BlogPostMet
               <Sparkles className="w-4 h-4" />
               {t.blog.tag}
             </p>
-            <h2 className="font-display text-5xl md:text-7xl font-light text-white mb-6 leading-[0.95]">
+            <h1 className="font-display text-5xl md:text-7xl font-light text-white mb-6 leading-[0.95]">
               {t.blog.title1}{" "}
               <span className="font-bold bg-gradient-to-r from-accent to-blue-400 bg-clip-text text-transparent italic">
                 {t.blog.title2}
               </span>
-            </h2>
+            </h1>
             <p className="text-white/50 text-lg md:text-xl leading-relaxed max-w-2xl">
               Guides, comparatifs et tutoriels pour automatiser votre PME avec l&apos;intelligence artificielle.
             </p>
@@ -188,7 +188,7 @@ function BlogList({ postsByLocale }: { postsByLocale: Record<string, BlogPostMet
       {rest.length > 0 && (
         <section className="relative z-10 pb-20">
           <div className="container mx-auto px-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5">
               {rest.map((post, i) => (
                 <div key={post.slug} id={`blog-card-${post.slug}`}>
                   <BlogCard post={post} index={i} isRead={mounted && readSlugs.has(post.slug)} />

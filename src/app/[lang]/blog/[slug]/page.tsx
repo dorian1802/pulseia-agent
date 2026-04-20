@@ -1,12 +1,17 @@
-import { getBlogSlugs, getBlogPost, getBlogPostAllLocales, getAllBlogPostsAllLocales } from "@/lib/blog";
+import { getBlogSlugs, getBlogPost, getBlogPostAllLocales, getAllBlogPostsAllLocales, blogPostExists, getAvailableLocalesForSlug } from "@/lib/blog";
 import { BlogArticlePageClient } from "@/components/blog/BlogArticlePageClient";
 import type { Metadata } from "next";
-import { redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import type { Locale } from "@/lib/i18n";
 
 const SITE_URL = "https://pulseia-agent.vercel.app";
-
 const VALID_LOCALES: Locale[] = ["fr", "en", "nl", "es", "de", "ma", "pt", "it", "tr", "zh", "ja", "ko", "ru", "hi", "ar"];
+
+const OG_LOCALE_MAP: Record<string, string> = {
+  fr: "fr_FR", en: "en_US", nl: "nl_NL", es: "es_ES", de: "de_DE",
+  ma: "ar_MA", pt: "pt_PT", it: "it_IT", tr: "tr_TR", zh: "zh_CN",
+  ja: "ja_JP", ko: "ko_KR", ru: "ru_RU", hi: "hi_IN", ar: "ar_SA",
+};
 
 export async function generateStaticParams() {
   const slugs = getBlogSlugs();
@@ -15,21 +20,29 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string; slug: string }> }): Promise<Metadata> {
   const { lang, slug } = await params;
+  if (!blogPostExists(slug)) return {};
   const locale = VALID_LOCALES.includes(lang as Locale) ? (lang as Locale) : "fr";
   const post = getBlogPost(slug, locale);
   const url = `${SITE_URL}/${lang}/blog/${slug}`;
+  const availableLocales = getAvailableLocalesForSlug(slug);
+
+  const languages: Record<string, string> = {};
+  for (const loc of availableLocales) {
+    languages[loc] = `${SITE_URL}/${loc}/blog/${slug}`;
+  }
+  languages["x-default"] = `${SITE_URL}/fr/blog/${slug}`;
 
   return {
     title: `${post.title} | Pulseia Blog`,
     description: post.excerpt || `Article ${post.category} par Pulseia — ${post.readTime} de lecture`,
-    alternates: { canonical: url },
+    alternates: { canonical: url, languages },
     openGraph: {
       type: "article",
       title: post.title,
       description: post.excerpt,
       url,
       siteName: "Pulseia",
-      locale: locale === "fr" ? "fr_FR" : locale,
+      locale: OG_LOCALE_MAP[locale] || "fr_FR",
       publishedTime: post.date,
       authors: [post.author || "Pulseia"],
       tags: [post.category],
@@ -48,28 +61,21 @@ function extractFAQItems(content: string): { question: string; answer: string }[
   const items: { question: string; answer: string }[] = [];
   const h3Matches = content.match(/### (.+)/g);
   if (!h3Matches) return items;
-
-  for (let i = 0; i < h3Matches.length; i++) {
-    const q = h3Matches[i].replace("### ", "").trim();
-    if (q.endsWith("?")) {
-      items.push({ question: q, answer: "" });
-    }
+  for (const m of h3Matches) {
+    const q = m.replace("### ", "").trim();
+    if (q.endsWith("?")) items.push({ question: q, answer: "" });
   }
   return items.slice(0, 5);
 }
 
 export default async function BlogArticlePage({ params }: { params: Promise<{ lang: string; slug: string }> }) {
   const { lang, slug } = await params;
+  if (!blogPostExists(slug)) notFound();
   const locale = VALID_LOCALES.includes(lang as Locale) ? (lang as Locale) : "fr";
   const postsByLocale = getBlogPostAllLocales(slug);
   const allPosts = getAllBlogPostsAllLocales(false);
 
   const post = postsByLocale[locale] || postsByLocale["fr"] || Object.values(postsByLocale)[0];
-
-  // Redirect to French version if no translation exists for this locale
-  if (post.fallback && locale !== "fr") {
-    redirect(`/fr/blog/${slug}`);
-  }
   const url = `${SITE_URL}/${lang}/blog/${slug}`;
   const faqItems = extractFAQItems(post.content);
 
@@ -80,24 +86,14 @@ export default async function BlogArticlePage({ params }: { params: Promise<{ la
     description: post.excerpt,
     datePublished: post.date,
     dateModified: post.date,
-    author: {
-      "@type": "Organization",
-      name: post.author || "Pulseia",
-      url: SITE_URL,
-    },
+    author: { "@type": "Person", name: post.author || "Pulseia", url: SITE_URL },
     publisher: {
       "@type": "Organization",
       name: "Pulseia",
       url: SITE_URL,
-      logo: {
-        "@type": "ImageObject",
-        url: `${SITE_URL}/logo.png`,
-      },
+      logo: { "@type": "ImageObject", url: `${SITE_URL}/logo.svg` },
     },
-    mainEntityOfPage: {
-      "@type": "WebPage",
-      "@id": url,
-    },
+    mainEntityOfPage: { "@type": "WebPage", "@id": url },
     ...(post.coverImage ? { image: `${SITE_URL}${post.coverImage}` } : {}),
   };
 
@@ -108,10 +104,7 @@ export default async function BlogArticlePage({ params }: { params: Promise<{ la
         mainEntity: faqItems.map((item) => ({
           "@type": "Question",
           name: item.question,
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "Consultez l'article pour la réponse complète.",
-          },
+          acceptedAnswer: { "@type": "Answer", text: `Voir l'article « ${post.title} » pour la réponse complète.` },
         })),
       }
     : null;
@@ -123,16 +116,8 @@ export default async function BlogArticlePage({ params }: { params: Promise<{ la
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
-      />
-      {faqSchema && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-        />
-      )}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
+      {faqSchema && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />}
       <BlogArticlePageClient postsByLocale={postsByLocale} allPostsByLocale={relatedByLocale} />
     </>
   );
