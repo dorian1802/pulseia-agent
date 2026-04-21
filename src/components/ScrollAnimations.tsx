@@ -5,34 +5,35 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const BLACK = [6, 6, 14];        // #06060e
-const NAVY = [12, 14, 42];      // #0c0e2a
-const BLUE = [22, 34, 90];      // #16225a
-const INDIGO = [30, 30, 100];   // #1e1e64
-const TURQUOISE = [8, 40, 48];  // #082830
-const MAUVE = [38, 16, 48];     // #261030
-const DEEP_NAVY = [20, 20, 56]; // #141438
+const DEEP_VIOLET = [14, 10, 32]; // #0e0a20
+const MAUVE_DARK = [24, 16, 48]; // #181030
+const VIOLET = [30, 18, 60];     // #1e123c
+const PURPLE = [28, 14, 52];     // #1c0e34
+const FUCHSIA = [36, 12, 48];    // #240c30
+const INDIGO_DARK = [22, 16, 56]; // #161038
+const BLACK2 = [8, 6, 16];       // #080610
 
 const GRADIENT_STOPS = [
-  BLACK,        // Hero — noir profond
-  NAVY,         // About — noir bleuté
-  BLUE,         // Services — bleu
-  INDIGO,       // Agents — bleu indigo
-  TURQUOISE,    // Portfolio — noir turquoise
-  MAUVE,        // Products — noir mauve
-  DEEP_NAVY,    // Audit — bleu profond
-  BLACK,        // CTA — retour au noir
+  BLACK,         // Hero — noir profond
+  DEEP_VIOLET,   // About — violet profond
+  MAUVE_DARK,    // Services — mauve sombre
+  VIOLET,        // Agents — violet
+  PURPLE,        // Portfolio — violet foncé
+  FUCHSIA,       // Products — fuchsia sombre
+  INDIGO_DARK,   // Audit — indigo profond
+  BLACK2,        // CTA — retour au noir
 ];
 
 // Accent glow colors per section (brighter, for the gradient overlay)
 const GLOW_COLORS = [
-  [124, 58, 237],   // Hero — violet accent
-  [20, 184, 166],   // About — teal
-  [59, 130, 246],   // Services — blue
-  [99, 102, 241],   // Agents — indigo
-  [64, 224, 208],   // Portfolio — turquoise
-  [186, 85, 211],   // Products — mauve
+  [167, 139, 250],  // Hero — mauve clair
+  [139, 92, 246],   // About — violet
+  [167, 139, 250],  // Services — mauve
+  [124, 58, 237],   // Agents — violet accent
+  [192, 132, 252],  // Portfolio — violet clair
+  [186, 85, 211],   // Products — medium orchid
   [139, 92, 246],   // Audit — violet
-  [124, 58, 237],   // CTA — violet accent
+  [167, 139, 250],  // CTA — mauve clair
 ];
 
 function lerpColor(a: number[], b: number[], t: number): string {

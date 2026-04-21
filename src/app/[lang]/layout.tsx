@@ -3,6 +3,7 @@ import type { Locale } from "@/lib/i18n";
 import { SmoothScroller } from "@/components/SmoothScroller";
 import { ScrollAnimations } from "@/components/ScrollAnimations";
 import { CursorGlow } from "@/components/CursorGlow";
+import { SwipeArcs } from "@/components/SwipeArcs";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 
@@ -42,6 +43,7 @@ export default async function LangLayout({ children, params }: { children: React
         <SmoothScroller>
           <ScrollAnimations />
           <CursorGlow />
+          <SwipeArcs />
           <Navbar />
           <main>{children}</main>
           <Footer />

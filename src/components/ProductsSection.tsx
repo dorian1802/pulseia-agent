@@ -4,56 +4,106 @@ import { useLanguage } from "@/lib/LanguageContext";
 import { Brain, Globe, Crown, Gamepad2 } from "lucide-react";
 
 const productIcons = [Brain, Globe, Crown, Gamepad2];
+const cardAccents = [
+  "border-violet-500/20 bg-violet-500/[0.03]",
+  "border-purple-500/20 bg-purple-500/[0.03]",
+  "border-fuchsia-500/20 bg-fuchsia-500/[0.03]",
+  "border-indigo-500/20 bg-indigo-500/[0.03]",
+];
+const iconAccents = ["text-violet-400", "text-purple-400", "text-fuchsia-400", "text-indigo-400"];
 
 export function ProductsSection() {
   const { t } = useLanguage();
 
   return (
-    <section id="products" className="min-h-screen relative z-10 flex items-center py-32">
-      <div className="pointer-events-auto container mx-auto px-6 text-center">
-        <p className="tag-animate text-xs tracking-[0.3em] uppercase text-accent font-medium mb-4">
-          {t.products.tag}
-        </p>
-        <h2 className="font-display text-5xl md:text-6xl text-white mb-16 leading-[0.95]">
-          {t.products.title1} <span className="text-accent italic">{t.products.title2}</span>
-        </h2>
+    <section id="products" className="relative z-10 py-32">
+      <div className="pointer-events-auto container mx-auto px-6">
+        {/* Header */}
+        <div className="reveal reveal-left mb-20">
+          <span className="section-tag">{t.products.tag}</span>
+          <h2 className="hero-title-sm">
+            {t.products.title1}
+            <br />
+            <span className="accent">{t.products.title2}</span>
+          </h2>
+        </div>
 
-        {/* Alternating left/right feature blocks */}
-        <div className="max-w-4xl mx-auto space-y-16">
+        {/* Destructured layout — alternating large/small cards */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
           {t.products.items.map((item, i) => {
             const Icon = productIcons[i];
-            const isReversed = i % 2 !== 0;
+            const isLarge = i === 0 || i === 2;
+            const colSpan = isLarge ? "md:col-span-7" : "md:col-span-4";
+            const offset = i === 1 ? "md:col-start-9" : i === 3 ? "md:col-start-2" : "";
+            const anim = i % 2 === 0 ? "reveal-left" : "reveal-right";
 
             return (
               <div
                 key={i}
-                className={`stat-animate group flex flex-col ${isReversed ? "md:flex-row-reverse" : "md:flex-row"} items-start gap-8 text-left`}
+                className={`${colSpan} ${offset} ${anim} reveal`}
               >
-                {/* Icon circle */}
-                <div className="relative flex-shrink-0">
-                  <div className="w-20 h-20 rounded-full border border-white/[0.08] flex items-center justify-center group-hover:border-accent/30 transition-colors">
-                    <Icon className="w-8 h-8 text-accent" />
+                <div className={`rounded-sm border ${cardAccents[i]} backdrop-blur-md p-8 h-full group transition-all duration-500 hover:border-white/10`}>
+                  <div className="flex items-center gap-3 mb-6">
+                    <Icon className={`w-5 h-5 ${iconAccents[i]}`} />
+                    <span className="section-tag-sm">Product {String(i + 1).padStart(2, "0")}</span>
                   </div>
-                  {/* Connecting line to next item */}
-                  {i < t.products.items.length - 1 && (
-                    <div className="absolute top-20 left-1/2 -translate-x-1/2 w-px h-16 bg-gradient-to-b from-white/[0.06] to-transparent" />
-                  )}
-                </div>
-
-                {/* Text */}
-                <div className="flex-1">
-                  <h3 className="font-display text-2xl text-white mb-2 group-hover:text-accent transition-colors">
+                  <h3 className={`${isLarge ? "text-3xl md:text-4xl" : "text-2xl"} font-bold text-white mb-4 leading-tight`}>
                     {item.title}
                   </h3>
-                  <p className="text-block text-white/60 leading-relaxed max-w-lg">
-                    {item.desc}
-                  </p>
+                  <p className="text-sm text-slate-400 leading-relaxed">{item.desc}</p>
                 </div>
               </div>
             );
           })}
         </div>
       </div>
+
+      <style jsx>{`
+        .section-tag {
+          font-family: monospace;
+          color: #a78bfa;
+          text-transform: uppercase;
+          letter-spacing: 0.3em;
+          font-size: 0.75rem;
+          margin-bottom: 1.5rem;
+          display: block;
+        }
+        .section-tag-sm {
+          font-family: monospace;
+          color: rgba(167, 139, 250, 0.6);
+          text-transform: uppercase;
+          letter-spacing: 0.2em;
+          font-size: 0.7rem;
+          display: block;
+        }
+        .hero-title-sm {
+          font-size: clamp(2.5rem, 6vw, 5rem);
+          font-weight: 900;
+          color: #ffffff;
+          line-height: 0.95;
+          letter-spacing: -0.04em;
+        }
+        .accent {
+          background: linear-gradient(135deg, #a78bfa, #7c3aed);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+        .reveal {
+          opacity: 0;
+          filter: blur(15px);
+          transition: all 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+          will-change: transform, opacity;
+        }
+        .reveal-left { transform: translateX(-80px) rotate(-3deg); }
+        .reveal-right { transform: translateX(80px) rotate(3deg); }
+        .reveal-up { transform: translateY(60px); }
+        .reveal.active {
+          opacity: 1;
+          transform: translateX(0) translateY(0) rotate(0);
+          filter: blur(0);
+        }
+      `}</style>
     </section>
   );
 }

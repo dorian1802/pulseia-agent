@@ -38,7 +38,7 @@ export function HeroSection() {
       <style jsx>{`
         .section-tag {
           font-family: monospace;
-          color: #38bdf8;
+          color: #a78bfa;
           text-transform: uppercase;
           letter-spacing: 0.3em;
           font-size: 0.75rem;
@@ -53,7 +53,7 @@ export function HeroSection() {
           letter-spacing: -0.06em;
         }
         .accent {
-          background: linear-gradient(135deg, #38bdf8, #818cf8);
+          background: linear-gradient(135deg, #a78bfa, #7c3aed);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
