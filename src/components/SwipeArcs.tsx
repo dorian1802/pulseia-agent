@@ -1,84 +1,98 @@
 "use client";
 
-import { useEffect, useRef, useCallback } from "react";
+import { useEffect, useRef } from "react";
 
 const THRESHOLD = 60;
-const FADE_SPEED = 0.12;
-const DECAY_SPEED = 0.06;
+const DECAY_TIMEOUT = 800;
 
 export function SwipeArcs() {
   const leftRef = useRef<HTMLDivElement>(null);
   const rightRef = useRef<HTMLDivElement>(null);
+  const leftOpacity = useRef(0);
+  const rightOpacity = useRef(0);
+  const leftPulsing = useRef(false);
+  const rightPulsing = useRef(false);
+  const leftDecayTimer = useRef<ReturnType<typeof setTimeout>>();
+  const rightDecayTimer = useRef<ReturnType<typeof setTimeout>>();
   const accumulated = useRef({ left: 0, right: 0 });
-  const pulsing = useRef({ left: false, right: false });
-
-  const updateArc = useCallback(
-    (el: HTMLDivElement | null, opacity: number, isPulsing: boolean) => {
-      if (!el) return;
-      el.style.opacity = String(Math.min(1, Math.max(0, opacity)));
-      if (isPulsing) {
-        el.classList.add("arc-pulsing");
-      } else {
-        el.classList.remove("arc-pulsing");
-      }
-    },
-    []
-  );
 
   useEffect(() => {
     let rafId: number;
 
+    function setArc(
+      el: HTMLDivElement | null,
+      opacity: number,
+      pulsing: boolean
+    ) {
+      if (!el) return;
+      el.style.opacity = String(opacity);
+      if (pulsing) {
+        el.classList.add("arc-pulsing");
+      } else {
+        el.classList.remove("arc-pulsing");
+      }
+    }
+
+    function scheduleDecay(side: "left" | "right") {
+      const timer = side === "left" ? leftDecayTimer : rightDecayTimer;
+      if (timer.current) clearTimeout(timer.current);
+      timer.current = setTimeout(() => {
+        const opRef = side === "left" ? leftOpacity : rightOpacity;
+        const pulseRef = side === "left" ? leftPulsing : rightPulsing;
+        const acc = accumulated.current;
+        acc[side] = 0;
+        opRef.current = 0;
+        pulseRef.current = false;
+      }, DECAY_TIMEOUT);
+    }
+
     function handleWheel(e: WheelEvent) {
+      const dx = e.deltaX;
+      if (dx === 0) return;
+
       const atLeftEdge = window.scrollX <= 0;
       const atRightEdge =
         window.scrollX + window.innerWidth >=
         document.scrollingElement!.scrollWidth - 1;
 
-      // Swipe right (trackpad: deltaX < 0) at left edge → show red arc
-      if (atLeftEdge && e.deltaX < 0) {
-        accumulated.current.left += Math.abs(e.deltaX);
+      if (atLeftEdge && dx < 0) {
+        // Swipe right at left edge → red arc
+        accumulated.current.left += Math.abs(dx);
         accumulated.current.right = 0;
-        pulsing.current.left = accumulated.current.left >= THRESHOLD;
-      }
-      // Swipe left (trackpad: deltaX > 0) at right edge → show blue arc
-      else if (atRightEdge && e.deltaX > 0) {
-        accumulated.current.right += Math.abs(e.deltaX);
+        const op = Math.min(1, accumulated.current.left / THRESHOLD);
+        leftOpacity.current = op;
+        leftPulsing.current = accumulated.current.left >= THRESHOLD;
+        rightOpacity.current = 0;
+        rightPulsing.current = false;
+        scheduleDecay("left");
+      } else if (atRightEdge && dx > 0) {
+        // Swipe left at right edge → blue arc
+        accumulated.current.right += Math.abs(dx);
         accumulated.current.left = 0;
-        pulsing.current.right = accumulated.current.right >= THRESHOLD;
-      }
-      // Opposite or neutral gesture → decay
-      else {
-        accumulated.current.left *= 0.7;
-        accumulated.current.right *= 0.7;
-        if (accumulated.current.left < 1) {
-          accumulated.current.left = 0;
-          pulsing.current.left = false;
-        }
-        if (accumulated.current.right < 1) {
-          accumulated.current.right = 0;
-          pulsing.current.right = false;
-        }
+        const op = Math.min(1, accumulated.current.right / THRESHOLD);
+        rightOpacity.current = op;
+        rightPulsing.current = accumulated.current.right >= THRESHOLD;
+        leftOpacity.current = 0;
+        leftPulsing.current = false;
+        scheduleDecay("right");
       }
     }
 
     function tick() {
-      // Decay accumulated values when not actively swiping
-      accumulated.current.left *= 0.95;
-      accumulated.current.right *= 0.95;
-      if (accumulated.current.left < 1) {
-        accumulated.current.left = 0;
-        pulsing.current.left = false;
-      }
-      if (accumulated.current.right < 1) {
-        accumulated.current.right = 0;
-        pulsing.current.right = false;
-      }
+      setArc(leftRef.current, leftOpacity.current, leftPulsing.current);
+      setArc(rightRef.current, rightOpacity.current, rightPulsing.current);
 
-      const leftOpacity = accumulated.current.left / THRESHOLD;
-      const rightOpacity = accumulated.current.right / THRESHOLD;
-
-      updateArc(leftRef.current, leftOpacity, pulsing.current.left);
-      updateArc(rightRef.current, rightOpacity, pulsing.current.right);
+      // Smooth decay after timer fires
+      leftOpacity.current *= 0.92;
+      rightOpacity.current *= 0.92;
+      if (leftOpacity.current < 0.01) {
+        leftOpacity.current = 0;
+        leftPulsing.current = false;
+      }
+      if (rightOpacity.current < 0.01) {
+        rightOpacity.current = 0;
+        rightPulsing.current = false;
+      }
 
       rafId = requestAnimationFrame(tick);
     }
@@ -89,19 +103,19 @@ export function SwipeArcs() {
     return () => {
       window.removeEventListener("wheel", handleWheel);
       cancelAnimationFrame(rafId);
+      if (leftDecayTimer.current) clearTimeout(leftDecayTimer.current);
+      if (rightDecayTimer.current) clearTimeout(rightDecayTimer.current);
     };
-  }, [updateArc]);
+  }, []);
 
   return (
     <>
-      {/* Left edge arc — red (Previous) */}
       <div
         ref={leftRef}
         className="swipe-arc swipe-arc-left pointer-events-none fixed z-[99]"
         aria-hidden="true"
         style={{ opacity: 0 }}
       />
-      {/* Right edge arc — blue (Next) */}
       <div
         ref={rightRef}
         className="swipe-arc swipe-arc-right pointer-events-none fixed z-[99]"
