@@ -62,11 +62,14 @@ export function SwipeArcs() {
     }
 
     function onWheel(e: WheelEvent) {
+      console.log("[SwipeArcs] wheel event:", { deltaX: e.deltaX, deltaY: e.deltaY, scrollX: window.scrollX });
+
       if (s.isReturning) return;
 
       if (window.scrollX === 0 && e.deltaX < 0) {
         s.accLeft += Math.abs(e.deltaX);
         s.accRight = 0;
+        console.log("[SwipeArcs] LEFT arc accumulating:", s.accLeft);
       } else if (
         Math.ceil(window.scrollX + window.innerWidth) >=
           document.documentElement.scrollWidth &&
@@ -74,6 +77,7 @@ export function SwipeArcs() {
       ) {
         s.accRight += Math.abs(e.deltaX);
         s.accLeft = 0;
+        console.log("[SwipeArcs] RIGHT arc accumulating:", s.accRight);
       } else if (s.accLeft > 0 || s.accRight > 0) {
         reset();
       }
@@ -98,16 +102,35 @@ export function SwipeArcs() {
     window.addEventListener("mousedown", onMouseDown);
     window.addEventListener("touchstart", onTouchStart);
 
+    console.log("[SwipeArcs] Component mounted, wheel listener attached");
+
     return () => {
       window.removeEventListener("wheel", onWheel);
       window.removeEventListener("mousedown", onMouseDown);
       window.removeEventListener("touchstart", onTouchStart);
       window.clearTimeout(s.timeout);
+      console.log("[SwipeArcs] Component unmounted");
     };
   }, []);
 
   return (
     <>
+      {/* DEBUG: visible indicator to confirm component renders */}
+      <div
+        style={{
+          position: "fixed",
+          bottom: 10,
+          left: 10,
+          background: "red",
+          color: "white",
+          padding: "4px 8px",
+          fontSize: 10,
+          zIndex: 99999,
+          pointerEvents: "none",
+        }}
+      >
+        SwipeArcs loaded
+      </div>
       <div className="swipe-edge swipe-edge-left" aria-hidden="true">
         <div
           ref={leftRef}
