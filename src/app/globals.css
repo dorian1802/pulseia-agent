@@ -115,14 +115,14 @@ main > section {
   will-change: transform, opacity;
 }
 
-#arc-left {
+.glow-arc-left {
   background: linear-gradient(to bottom, transparent, #ef4444, #991b1b, transparent);
   border-radius: 0 100% 100% 0;
   transform: translateX(-50px) scaleY(0.8);
   box-shadow: 0 0 50px rgba(239, 68, 68, 0.4);
 }
 
-#arc-right {
+.glow-arc-right {
   background: linear-gradient(to bottom, transparent, #3b82f6, #1e40af, transparent);
   border-radius: 100% 0 0 100%;
   transform: translateX(50px) scaleY(0.8);
