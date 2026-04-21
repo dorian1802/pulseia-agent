@@ -91,53 +91,53 @@ main > section {
   50% { opacity: 0; }
 }
 
-/* Swipe arc — immersive navigation glow */
-.swipe-arc {
+/* Swipe arc — immersive navigation glow (Chrome-style) */
+.swipe-edge {
+  position: fixed;
   top: 0;
-  width: 140px;
-  height: 100vh;
-  filter: blur(18px);
+  bottom: 0;
+  width: 200px;
+  pointer-events: none;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+}
+
+.swipe-edge-left { left: 0; }
+.swipe-edge-right { right: 0; justify-content: flex-end; }
+
+.glow-arc {
+  height: 45vh;
+  width: 15px;
+  filter: blur(15px);
   opacity: 0;
-  will-change: opacity, transform;
+  transition: opacity 0.2s ease-out, transform 0.1s ease-out;
+  will-change: transform, opacity;
 }
 
-.swipe-arc-left {
-  left: -40px;
-  background: radial-gradient(
-    ellipse 120% 70% at 10% 50%,
-    rgba(255, 50, 50, 1) 0%,
-    rgba(255, 40, 40, 0.7) 20%,
-    rgba(255, 30, 30, 0.3) 45%,
-    transparent 75%
-  );
-  box-shadow: 0 0 80px 30px rgba(255, 50, 50, 0.4),
-    inset 0 0 60px 10px rgba(255, 80, 80, 0.2);
+#arc-left {
+  background: linear-gradient(to bottom, transparent, #ef4444, #991b1b, transparent);
+  border-radius: 0 100% 100% 0;
+  transform: translateX(-50px) scaleY(0.8);
+  box-shadow: 0 0 50px rgba(239, 68, 68, 0.4);
 }
 
-.swipe-arc-right {
-  right: -40px;
-  background: radial-gradient(
-    ellipse 120% 70% at 90% 50%,
-    rgba(50, 100, 255, 1) 0%,
-    rgba(40, 90, 255, 0.7) 20%,
-    rgba(30, 80, 255, 0.3) 45%,
-    transparent 75%
-  );
-  box-shadow: 0 0 80px 30px rgba(50, 100, 255, 0.4),
-    inset 0 0 60px 10px rgba(80, 120, 255, 0.2);
+#arc-right {
+  background: linear-gradient(to bottom, transparent, #3b82f6, #1e40af, transparent);
+  border-radius: 100% 0 0 100%;
+  transform: translateX(50px) scaleY(0.8);
+  box-shadow: 0 0 50px rgba(59, 130, 246, 0.4);
 }
 
-@keyframes arc-pulse {
-  0%, 100% {
-    transform: scaleX(1);
-    filter: blur(18px) brightness(1);
-  }
-  50% {
-    transform: scaleX(1.4);
-    filter: blur(24px) brightness(1.5);
-  }
+@keyframes pulse-red {
+  0%, 100% { filter: blur(15px) brightness(1); }
+  50% { filter: blur(25px) brightness(1.8); }
 }
 
-.swipe-arc.arc-pulsing {
-  animation: arc-pulse 0.5s ease-in-out infinite;
+@keyframes pulse-blue {
+  0%, 100% { filter: blur(15px) brightness(1); }
+  50% { filter: blur(25px) brightness(1.8); }
 }
+
+.active-red { animation: pulse-red 1s infinite ease-in-out; }
+.active-blue { animation: pulse-blue 1s infinite ease-in-out; }
