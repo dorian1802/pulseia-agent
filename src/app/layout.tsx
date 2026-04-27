@@ -55,9 +55,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <body className={`${inter.variable} ${spaceGrotesk.variable} font-sans antialiased`}>
-      <div id="bg-glow" className="fixed inset-0 pointer-events-none z-[-1]" />
-      {children}
-    </body>
+    <html suppressHydrationWarning>
+      <body className={`${inter.variable} ${spaceGrotesk.variable} font-sans antialiased`}>
+        <div id="bg-glow" className="fixed inset-0 pointer-events-none z-[-1]" />
+        {children}
+      </body>
+    </html>
   );
 }

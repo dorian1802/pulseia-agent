@@ -148,7 +148,7 @@ export function SwipeArcs() {
       reset();
     }
 
-    window.addEventListener("wheel", onWheel, { passive: true });
+    window.addEventListener("wheel", onWheel, { passive: true, capture: true });
     window.addEventListener("mousedown", onMouseDown);
     window.addEventListener("touchstart", onTouchStart);
 

@@ -247,7 +247,7 @@ function ArticleContent({ postsByLocale, allPostsByLocale }: { postsByLocale: Re
                 <Link key={rel.slug} href={`/${locale}/blog/${rel.slug}`} className="block group">
                   <div className="stat-animate rounded-xl border border-white/[0.06] p-6 bg-white/[0.02] hover:bg-white/[0.04] hover:border-accent/20 transition-all duration-500">
                     <span className="text-[10px] tracking-[0.2em] uppercase text-accent/70">{rel.category}</span>
-                    <h4 className="font-display text-base text-white mt-2 mb-2 group-hover:text-accent transition-colors leading-snug">
+                    <h4 className="font-display text-base text-white mt-2 mb-2 leading-snug">
                       {rel.title}
                     </h4>
                     <p className="text-xs text-white/40 line-clamp-2">{rel.excerpt}</p>

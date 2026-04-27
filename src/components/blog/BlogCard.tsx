@@ -73,7 +73,7 @@ export function BlogCard({ post, index, isFeatured, isRead }: { post: BlogPostMe
                   </span>
                 )}
               </div>
-              <h3 className="font-display text-2xl lg:text-3xl text-white mb-4 group-hover:text-accent transition-colors duration-500 leading-[1.1]">
+              <h3 className="font-display text-2xl lg:text-3xl text-white mb-4 leading-[1.1]">
                 {post.title}
               </h3>
               <p className="text-white/45 leading-relaxed mb-6 line-clamp-3 text-sm lg:text-base">
@@ -126,7 +126,7 @@ export function BlogCard({ post, index, isFeatured, isRead }: { post: BlogPostMe
         </div>
         {/* Content */}
         <div className="relative p-6 flex flex-col flex-1">
-          <h3 className="font-display text-lg text-white mb-2.5 group-hover:text-accent transition-colors duration-500 leading-[1.2] line-clamp-2">
+          <h3 className="font-display text-lg text-white mb-2.5 leading-[1.2] line-clamp-2">
             {post.title}
           </h3>
           <p className="text-white/40 leading-relaxed mb-4 line-clamp-2 text-sm flex-1">

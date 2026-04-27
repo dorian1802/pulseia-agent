@@ -95,7 +95,7 @@ export function ScrollAnimations() {
     // ── Build/deconstruct animations ──
     sections.forEach((section) => {
       // Headings (skip inside cards/stats)
-      const headings = section.querySelectorAll(":scope > div h1, :scope > div h2, :scope > div > div > h2, :scope > div h3");
+      const headings = section.querySelectorAll(":scope > div h1, :scope > div h2, :scope > div > div > h2");
       headings.forEach((el) => {
         if ((el as HTMLElement).closest(".card-animate, .stat-animate, article, a")) return;
         gsap.set(el, { opacity: 0, y: 40, scale: 0.95 });

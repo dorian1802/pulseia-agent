@@ -1,4 +1,5 @@
 import { LangProvider } from "@/components/LangProvider";
+import { HtmlLang } from "@/components/HtmlLang";
 import type { Locale } from "@/lib/i18n";
 import { SmoothScroller } from "@/components/SmoothScroller";
 import { ScrollAnimations } from "@/components/ScrollAnimations";
@@ -32,13 +33,12 @@ export default async function LangLayout({ children, params }: { children: React
   const dir = RTL_LOCALES.includes(locale) ? "rtl" : "ltr";
 
   return (
-    <html lang={locale} dir={dir} suppressHydrationWarning className="antialiased">
-      <head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
-        />
-      </head>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+      />
+      <HtmlLang locale={locale} dir={dir} />
       <LangProvider locale={locale}>
         <SmoothScroller>
           <ScrollAnimations />
@@ -49,6 +49,6 @@ export default async function LangLayout({ children, params }: { children: React
           <Footer />
         </SmoothScroller>
       </LangProvider>
-    </html>
+    </>
   );
 }

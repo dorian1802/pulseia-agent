@@ -49,7 +49,7 @@ export function ServicesSection() {
                     <Icon className={`w-5 h-5 ${iconColors[i]}`} />
                     <span className="section-tag-sm">Solution {String(i + 1).padStart(2, "0")}</span>
                   </div>
-                  <h3 className="text-2xl md:text-3xl font-bold text-white mb-4 leading-tight group-hover:text-[#a78bfa] transition-colors">
+                  <h3 className="text-2xl md:text-3xl font-bold text-white mb-4 leading-tight">
                     {item.title}
                   </h3>
                   <p className="text-base text-slate-400 leading-relaxed">{item.desc}</p>
@@ -70,7 +70,7 @@ export function ServicesSection() {
                     <Icon className={`w-4 h-4 ${iconColors[idx]}`} />
                     <span className="section-tag-sm">Solution {String(idx + 1).padStart(2, "0")}</span>
                   </div>
-                  <h3 className="text-xl font-bold text-white mb-3 leading-tight group-hover:text-[#a78bfa] transition-colors">
+                  <h3 className="text-xl font-bold text-white mb-3 leading-tight">
                     {item.title}
                   </h3>
                   <p className="text-sm text-slate-400 leading-relaxed">{item.desc}</p>
