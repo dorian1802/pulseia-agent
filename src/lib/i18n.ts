@@ -324,7 +324,7 @@ export const translations = {
   },
 } satisfies Record<Locale, object>;
 
-type DeepStringify<T> = {
+export type DeepStringify<T> = {
   [K in keyof T]: T[K] extends string
     ? string
     : T[K] extends readonly (infer U)[]
@@ -332,6 +332,6 @@ type DeepStringify<T> = {
       : DeepStringify<T[K]>;
 };
 
-type DeepPartial<T> = { [P in keyof T]?: DeepPartial<T[P]> };
-type PortfolioItem = { name: string; desc: string; category: string; url?: string; review?: string; author?: string; image?: string };
-type Translations = DeepStringify<Omit<typeof translations.fr, 'portfolio'> & { portfolio: Omit<typeof translations.fr['portfolio'], 'items'> & { items: PortfolioItem[] } }>;
+export type DeepPartial<T> = { [P in keyof T]?: DeepPartial<T[P]> };
+export type PortfolioItem = { name: string; desc: string; category: string; url?: string; review?: string; author?: string; image?: string };
+export type Translations = DeepStringify<Omit<typeof translations.fr, 'portfolio'> & { portfolio: Omit<typeof translations.fr['portfolio'], 'items'> & { items: PortfolioItem[] } }>;
