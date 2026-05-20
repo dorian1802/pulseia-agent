@@ -1,12 +1,14 @@
 import type { MetadataRoute } from "next";
 import { getBlogSlugs, getAvailableLocalesForSlug } from "@/lib/blog";
+import { getCitySlugs } from "@/lib/cities";
 import type { Locale } from "@/lib/i18n";
 
-const BASE_URL = "https://pulseia-agent.vercel.app";
+const BASE_URL = "https://pulseia-v2.vercel.app";
 const LOCALES: Locale[] = ["fr", "en", "nl", "es", "de", "ma", "pt", "it", "tr", "zh", "ja", "ko", "ru", "hi", "ar"];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const blogSlugs = getBlogSlugs();
+  const citySlugs = getCitySlugs();
 
   const staticPages = LOCALES.map((lang) => [
     { url: `${BASE_URL}/${lang}`, lastModified: new Date(), changeFrequency: "weekly" as const, priority: lang === "fr" ? 1.0 : 0.8 },
@@ -27,5 +29,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }));
   });
 
-  return [...staticPages, ...blogPages];
+  const cityPages = citySlugs.flatMap((slug) =>
+    ["fr" as Locale].map((lang) => ({
+      url: `${BASE_URL}/${lang}/agence-ia/${slug}`,
+      lastModified: new Date(),
+      changeFrequency: "weekly" as const,
+      priority: lang === "fr" ? 0.7 : 0.5,
+    }))
+  );
+
+  return [...staticPages, ...blogPages, ...cityPages];
 }
