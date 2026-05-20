@@ -1,10 +1,12 @@
 "use client";
 
 import { useLanguage } from "@/lib/LanguageContext";
-import { Mail, MapPin, ArrowRight } from "lucide-react";
+import { SplitTextReveal } from "./SplitTextReveal";
+import { Mail, MapPin, ArrowRight, Globe } from "lucide-react";
+import Link from "next/link";
 
 export function CTASection() {
-  const { t } = useLanguage();
+  const { t, locale } = useLanguage();
 
   return (
     <section id="contact" className="relative z-10 py-32">
@@ -13,9 +15,11 @@ export function CTASection() {
         <div className="reveal reveal-left mb-16">
           <span className="section-tag">{t.cta.tag}</span>
           <h2 className="hero-title-sm">
-            {t.cta.title1}
+            <SplitTextReveal text={t.cta.title1} stagger={0.03} duration={0.7} className="block" />
             <br />
-            <span className="accent">{t.cta.title2}</span>
+            <span className="accent">
+              <SplitTextReveal text={t.cta.title2} stagger={0.03} duration={0.7} className="block" />
+            </span>
           </h2>
           <p className="mt-6 text-lg text-slate-400 max-w-md leading-relaxed">
             {t.cta.description}
@@ -33,7 +37,16 @@ export function CTASection() {
               </a>
             </div>
             <div className="rounded-sm border border-white/[0.05] bg-white/[0.02] backdrop-blur-md p-6">
-              <MapPin className="w-4 h-4 text-[#a78bfa] mb-3" />
+              <div className="flex items-center justify-between mb-3">
+                <MapPin className="w-4 h-4 text-[#a78bfa]" />
+                <Link
+                  href={`/${locale}/zones`}
+                  className="inline-flex items-center gap-1 text-[10px] text-accent hover:text-accent-light transition-colors"
+                >
+                  <Globe className="w-3 h-3" />
+                  {locale === "fr" ? "Voir toutes" : "View all"}
+                </Link>
+              </div>
               <p className="font-mono text-xs text-white/40 uppercase tracking-[0.2em] mb-1">Location</p>
               <p className="text-white/70 text-sm">{t.cta.location}</p>
             </div>

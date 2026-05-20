@@ -23,7 +23,11 @@ const organizationSchema = {
   areaServed: [
     { "@type": "Country", name: "Belgium" },
     { "@type": "Country", name: "France" },
+    { "@type": "Country", name: "Netherlands" },
+    { "@type": "Country", name: "Luxembourg" },
     { "@type": "Country", name: "Switzerland" },
+    { "@type": "Country", name: "Spain" },
+    { "@type": "Country", name: "Italy" },
   ],
 };
 

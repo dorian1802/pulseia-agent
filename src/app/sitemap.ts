@@ -15,6 +15,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/${lang}/blog`, lastModified: new Date(), changeFrequency: "weekly" as const, priority: lang === "fr" ? 0.9 : 0.7 },
     { url: `${BASE_URL}/${lang}/about`, lastModified: new Date(), changeFrequency: "monthly" as const, priority: lang === "fr" ? 0.7 : 0.5 },
     { url: `${BASE_URL}/${lang}/audit`, lastModified: new Date(), changeFrequency: "monthly" as const, priority: lang === "fr" ? 0.7 : 0.5 },
+    { url: `${BASE_URL}/${lang}/zones`, lastModified: new Date(), changeFrequency: "monthly" as const, priority: lang === "fr" ? 0.7 : 0.5 },
   ]).flat();
 
   const blogPages = blogSlugs.flatMap((slug) => {
